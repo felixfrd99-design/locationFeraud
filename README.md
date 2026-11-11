@@ -17,7 +17,7 @@ Réglée dans le bloc `CONFIG` en haut du script de `index.html` :
 
 ## Prochaines étapes
 
-- Base de données et stockage des photos : Supabase (les appels sont prêts en commentaires dans `index.html`)
+- Base de données : Supabase, projet `qdnytvevomychpuuxbym` (région eu-west-1). Migrations dans `supabase/`, à appliquer dans l'ordre : `schema.sql`, `02_app.sql`, `03_hardening.sql`. Déjà appliquées sur le projet.
 - Paiements et reversement aux propriétaires : Stripe
 - Mise en ligne : Vercel, branché sur ce dépôt
 

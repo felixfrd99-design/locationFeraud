@@ -4,7 +4,7 @@
 --  Montants en centimes (int) pour éviter les erreurs d'arrondi.
 -- =====================================================================
 
-create extension if not exists btree_gist;
+create extension if not exists btree_gist with schema extensions;
 
 -- ---------------------------------------------------------------------
 -- 1. Types
