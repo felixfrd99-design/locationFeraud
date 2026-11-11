@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Location Ferro — Libérez vos équipements</title>
-<meta name="description" content="Location Ferro, la marketplace de location d'équipements sportifs entre particuliers.">
+<title>Rebond — Donnez du rebond à votre matos</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1512'/%3E%3Cpath d='M10 46 Q18 10 27 46 Q33 26 39 46 Q43 34 47 46' stroke='%23FF6B4A' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='54' cy='40' r='6' fill='%23F3F1EA'/%3E%3C/svg%3E">
+<meta name="description" content="Rebond, la marketplace de location d'équipements sportifs entre particuliers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -48,8 +49,13 @@ h1,h2,h3{font-family:var(--display);line-height:1;letter-spacing:-.03em}
 .nav.hide{transform:translateY(-120%)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 20px;border-radius:999px;background:rgba(243,241,234,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line)}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.03em}
-.logo-mark{width:32px;height:32px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
-.logo-mark span{width:14px;height:14px;border-radius:50%;border:3px solid var(--lime);border-right-color:transparent;animation:spin 3s linear infinite}
+.logo{font-size:24px;letter-spacing:-.045em}
+.logo-mark{width:40px;height:32px;overflow:visible}
+.logo:hover .lm-ball{animation:hop .6s var(--ease)}
+.lm-path{stroke-dasharray:140;stroke-dashoffset:140;animation:draw 1.2s .2s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes hop{40%{transform:translateY(-14px)}}
+.lm-ball{transform-box:fill-box;transform-origin:center}
 .nav-links{display:flex;gap:28px;font-weight:500;font-size:15px}
 .nav-links a{position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--coral);transition:width .3s var(--ease)}
@@ -454,7 +460,7 @@ footer a:hover{color:var(--lime)}
 <!-- ============ NAVIGATION ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a href="#top" class="logo"><span class="logo-mark"><span></span></span>Location Ferro</a>
+    <a href="#top" class="logo" aria-label="Rebond, accueil"><svg class="logo-mark" viewBox="0 0 80 64" aria-hidden="true"><path class="lm-path" d="M4 54 Q15 4 28 54 Q37 24 46 54 Q52 38 58 54" stroke="#0F1512" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="lm-ball" cx="68" cy="46" r="9" fill="#FF6B4A"/></svg>rebond</a>
     <nav class="nav-links">
       <a href="#marketplace">Marketplace</a>
       <a href="#comment">Comment ça marche</a>
@@ -528,7 +534,7 @@ footer a:hover{color:var(--lime)}
         <div class="say pop" style="--d:.1s;left:6%;top:10%">Mon vélo dort au garage… 😴</div>
         <div class="char" data-who="alex" data-wave style="left:9%"><span class="ntag">Alex · propriétaire</span></div>
         <div class="phone up" style="--d:.2s">
-          <div class="ph-top">Location Ferro</div>
+          <div class="ph-top">rebond</div>
           <div class="ph-photo pop" style="--d:.9s"><span>🚲</span></div>
           <div class="ph-line grow" style="--d:1.2s;width:85%"></div>
           <div class="ph-line grow" style="--d:1.35s;width:55%"></div>
@@ -640,7 +646,7 @@ footer a:hover{color:var(--lime)}
       <div class="how-grid">
         <div class="how-card"><span class="n">1</span><div class="ic" style="background:var(--coral)">📸</div><h3>Publiez</h3><p>Photos, description, prix à la journée et caution. Publier est gratuit.</p></div>
         <div class="how-card"><span class="n">2</span><div class="ic" style="background:var(--lime)">✅</div><h3>Acceptez</h3><p>Vous recevez les demandes et choisissez à qui vous louez, et quand.</p></div>
-        <div class="how-card"><span class="n">3</span><div class="ic" style="background:var(--sky)">💸</div><h3>Encaissez</h3><p>Vous êtes payé après la remise du matériel. Location Ferro ne prélève que 10 %.</p></div>
+        <div class="how-card"><span class="n">3</span><div class="ic" style="background:var(--sky)">💸</div><h3>Encaissez</h3><p>Vous êtes payé après la remise du matériel. Rebond ne prélève que 10 %.</p></div>
       </div>
     </div>
   </div>
@@ -728,7 +734,7 @@ footer a:hover{color:var(--lime)}
   <div class="wrap">
     <div class="sec-head rv" style="justify-content:center;text-align:center"><div><span class="eyebrow">FAQ</span><h2>Questions fréquentes</h2></div></div>
     <div class="faq rv">
-      <details><summary>Combien coûte Location Ferro ?</summary><p id="faqFee">Publier une annonce est gratuit. Des frais de service de 10 % sont ajoutés au prix de chaque location, avec un minimum par réservation.</p></details>
+      <details><summary>Combien coûte Rebond ?</summary><p id="faqFee">Publier une annonce est gratuit. Des frais de service de 10 % sont ajoutés au prix de chaque location, avec un minimum par réservation.</p></details>
       <details><summary>Que se passe-t-il si le matériel est abîmé ?</summary><p>La caution fixée par le propriétaire est bloquée pendant la location. En cas de dommage constaté au retour, tout ou partie peut être retenu après échange entre les deux parties.</p></details>
       <details><summary>Qui fixe le prix ?</summary><p>Le propriétaire choisit librement son prix à la journée et le montant de la caution.</p></details>
       <details><summary>Comment récupère-t-on l'équipement ?</summary><p>En main propre, au lieu et à l'heure convenus avec le propriétaire via la messagerie.</p></details>
@@ -755,12 +761,12 @@ footer a:hover{color:var(--lime)}
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><a href="#top" class="logo"><span class="logo-mark"><span></span></span>Location Ferro</a><p style="margin-top:14px;max-width:300px;font-size:14px">La marketplace de location d'équipements sportifs entre particuliers.</p></div>
+      <div><a href="#top" class="logo" aria-label="Rebond, accueil"><svg class="logo-mark" viewBox="0 0 80 64" aria-hidden="true"><path class="lm-path" d="M4 54 Q15 4 28 54 Q37 24 46 54 Q52 38 58 54" stroke="#F3F1EA" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="lm-ball" cx="68" cy="46" r="9" fill="#FF6B4A"/></svg>rebond</a><p style="margin-top:14px;max-width:300px;font-size:14px">La marketplace de location d'équipements sportifs entre particuliers.</p></div>
       <div><h5>Louer</h5><ul><li><a href="#marketplace">Marketplace</a></li><li><a href="#comment">Comment ça marche</a></li></ul></div>
       <div><h5>Proposer</h5><ul><li><a href="#deposer">Déposer une annonce</a></li><li><a href="#faq">Commission</a></li></ul></div>
       <div><h5>Infos</h5><ul><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Contact</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>© <span id="yr"></span> Location Ferro</span><span>Fait pour que le matériel serve.</span></div>
+    <div class="foot-bottom"><span>© <span id="yr"></span> Rebond</span><span>Donnez du rebond à votre matos.</span></div>
   </div>
 </footer>
 

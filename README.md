@@ -1,6 +1,8 @@
-# Location Ferro
+# Rebond
 
-Marketplace de location d'équipements sportifs entre particuliers : une personne met en location un équipement dont elle se sert peu, une autre le loue, et peut aussi proposer de l'acheter.
+*Donnez du rebond à votre matos.*
+
+Rebond (ex-Location Ferro) est une marketplace de location d'équipements sportifs entre particuliers : une personne met en location un équipement dont elle se sert peu, une autre le loue, et peut aussi proposer de l'acheter.
 
 ## Contenu
 
