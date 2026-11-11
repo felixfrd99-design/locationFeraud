@@ -2,1317 +2,681 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rebond — Donnez du rebond à votre matos</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1512'/%3E%3Cpath d='M10 46 Q18 10 27 46 Q33 26 39 46 Q43 34 47 46' stroke='%23FF6B4A' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='54' cy='40' r='6' fill='%23F3F1EA'/%3E%3C/svg%3E">
-<meta name="description" content="Rebond, la marketplace de location d'équipements sportifs entre particuliers.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spoloc — Location de matériel de sport entre particuliers</title>
+<meta name="description" content="Louez le matériel de sport de vos voisins, dès une demi-journée. Paiement, caution et remise protégés. Paris et petite couronne.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1512'/%3E%3Cpath d='M51 32 A19 19 0 1 1 45.4 18.6' stroke='%23F3F1EA' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23FF6B4A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Supabase (à activer quand le projet est créé)
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
--->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0F1512; --ink-2:#1B2420; --paper:#F3F1EA; --card:#FFFFFF;
-  --lime:#C9F23B; --coral:#FF6B4A; --sky:#9DD4FF; --sand:#F2D9A8;
-  --muted:#626A65; --line:rgba(15,21,18,.12);
+  --lime:#C9F23B; --coral:#FF6B4A; --sky:#9DD4FF;
+  --muted:#5A615C; --line:rgba(15,21,18,.12);
   --r:22px; --r-sm:14px;
   --display:"Bricolage Grotesque",system-ui,sans-serif;
   --body:"Instrument Sans",system-ui,sans-serif;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-button,input,select,textarea{font:inherit;color:inherit}
+html{overflow-x:hidden;overflow-x:clip;scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;line-height:1.04}
 .wrap{width:min(1200px,100% - 32px);margin-inline:auto}
-h1,h2,h3{font-family:var(--display);line-height:1;letter-spacing:-.03em}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral)}
 
-/* ---------- Boutons ---------- */
-.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;border:0;cursor:pointer;font-weight:600;font-size:15px;transition:transform .3s var(--ease),background .3s,box-shadow .3s;will-change:transform}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:999px;border:0;font-weight:600;font-size:15px;transition:transform .25s var(--ease),box-shadow .25s,background .2s;text-decoration:none;white-space:nowrap}
+.btn:active{transform:scale(.97)}
 .btn-dark{background:var(--ink);color:var(--paper)}
-.btn-dark:hover{box-shadow:0 12px 30px -10px rgba(15,21,18,.6)}
-.btn-lime{background:var(--lime);color:var(--ink)}
-.btn-lime:hover{box-shadow:0 12px 30px -10px rgba(140,180,20,.8)}
-.btn-ghost{background:transparent;border:1.5px solid var(--ink)}
-.btn-ghost:hover{background:var(--ink);color:var(--paper)}
-.btn .arr{transition:transform .3s var(--ease)}
-.btn:hover .arr{transform:translateX(4px)}
+.btn-dark:hover{box-shadow:0 12px 28px -12px rgba(15,21,18,.6);transform:translateY(-1px)}
+.btn-ghost{border:1.5px solid var(--line);background:transparent}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-sm{min-height:44px;padding:0 18px;font-size:14px}
 
-/* ---------- Navigation ---------- */
-.nav{position:fixed;inset:12px 0 auto;z-index:50;transition:transform .4s var(--ease)}
-.nav.hide{transform:translateY(-120%)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 20px;border-radius:999px;background:rgba(243,241,234,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line)}
-.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.03em}
-.logo{font-size:24px;letter-spacing:-.045em}
-.logo-mark{width:40px;height:32px;overflow:visible}
-.logo:hover .lm-ball{animation:hop .6s var(--ease)}
-.lm-path{stroke-dasharray:140;stroke-dashoffset:140;animation:draw 1.2s .2s var(--ease) forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes hop{40%{transform:translateY(-14px)}}
-.lm-ball{transform-box:fill-box;transform-origin:center}
-.nav-links{display:flex;gap:26px;font-weight:500;font-size:15px;white-space:nowrap}
-.nav-links a{position:relative}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--coral);transition:width .3s var(--ease)}
-.nav-links a:hover::after{width:100%}
-.nav .btn{padding:11px 18px}
-.burger{display:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);cursor:pointer;position:relative}
-.burger span{position:absolute;left:13px;right:13px;height:2px;background:var(--paper);transition:transform .3s,opacity .3s}
-.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:26px}
-.burger.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0}
-.burger.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
-.mobile-menu{position:fixed;inset:0;z-index:45;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:18px;padding:32px;clip-path:circle(0% at calc(100% - 40px) 40px);transition:clip-path .6s var(--ease)}
-.mobile-menu.open{clip-path:circle(150% at calc(100% - 40px) 40px)}
-.mobile-menu a{font-family:var(--display);font-size:42px;font-weight:700;letter-spacing:-.03em}
+.top{position:sticky;top:0;z-index:50;background:rgba(243,241,234,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:20px;height:72px}
+.logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:800;font-size:25px;letter-spacing:-.05em;text-decoration:none}
+.logo .sl-ball{transform-box:fill-box;transform-origin:center;animation:ball 2.4s var(--ease) infinite}
+@keyframes ball{0%,70%,100%{transform:none}35%{transform:scale(.8)}}
+.tabs{display:flex;gap:4px;margin-left:12px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px;position:relative}
+.tab{position:relative;z-index:1;border-radius:999px;padding:0 18px;min-height:42px;font-weight:600;font-size:15px;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;transition:color .25s;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--paper)}
+.tabs .pill{position:absolute;top:5px;bottom:5px;left:0;border-radius:999px;background:var(--ink);transition:transform .45s var(--ease),width .45s var(--ease)}
+.top-r{margin-left:auto;display:flex;gap:10px}
 
-/* ---------- Hero ---------- */
-.hero{padding:140px 0 60px;position:relative;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
-.hero h1{font-size:clamp(48px,8.4vw,116px);font-weight:800;margin:18px 0 22px}
-.hero h1 .line{display:block;overflow:hidden}
-.hero h1 .line > span{display:inline-block;transform:translateY(105%);animation:rise 1s var(--ease) forwards}
-.hero h1 .line:nth-child(2) > span{animation-delay:.12s}
-.hero h1 .line:nth-child(3) > span{animation-delay:.24s}
-.hl{position:relative;white-space:nowrap}
-.hl::before{content:"";position:absolute;left:-2%;right:-2%;bottom:.08em;height:.32em;background:var(--lime);z-index:-1;border-radius:6px;transform:scaleX(0);transform-origin:left;animation:grow .8s .9s var(--ease) forwards}
-.rotator{display:inline-grid;vertical-align:bottom;height:1.25em;overflow:hidden;color:var(--coral)}
-.rotator span{grid-area:1/1;transform:translateY(110%);transition:transform .6s var(--ease)}
-.rotator span.on{transform:translateY(0)}
-.rotator span.out{transform:translateY(-110%)}
-.hero-sub{font-size:clamp(17px,1.6vw,20px);max-width:520px;color:var(--muted);opacity:0;animation:fade .8s .5s forwards}
-.hero-sub strong{color:var(--ink)}
-.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;opacity:0;animation:fade .8s .7s forwards}
-.hero-proof{display:flex;flex-wrap:wrap;gap:22px;margin-top:38px;font-size:14px;color:var(--muted);opacity:0;animation:fade .8s .9s forwards}
-.hero-proof b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);letter-spacing:-.02em}
-
-.hero-visual{position:relative;height:540px}
-.blob{position:absolute;inset:8% 4% 6% 10%;border-radius:42% 58% 55% 45%/50% 40% 60% 50%;background:var(--ink);animation:morph 12s ease-in-out infinite}
-.float-card{position:absolute;width:220px;background:var(--card);border-radius:var(--r);padding:12px;box-shadow:0 30px 60px -25px rgba(15,21,18,.45);animation:float 6s ease-in-out infinite}
-.float-card .thumb{height:140px;border-radius:14px;display:grid;place-items:center;font-size:64px}
-.float-card h4{font-family:var(--display);font-size:17px;margin:10px 4px 2px;letter-spacing:-.02em}
-.float-card p{font-size:13px;color:var(--muted);margin:0 4px;display:flex;justify-content:space-between}
-.float-card p b{color:var(--ink)}
-.fc1{top:4%;left:2%;transform:rotate(-7deg);animation-delay:0s}
-.fc2{top:30%;right:0;transform:rotate(6deg);animation-delay:-2s}
-.fc3{bottom:2%;left:16%;transform:rotate(-2deg);animation-delay:-4s}
-.badge-circle{position:absolute;right:8%;top:2%;width:120px;height:120px;animation:spin 16s linear infinite}
-.badge-circle text{font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:2.4px;fill:var(--ink)}
-.badge-core{position:absolute;right:calc(8% + 38px);top:calc(2% + 38px);width:44px;height:44px;border-radius:50%;background:var(--coral);display:grid;place-items:center;color:#fff;font-size:20px}
-.live-pill{position:absolute;bottom:22%;right:2%;background:var(--lime);border-radius:999px;padding:10px 16px;font-weight:600;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 14px 30px -14px rgba(0,0,0,.4);animation:float 5s -1s ease-in-out infinite}
-.live-pill i{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:pulse 1.4s infinite}
-
-/* ---------- Marquee ---------- */
-.marquee{background:var(--ink);color:var(--paper);padding:22px 0;overflow:hidden;transform:rotate(-1.5deg);margin:20px -20px 0;position:relative;z-index:2}
-.marquee-track{display:flex;gap:48px;width:max-content;animation:scroll 32s linear infinite}
-.marquee span{font-family:var(--display);font-size:clamp(26px,4vw,44px);font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:48px;white-space:nowrap}
-.marquee span::after{content:"✦";color:var(--lime);font-size:.6em}
-
-/* ---------- Sections ---------- */
-section{padding:110px 0}
-.sec-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:50px;flex-wrap:wrap}
-.sec-head h2{font-size:clamp(38px,5.6vw,72px);font-weight:800;max-width:760px;margin-top:14px}
-.sec-head p{max-width:380px;color:var(--muted)}
-
-/* Reveal */
-.rv{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+main{min-height:70vh}
+.view{animation:viewIn .5s var(--ease)}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+section{padding:80px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:36px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(34px,4.8vw,60px);font-weight:800;max-width:720px;margin-top:12px}
+.sec-head p{max-width:400px;color:var(--muted)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 
-/* ---------- Story (scroll) ---------- */
-.story{background:var(--ink);color:var(--paper);border-radius:40px;margin:0 12px}
-.story .eyebrow{color:#9aa39e}
-.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
-.story-sticky{position:sticky;top:110px;height:min(520px,70vh);border-radius:30px;background:var(--ink-2);overflow:hidden;display:grid;place-items:center}
-.stage{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0;transform:scale(.92);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.stage.on{opacity:1;transform:none}
-.stage .big{font-size:120px;line-height:1;filter:drop-shadow(0 20px 30px rgba(0,0,0,.4))}
-.stage small{display:block;margin-top:18px;font-family:var(--display);font-size:22px;font-weight:700}
-.stage-0{background:radial-gradient(circle at 50% 60%,#2a332e,transparent 70%)}
-.stage-0 .big{filter:grayscale(1) brightness(.7)}
-.stage-0 .zz{position:absolute;top:30%;right:32%;font-family:var(--display);font-weight:800;font-size:30px;color:#6b746f;animation:zz 2.4s infinite}
-.stage-1{background:radial-gradient(circle at 50% 60%,rgba(201,242,59,.25),transparent 70%)}
-.stage-2{background:radial-gradient(circle at 50% 60%,rgba(255,107,74,.35),transparent 70%)}
-.stage-2 .big{animation:ride 2s ease-in-out infinite}
-.steps-col{padding:20vh 0}
-.step{min-height:60vh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .5s}
-.step.on{opacity:1}
-.step .num{font-family:var(--display);color:var(--lime);font-weight:700;font-size:18px}
-.step h3{font-size:clamp(32px,4vw,52px);margin:12px 0 16px}
-.step p{color:#b9c0bc;max-width:440px;font-size:18px}
+/* LOUER */
+.hero{padding:56px 0 30px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(44px,6.4vw,88px);font-weight:800;margin:16px 0 18px}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.sub{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:540px}
+.search{margin-top:28px;display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:8px;box-shadow:0 20px 50px -30px rgba(15,21,18,.35)}
+.s-box{display:flex;flex-direction:column;justify-content:center;padding:6px 14px;border-radius:15px;background:var(--paper);min-width:0}
+.s-box label{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.s-box input{border:0;background:none;outline:none;min-height:30px;width:100%;min-width:0}
+.trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px}
+.trust span{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:#3F4642}
+.trust svg{color:var(--coral)}
+.mock{position:relative;height:500px}
+.m-card{position:absolute;background:var(--card);border-radius:24px;box-shadow:0 30px 60px -28px rgba(15,21,18,.45);border:1px solid var(--line)}
+.m-main{left:6%;top:8%;width:68%;padding:14px;animation:float 7s ease-in-out infinite}
+.m-main .ph{height:190px;border-radius:16px;background:#E8F8C2;display:grid;place-items:center;color:var(--ink)}
+.m-main h4{font-family:var(--display);font-size:19px;letter-spacing:-.02em;margin:12px 4px 2px}
+.m-main .meta{display:flex;justify-content:space-between;margin:0 4px;font-size:13px;color:var(--muted)}
+.m-main .meta b{color:var(--ink);font-family:var(--display);font-size:17px}
+.m-tags{display:flex;gap:6px;margin:10px 4px 8px;flex-wrap:wrap}
+.m-tags span{font-size:11.5px;font-weight:600;border-radius:999px;padding:4px 9px;background:var(--paper)}
+.m-tags .ok{background:#E6F7B0;color:#3E5200}
+.m-code{right:2%;top:46%;padding:16px 18px;background:var(--ink);color:var(--paper);animation:float 6s -2s ease-in-out infinite}
+.m-code small{display:block;font-size:12px;color:#B9C0BC}
+.m-code b{font-family:var(--display);font-size:34px;letter-spacing:.25em;color:var(--lime)}
+.m-dep{left:0;bottom:4%;padding:14px 16px;display:flex;gap:12px;align-items:center;animation:float 8s -4s ease-in-out infinite}
+.m-dep .ic{width:42px;height:42px;border-radius:12px;background:#FBEBCB;display:grid;place-items:center;color:#7A5200}
+.m-dep b{display:block;font-size:14px}.m-dep span{font-size:12.5px;color:var(--muted)}
+.m-half{right:6%;top:0;padding:10px 14px;font-size:13px;font-weight:600;display:flex;gap:8px;align-items:center;animation:float 6.5s -1s ease-in-out infinite}
+.m-half i{width:9px;height:9px;border-radius:50%;background:var(--coral)}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
 
-/* ---------- Le film ---------- */
-.film-sec{padding:100px 0 70px}
-.film{position:relative;aspect-ratio:16/9;border-radius:32px;overflow:hidden;background:var(--ink);container-type:inline-size;cursor:pointer;box-shadow:0 40px 80px -40px rgba(15,21,18,.55);font-size:1cqw;user-select:none}
-.film-btn{position:absolute;right:16px;top:16px;z-index:10;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);cursor:pointer;font-size:14px;color:var(--ink)}
-.film.paused .scene *,.film.paused .scene *::after{animation-play-state:paused!important}
-.scene{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;font-family:var(--display);overflow:hidden}
-.scene.on{opacity:1}
-/* briques d'animation (ne jouent que sur la scène active) */
-.pop,.up,.stamp{opacity:0}
-.scene.on .pop{animation:popIn .5s var(--ease) both;animation-delay:var(--d,0s)}
-.scene.on .up{animation:upIn .7s var(--ease) both;animation-delay:var(--d,0s)}
-.grow{transform:scaleX(0);transform-origin:left}
-.scene.on .grow{animation:growX .5s var(--ease) both;animation-delay:var(--d,0s)}
-.scene.on .stamp{animation:slam .45s var(--ease) both;animation-delay:var(--d,0s)}
-@keyframes popIn{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
-@keyframes upIn{from{opacity:0;transform:translateY(6em)}to{opacity:1;transform:none}}
-@keyframes growX{to{transform:scaleX(1)}}
-@keyframes slam{0%{opacity:0;transform:scale(2.6) rotate(-10deg)}100%{opacity:1;transform:scale(1) rotate(-10deg)}}
-/* personnages */
-.char{position:absolute;bottom:0;width:15em;display:flex;flex-direction:column;align-items:center}
-.char svg,.char-in svg{width:100%;display:block}
-.flip svg{transform:scaleX(-1)}
-.ntag{font-family:var(--body);font-size:1.5em;font-weight:600;background:#fff;color:var(--ink);border-radius:99px;padding:.3em .9em;margin-bottom:.5em;white-space:nowrap;box-shadow:0 .4em 1em -.5em rgba(0,0,0,.4)}
-.wave{transform-box:view-box;transform-origin:76px 118px}
-.scene.on .wave{animation:wave .45s ease-in-out 6 alternate}
-@keyframes wave{to{transform:rotate(-28deg)}}
-.say{position:absolute;z-index:3;max-width:22em;white-space:normal!important;font-family:var(--body);font-size:1.7em;font-weight:600;background:#fff;color:var(--ink);padding:.6em 1em;border-radius:1em 1em 1em .2em;white-space:nowrap}
-.chip-f{position:absolute;font-family:var(--body);font-size:1.6em;font-weight:600;background:var(--lime);color:var(--ink);padding:.5em 1em;border-radius:99px;white-space:nowrap}
-/* 1 */
-.s1{background:radial-gradient(circle at 50% 40%,#25302a,var(--ink) 70%)}
-.phone{position:absolute;left:50%;translate:-50% 0;top:4em;width:23em;height:48em;background:#fff;border:.8em solid #1e2622;border-radius:3.2em;padding:1.6em;display:flex;flex-direction:column;gap:1em;color:var(--ink);overflow:hidden}
-.ph-top{font-size:1.5em;font-weight:800;letter-spacing:-.02em}
-.ph-photo{height:15em;border-radius:1.4em;background:var(--sky);display:grid;place-items:center}
-.ph-photo span{font-size:8em;line-height:1}
-.ph-line{height:1.3em;border-radius:1em;background:#E6E4DC}
-.ph-price{font-size:2.4em;font-weight:800}
-.ph-btn{margin-top:auto;background:var(--ink);color:var(--lime);border-radius:99px;text-align:center;padding:.7em;font-size:1.8em;font-weight:700}
-.scene.on .ph-btn{animation:press .45s 2s both}
-@keyframes press{50%{transform:scale(.86);background:var(--coral);color:#fff}}
-.ph-ok{position:absolute;inset:0;background:var(--lime);display:grid;place-items:center;border-radius:2.2em}
-.ph-ok span{font-size:2.8em;font-weight:800}
-.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
-.scene.on .flash{animation:flash .5s .7s both}
-@keyframes flash{30%{opacity:.9}100%{opacity:0}}
-/* 2 */
-.s2{background:var(--paper);color:var(--ink)}
-.mcard{position:absolute;left:12%;top:10%;width:28em;background:#fff;border-radius:2.4em;padding:1.4em;box-shadow:0 2em 4em -2em rgba(15,21,18,.3)}
-.m-thumb{height:18em;border-radius:1.6em;background:var(--sky);display:grid;place-items:center}
-.m-thumb span{font-size:10em;line-height:1}
-.m-title{font-size:2.2em;font-weight:800;margin:.5em .2em .1em;letter-spacing:-.02em}
-.m-meta{font-family:var(--body);font-size:1.5em;color:var(--muted);margin:0 .3em}
-.cal{position:absolute;left:50%;top:10%;width:36em;background:#fff;border-radius:2.4em;padding:2em;box-shadow:0 2em 4em -2em rgba(15,21,18,.3)}
-.cal-h{font-size:2em;font-weight:800;margin-bottom:.6em}
-.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:.8em}
-.cal-g span{aspect-ratio:1;border-radius:.8em;background:#EEECE4;display:grid;place-items:center;font-family:var(--body);font-size:1.4em;font-weight:600}
-.scene.on .cal-g .bk{animation:fillDay .35s both;animation-delay:var(--d)}
-@keyframes fillDay{to{background:var(--lime);transform:scale(1.08)}}
-.cal-f{font-family:var(--body);font-size:1.6em;margin-top:1em}
-.stamp{position:absolute;font-size:4.4em;font-weight:800;color:var(--coral);border:.12em solid var(--coral);padding:.1em .45em;border-radius:.25em;letter-spacing:.04em;background:rgba(255,255,255,.7)}
-.notif{position:absolute;left:12%;bottom:8%;font-family:var(--body);font-size:1.8em;font-weight:600;background:var(--ink);color:var(--paper);padding:.7em 1.2em;border-radius:99px}
-/* 3 */
-.s3{background:linear-gradient(#FBE8C2,#F3F1EA)}
-.ground{position:absolute;left:0;right:0;bottom:0;height:6em;background:#E5C98F}
-.s3 .char{bottom:4em}
-.bike-t{position:absolute;bottom:.42em;left:27%;font-size:12em;line-height:1}
-.scene.on .bike-t{animation:travel 1.6s .5s var(--ease) both}
-@keyframes travel{from{left:27%}to{left:56%}}
-.shake{position:absolute;left:50%;top:14%;translate:-50% 0;font-size:8em;line-height:1}
-/* 4 */
-.s4{background:radial-gradient(circle at 70% 30%,#25302a,var(--ink) 70%);color:var(--paper)}
-.pay{position:absolute;left:50%;top:16%;width:36em;background:#fff;color:var(--ink);border-radius:2.4em;padding:2.2em;box-shadow:0 2em 5em -2em rgba(0,0,0,.6)}
-.pay-h{font-family:var(--body);font-size:1.7em;font-weight:600;color:var(--muted)}
-.pay-amt{font-size:8em;font-weight:800;letter-spacing:-.05em;line-height:1.05}
-.pay-s{font-family:var(--body);font-size:1.5em;color:var(--muted)}
-.pay-txt{position:absolute;left:50%;top:66%;font-size:3.4em;font-weight:800;line-height:1.05;color:var(--lime);letter-spacing:-.03em}
-.coins i{position:absolute;top:0;width:3.4em;height:3.4em;border-radius:50%;background:#F7C948;border:.4em solid #E0A92B;opacity:0}
-.scene.on .coins i{animation:coin 1.1s var(--d) ease-in both}
-@keyframes coin{0%{opacity:0;transform:translateY(-6em) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(22em) rotate(400deg)}}
-/* 5 */
-.s5{background:linear-gradient(#8FCBFF,#E1F3FF)}
-.sun{position:absolute;right:12%;top:10%;width:9em;height:9em;border-radius:50%;background:#FFD54A;box-shadow:0 0 0 2em rgba(255,213,74,.25),0 0 0 4em rgba(255,213,74,.12);animation:pulseSun 3s ease-in-out infinite}
-@keyframes pulseSun{50%{box-shadow:0 0 0 3em rgba(255,213,74,.25),0 0 0 6em rgba(255,213,74,.1)}}
-.cloud{position:absolute;left:-20%;width:16em;height:5em;background:#fff;border-radius:99px;animation:drift 14s linear infinite;animation-delay:var(--d)}
-.cloud::before{content:"";position:absolute;left:3em;top:-3em;width:7em;height:7em;border-radius:50%;background:#fff}
-@keyframes drift{to{left:110%}}
-.hills{position:absolute;left:0;bottom:9em;width:100%;height:14em}
-.road{position:absolute;left:0;right:0;bottom:0;height:9.2em;background:#3A403C}
-.road::after{content:"";position:absolute;left:0;right:0;top:45%;height:.8em;background:repeating-linear-gradient(90deg,#fff 0 4em,transparent 4em 9em);animation:dash .5s linear infinite}
-@keyframes dash{to{background-position:-9em 0}}
-.title-f{position:absolute;left:6%;top:10%;font-size:4.4em;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--ink)}
-.title-f span{color:var(--coral)}
-.rider{position:absolute;left:50%;translate:-50% 0;bottom:4.5em;width:18em;display:flex;flex-direction:column;align-items:center;animation:bob .5s ease-in-out infinite alternate}
-.char-in{width:11em;margin-bottom:-7em;position:relative;z-index:1}
-.bike{font-size:16em;line-height:1}
-@keyframes bob{to{transform:translateY(-.8em)}}
-.heart{position:absolute;top:10%;font-size:3em;opacity:0}
-.scene.on .heart{animation:heart 1.8s var(--d) ease-out infinite}
-@keyframes heart{0%{opacity:0;transform:translateY(0) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-4em) scale(1.2)}}
-/* 6 */
-.s6{background:var(--paper);color:var(--ink)}
-.chat{position:absolute;left:50%;translate:-50% 0;top:6%;width:54em;height:44em;background:#fff;border-radius:3em;padding:2.4em;display:flex;flex-direction:column;gap:1.3em;box-shadow:0 2em 5em -2em rgba(15,21,18,.3)}
-.chat-h{font-family:var(--body);font-size:1.6em;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:.6em;padding-bottom:.6em;border-bottom:1px solid var(--line)}
-.chat-h span{width:1.8em;height:1.8em;border-radius:50%;background:#2F6FED;color:#fff;display:grid;place-items:center}
-.b{max-width:75%;padding:.65em 1em;border-radius:1em;font-family:var(--body);font-size:2em;font-weight:500;line-height:1.3}
-.b.r{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:.2em}
-.b.l{align-self:flex-start;background:#EEECE4;border-bottom-left-radius:.2em}
-.offer-b{background:var(--lime)!important;color:var(--ink)!important}
-.typing{display:flex;gap:.3em;opacity:0;max-height:0;padding-block:0;overflow:hidden}
-.typing i{width:.45em;height:.45em;border-radius:50%;background:var(--muted);animation:pulse .8s infinite}
-.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
-.scene.on .typing{animation:typing 1s 1.2s both}
-@keyframes typing{0%{opacity:0;max-height:0;padding-block:0}12%,88%{opacity:1;max-height:3em;padding-block:.65em}100%{opacity:0;max-height:0;padding-block:0}}
-.sold{color:#1A9B50;border-color:#1A9B50;font-size:6em}
-.confetti i{position:absolute;top:0;width:1.2em;height:1.8em;border-radius:.2em;opacity:0}
-.scene.on .confetti i{animation:conf 1.8s var(--d) ease-in both}
-@keyframes conf{0%{opacity:1;transform:translateY(-4em) rotate(0)}100%{opacity:0;transform:translateY(60em) rotate(600deg)}}
-/* chapitres */
-.chapters{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px}
-.chapters button{border:0;background:none;cursor:pointer;text-align:left;padding:4px 0}
-.chapters .bar{display:block;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
-.chapters .bar i{display:block;height:100%;width:0;background:var(--ink)}
-.chapters .lbl{display:block;margin-top:8px;font-size:13px;font-weight:600;color:var(--muted);transition:color .3s}
-.chapters .lbl b{color:var(--coral);margin-right:4px}
-.chapters button.on .lbl{color:var(--ink)}
-.film-cap{margin-top:20px}
-.film-cap h3{font-size:clamp(24px,3vw,34px)}
-.film-cap p{color:var(--muted);margin-top:6px}
-.film-cap.swap{animation:fade .5s}
-@media (max-width:860px){
-  .film{aspect-ratio:4/3;font-size:1.25cqw;border-radius:24px}
-  .chapters .t{display:none}
-  .film-btn{top:auto;bottom:10px;right:10px;width:34px;height:34px;font-size:11px}
-  .mcard{left:6%;width:27em}
-  .cal{left:51%;width:33em;padding:1.6em}
-}
-
-/* ---------- Comment ça marche ---------- */
-.tabs{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px;margin-bottom:40px;position:relative}
-.tabs button{position:relative;z-index:1;border:0;background:none;padding:12px 22px;border-radius:999px;cursor:pointer;font-weight:600;transition:color .3s}
-.tabs button.on{color:var(--paper)}
-.tabs .pill{position:absolute;top:6px;bottom:6px;left:6px;border-radius:999px;background:var(--ink);transition:transform .45s var(--ease),width .45s var(--ease)}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.how-card{background:var(--card);border-radius:var(--r);padding:30px;border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .4s var(--ease)}
-.how-card:hover{transform:translateY(-6px)}
-.how-card .ic{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:28px;margin-bottom:22px}
-.how-card h3{font-size:26px;margin-bottom:10px}
-.how-card p{color:var(--muted)}
-.how-card .n{position:absolute;right:20px;top:14px;font-family:var(--display);font-weight:800;font-size:72px;color:rgba(15,21,18,.06)}
-.how-panel{display:none}
-.how-panel.on{display:block;animation:fade .6s}
-
-/* ---------- Marketplace ---------- */
-.market{background:var(--card);border-radius:40px;margin:0 12px}
-.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:28px}
-.search{flex:1 1 280px;display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:999px;padding:4px 6px 4px 20px;border:1px solid var(--line)}
-.search input{flex:1;border:0;background:none;outline:none;padding:12px 0;min-width:0}
-.search select{border:0;background:var(--card);border-radius:999px;padding:10px 14px;cursor:pointer}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:26px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1.5px solid var(--line);background:var(--card);padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:500;font-size:14px;transition:all .25s}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;margin-bottom:20px;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--card);padding:0 16px;min-height:44px;border-radius:999px;font-weight:500;font-size:14px;transition:all .2s}
 .chip:hover{border-color:var(--ink)}
 .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.p-card{cursor:pointer;border-radius:var(--r);transition:transform .4s var(--ease);animation:pop .55s var(--ease) both}
-.p-card:hover{transform:translateY(-6px)}
-.p-thumb{aspect-ratio:4/3.3;border-radius:var(--r);display:grid;place-items:center;font-size:76px;position:relative;overflow:hidden}
-.p-thumb .em{transition:transform .6s var(--ease)}
-.p-card:hover .p-thumb .em{transform:scale(1.15) rotate(-6deg)}
-.p-thumb .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.9);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
-.p-thumb .fav{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:0;cursor:pointer;font-size:16px;transition:transform .2s}
-.p-thumb .fav:active{transform:scale(.85)}
-.p-body{padding:14px 4px 0}
-.p-body h4{font-family:var(--display);font-size:19px;letter-spacing:-.02em;line-height:1.15}
-.p-meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:14px;color:var(--muted)}
-.p-meta b{font-family:var(--display);font-size:20px;color:var(--ink)}
-.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)}
-.market-cta{display:flex;justify-content:center;margin-top:44px}
+.result{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;color:var(--muted);font-size:15px;flex-wrap:wrap}
+.result b{color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{border:0;background:none;text-align:left;padding:0;border-radius:var(--r);transition:transform .35s var(--ease);animation:pop .5s var(--ease) both}
+.card:hover{transform:translateY(-5px)}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.thumb{aspect-ratio:4/3.2;border-radius:var(--r);display:grid;place-items:center;position:relative;overflow:hidden;color:var(--ink)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .pic{transition:transform .5s var(--ease);display:grid}
+.card:hover .thumb .pic{transform:scale(1.08)}
+.badge{position:absolute;padding:5px 10px;border-radius:999px;font-size:11.5px;font-weight:600;line-height:1.2}
+.b-tl{left:12px;top:12px;background:rgba(255,255,255,.92)}
+.b-bl{left:12px;bottom:12px;background:var(--ink);color:var(--lime)}
+.b-br{right:12px;bottom:12px;background:#fff;color:#3E5200}
+.card h3{font-size:17.5px;margin:12px 4px 2px;line-height:1.2}
+.card .cond{font-size:13px;color:var(--muted);margin:0 4px}
+.card .meta{display:flex;justify-content:space-between;align-items:baseline;margin:6px 4px 0;font-size:13.5px;color:var(--muted);gap:8px}
+.card .meta b{font-family:var(--display);font-size:19px;color:var(--ink)}
+.skel{border-radius:var(--r);background:linear-gradient(90deg,#e8e5dc,#f3f1ea,#e8e5dc);background-size:200% 100%;animation:shimmer 1.2s infinite;aspect-ratio:4/4.2}
+@keyframes shimmer{to{background-position:-200% 0}}
+.empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:var(--r)}
+.empty h3{color:var(--ink);font-size:24px;margin-bottom:6px}
+.demo-note{font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
 
-/* ---------- Déposer ---------- */
-.list-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:start}
-.form{background:var(--card);border-radius:30px;padding:30px;border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form .full{grid-column:1/-1}
-.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
-.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:var(--paper);border-radius:var(--r-sm);padding:13px 14px;outline:none;transition:border-color .2s,background .2s}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink);background:#fff}
-.field textarea{resize:vertical;min-height:90px}
-.drop{border:2px dashed var(--line);border-radius:var(--r-sm);padding:22px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .2s,background .2s}
-.drop:hover{border-color:var(--ink);background:var(--paper)}
-.side{position:sticky;top:100px;display:grid;gap:18px}
-.preview-label{font-size:13px;font-weight:600;color:var(--muted)}
-.sim{background:var(--ink);color:var(--paper);border-radius:30px;padding:28px}
-.sim h3{font-size:26px;margin-bottom:6px}
-.sim p{color:#b9c0bc;font-size:14px}
-.sim input[type=range]{width:100%;accent-color:var(--lime);margin:18px 0 6px}
-.sim .earn{font-family:var(--display);font-size:56px;font-weight:800;color:var(--lime);letter-spacing:-.04em;line-height:1;margin-top:10px}
-.sim .row{display:flex;justify-content:space-between;font-size:14px;color:#b9c0bc}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative}
+.step .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:18px}
+.step .ic svg{width:26px;height:26px}
+.step .n{position:absolute;right:20px;top:16px;font-family:var(--display);font-weight:800;font-size:44px;color:rgba(15,21,18,.07)}
+.step h3{font-size:21px;margin-bottom:8px}
+.step p{color:var(--muted);font-size:15px}
 
-/* ---------- Confiance ---------- */
-.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.trust{padding:28px;border-radius:var(--r);border:1px solid var(--line);background:var(--card)}
-.trust .ic{font-size:30px}
-.trust h3{font-size:22px;margin:16px 0 8px}
-.trust p{color:var(--muted);font-size:15px}
-.commission{margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;background:var(--lime);border-radius:30px;padding:30px 34px}
-.commission h3{font-size:clamp(26px,3vw,38px);max-width:620px}
-.commission .pct{font-family:var(--display);font-weight:800;font-size:clamp(64px,9vw,120px);letter-spacing:-.05em;line-height:.9}
+.modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(15,21,18,.5);opacity:0;pointer-events:none;transition:opacity .25s}
+.modal.open{opacity:1;pointer-events:auto}
+.sheet{width:min(880px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--card);border-radius:28px;display:grid;grid-template-columns:1fr 1fr;transform:translateY(20px);transition:transform .4s var(--ease);position:relative}
+.modal.open .sheet{transform:none}
+.sheet .thumb{border-radius:28px 0 0 28px;aspect-ratio:auto;min-height:100%}
+.sheet-b{padding:28px;display:flex;flex-direction:column;gap:14px}
+.sheet-b h2{font-size:30px;padding-right:40px}
+.close{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:50%;border:0;background:var(--paper);display:grid;place-items:center;z-index:2}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.spec{background:var(--paper);border-radius:12px;padding:10px 12px}
+.spec span{display:block;font-size:12px;color:var(--muted)}
+.spec b{font-size:15px}
+.prices{display:flex;gap:10px}
+.price{flex:1;border:1.5px solid var(--line);border-radius:14px;padding:12px}
+.price span{font-size:12.5px;color:var(--muted)}
+.price b{display:block;font-family:var(--display);font-size:24px}
+.facts{display:flex;gap:8px;flex-wrap:wrap}
+.fact{background:var(--paper);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.fact.ok{background:#E6F7B0;color:#3E5200}
 
-/* ---------- Paiement & remise ---------- */
-.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative;counter-reset:fl}
-.flow-step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;position:relative}
-.flow-step .when{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.flow-step h3{font-size:22px;margin:10px 0 8px}
-.flow-step p{color:var(--muted);font-size:15px}
-.flow-step .amt{display:inline-flex;margin-top:14px;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px}
-.flow-step:not(:last-child)::after{content:"→";position:absolute;right:-14px;top:50%;translate:0 -50%;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--lime);display:grid;place-items:center;font-size:14px;z-index:1}
-.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
-.rule{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:24px;display:flex;gap:16px;align-items:flex-start}
-.rule b{font-family:var(--display);font-size:34px;color:var(--lime);line-height:1;flex:none;letter-spacing:-.03em}
-.rule h3{font-size:19px;margin-bottom:4px}
-.rule p{color:#B9C0BC;font-size:14px}
-.handover{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
-.ho{border:1.5px dashed var(--line);border-radius:var(--r);padding:22px}
-.ho h3{font-size:19px;margin:10px 0 6px}
-.ho p{color:var(--muted);font-size:14px}
-.ho .ic{font-size:26px}
-.soon{font-size:11px;font-weight:600;background:var(--sand);border-radius:999px;padding:3px 8px;margin-left:6px;vertical-align:middle;font-family:var(--body);letter-spacing:0}
-/* ---------- Rachat (dépôt) ---------- */
-.buy-opt{grid-column:1/-1;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:16px;display:grid;gap:12px;background:var(--paper)}
-.switch{display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:600}
-.switch input{width:22px;height:22px;accent-color:var(--ink)}
-.switch small{display:block;font-weight:400;color:var(--muted);font-size:13px}
-.p-thumb .buy{position:absolute;left:12px;bottom:12px;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
-/* ---------- Club ---------- */
-.club{background:var(--ink);color:var(--paper);border-radius:40px;margin:0 12px}
-.club .eyebrow{color:#9aa39e}
-.club .sec-head p{color:#B9C0BC}
-.promise{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.prom{border-radius:28px;padding:30px;display:flex;flex-direction:column;gap:10px}
-.prom .k{font-family:var(--display);font-weight:800;font-size:clamp(46px,6vw,84px);line-height:.9;letter-spacing:-.05em}
-.prom h3{font-size:24px}
-.prom p{font-size:15px}
-.earn-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:16px}
-.panel{background:var(--ink-2);border-radius:28px;padding:26px}
-.panel h3{font-size:22px;margin-bottom:12px}
-.line{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:#D8DDD9}
-.line:last-child{border-bottom:0}
-.line b{font-family:var(--display);color:var(--lime);white-space:nowrap}
-.ref-band{margin-top:16px;background:var(--coral);color:var(--ink);border-radius:28px;padding:26px 30px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.ref-band h3{font-size:clamp(24px,3vw,34px);max-width:640px}
-/* ---------- Process d'achat ---------- */
-.buy-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.bstep{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
-.bstep .n{font-family:var(--display);font-weight:800;font-size:34px;color:var(--coral);line-height:1}
-.bstep h3{font-size:18px;margin:10px 0 6px}
-.bstep p{font-size:14px;color:var(--muted)}
-.shop-band{margin-top:16px;border:2px solid var(--ink);border-radius:28px;padding:26px 30px;display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:center}
-.shop-band h3{font-size:clamp(24px,3vw,34px)}
-.shop-band ul{list-style:none;display:grid;gap:6px;margin-top:12px;color:#3F4642}
-.shop-band li::before{content:"✓ ";color:var(--coral);font-weight:700}
-.f-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.p-body .cond{font-size:13px;color:var(--muted);margin-top:2px}
-.p-thumb .ver{position:absolute;right:12px;bottom:12px;background:#E6F7B0;color:#3E5200;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+/* PUBLIER */
+.pub-hero{padding:56px 0 20px}
+.pub-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.pub-hero h1{font-size:clamp(42px,6vw,84px);font-weight:800;margin:16px 0 18px}
+.pub-hero h1 em{font-style:normal;color:var(--coral)}
+.sim{background:var(--ink);color:var(--paper);border-radius:30px;padding:30px}
+.sim h3{font-size:24px}
+.sim .row{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:#B9C0BC;margin-top:16px}
+.sim input[type=range]{width:100%;accent-color:var(--lime);margin-top:8px}
+.sim .earn{font-family:var(--display);font-weight:800;font-size:68px;color:var(--lime);letter-spacing:-.04em;line-height:1;margin-top:22px}
+.sim .yr{color:#B9C0BC;font-size:14px;margin-top:6px}
+.ctrl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ctl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.ctl .ic{width:46px;height:46px;border-radius:14px;background:var(--paper);display:grid;place-items:center;margin-bottom:14px}
+.ctl h3{font-size:19px;margin-bottom:6px}
+.ctl p{font-size:14.5px;color:var(--muted)}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.fs{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:24px}
+.fs .when{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--lime)}
+.fs h3{font-size:20px;margin:10px 0 6px}
+.fs p{font-size:14.5px;color:#B9C0BC}
+.zero{margin-top:16px;background:var(--lime);border-radius:30px;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.zero b{font-family:var(--display);font-size:clamp(56px,8vw,110px);letter-spacing:-.05em;line-height:.9}
+.zero h3{font-size:clamp(24px,3vw,36px);max-width:560px}
 
-/* ---------- Qui sommes-nous ---------- */
-.about{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}
-.about-card{background:var(--ink);color:var(--paper);border-radius:32px;padding:36px;position:relative;overflow:hidden}
-.about-card .ph{width:96px;height:96px;border-radius:50%;background:var(--sand);display:grid;place-items:center;color:var(--ink);font-family:var(--display);font-weight:800;font-size:36px;margin-bottom:18px}
-.about-card h3{font-size:30px}
-.about-card .role{color:var(--lime);font-weight:600;margin:4px 0 16px}
-.about-card p{color:#B9C0BC}
-.about-card .todo{display:inline-block;margin-top:14px;background:rgba(201,242,59,.14);color:var(--lime);border-radius:8px;padding:4px 8px;font-size:13px}
-.about-txt p{font-size:18px;color:#3F4642;margin-bottom:14px}
-.about-txt p strong{color:var(--ink)}
+/* QUI SOMMES-NOUS */
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;padding-top:56px}
+.founder{background:var(--ink);color:var(--paper);border-radius:30px;padding:34px}
+.founder .ph{width:96px;height:96px;border-radius:50%;background:var(--paper);display:grid;place-items:center;color:var(--ink);font-family:var(--display);font-weight:800;font-size:36px;margin-bottom:18px}
+.founder h3{font-size:30px}
+.founder .role{color:var(--lime);font-weight:600;margin:4px 0 14px}
+.founder p{color:#B9C0BC}
+.todo{display:inline-block;margin-top:14px;background:rgba(201,242,59,.14);color:var(--lime);border-radius:8px;padding:4px 8px;font-size:13px}
+.about-t h1{font-size:clamp(40px,5.4vw,72px);font-weight:800;margin:14px 0 20px}
+.about-t p{font-size:18px;color:#3F4642;margin-bottom:14px}
 .values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
 .value{background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px}
 .value b{display:block;font-family:var(--display);font-size:18px;margin-bottom:4px}
 .value span{font-size:14px;color:var(--muted)}
-
-/* ---------- FAQ ---------- */
+.club{background:var(--ink);color:var(--paper);border-radius:40px;margin:0 12px}
+.club .eyebrow{color:#9aa39e}
+.club .sec-head p{color:#B9C0BC}
+.promise{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.prom{border-radius:26px;padding:28px;color:var(--ink)}
+.prom .k{font-family:var(--display);font-weight:800;font-size:clamp(44px,6vw,76px);line-height:.9;letter-spacing:-.05em}
+.prom h3{font-size:22px;margin:10px 0 6px}
+.prom p{font-size:15px}
+.earn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.panel{background:var(--ink-2);border-radius:26px;padding:24px}
+.panel h3{font-size:21px;margin-bottom:10px}
+.line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:#D8DDD9}
+.line:last-child{border-bottom:0}
+.line b{font-family:var(--display);color:var(--lime);white-space:nowrap}
+.shop{border:2px solid var(--ink);border-radius:28px;padding:28px 32px;display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:center}
+.shop h3{font-size:clamp(24px,3vw,34px)}
+.shop ul{list-style:none;display:grid;gap:6px;margin-top:12px;color:#3F4642}
+.shop li{display:flex;gap:8px;align-items:center}
+.shop li svg{color:var(--coral)}
 .faq{max-width:860px;margin-inline:auto}
-.faq details{border-bottom:1px solid var(--line);padding:22px 0}
-.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.faq details{border-bottom:1px solid var(--line);padding:20px 0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:-.02em}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";flex:none;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:22px;transition:transform .35s var(--ease)}
+.faq summary::after{content:"+";flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:20px;transition:transform .3s var(--ease)}
 .faq details[open] summary::after{transform:rotate(45deg);background:var(--coral)}
-.faq details p{color:var(--muted);margin-top:12px;max-width:700px;animation:fade .4s}
+.faq details p{color:var(--muted);margin-top:10px}
 
-/* ---------- CTA final + footer ---------- */
-.final{text-align:center;padding:130px 0;position:relative;overflow:hidden}
-.final h2{font-size:clamp(52px,10vw,150px);font-weight:800;letter-spacing:-.05em}
-.final h2 em{font-style:normal;color:var(--coral)}
-.final .hero-ctas{justify-content:center;opacity:1;animation:none}
-.orbit{position:absolute;font-size:44px;animation:orbit 18s linear infinite;top:50%;left:50%;pointer-events:none;opacity:.9}
-footer{background:var(--ink);color:#b9c0bc;padding:60px 0 30px;border-radius:40px 40px 0 0}
-.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+/* AIDE */
+.help{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:start;padding-top:56px}
+.help h1{font-size:clamp(40px,5.4vw,72px);font-weight:800;margin:14px 0 18px}
+.lead{font-size:18px;color:#3F4642}
+.topics{display:grid;gap:10px;margin-top:26px}
+.topic{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;text-align:left;width:100%;transition:border-color .2s,transform .25s var(--ease)}
+.topic:hover{border-color:var(--ink);transform:translateX(4px)}
+.topic .ic{width:42px;height:42px;border-radius:12px;background:var(--paper);display:grid;place-items:center;flex:none}
+.topic b{display:block}
+.topic span span{font-size:13.5px;color:var(--muted)}
+.chat-wrap{height:min(680px,calc(100vh - 140px));position:sticky;top:96px}
+
+footer{background:var(--ink);color:#B9C0BC;padding:56px 0 30px;border-radius:40px 40px 0 0;margin-top:80px}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:30px}
 footer .logo{color:var(--paper)}
 footer h5{color:var(--paper);font-size:14px;margin-bottom:12px}
 footer ul{list-style:none;display:grid;gap:8px;font-size:14px}
+footer a{text-decoration:none}
 footer a:hover{color:var(--lime)}
-.foot-bottom{margin-top:50px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
+.foot-b{margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
 
-/* ---------- Modal réservation ---------- */
-.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(15,21,18,.55);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
-.modal.open{opacity:1;pointer-events:auto}
-.sheet{width:min(860px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--card);border-radius:30px;display:grid;grid-template-columns:1fr 1fr;transform:translateY(30px) scale(.97);transition:transform .45s var(--ease)}
-.modal.open .sheet{transform:none}
-.sheet .p-thumb{border-radius:30px 0 0 30px;aspect-ratio:auto;min-height:100%;font-size:130px}
-.sheet-body{padding:30px;position:relative}
-.close{position:absolute;right:16px;top:16px;width:40px;height:40px;border-radius:50%;border:0;background:var(--paper);cursor:pointer;font-size:18px}
-.sheet h3{font-size:32px;margin:8px 0 6px;padding-right:40px}
-.owner{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);margin:14px 0}
-.owner .av{width:36px;height:36px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;color:var(--ink)}
-.dates{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
-.quote{background:var(--paper);border-radius:var(--r-sm);padding:16px;display:grid;gap:8px;font-size:14px}
-.quote div{display:flex;justify-content:space-between}
-.quote .tot{border-top:1px solid var(--line);padding-top:10px;font-weight:700;font-size:17px}
-.sheet .btn{width:100%;justify-content:center;margin-top:16px}
+.tabbar{display:none}
+.over .sl-fab,.over .sl-pop{display:none}
 
-/* Toast */
-.toast{position:fixed;left:50%;bottom:24px;z-index:90;transform:translate(-50%,150%);background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:999px;font-weight:500;transition:transform .5s var(--ease);max-width:calc(100% - 32px);text-align:center}
-.toast.show{transform:translate(-50%,0)}
-
-/* ---------- Animations ---------- */
-@keyframes rise{to{transform:none}}
-@keyframes grow{to{transform:scaleX(1)}}
-@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes float{0%,100%{translate:0 0}50%{translate:0 -16px}}
-@keyframes morph{0%,100%{border-radius:42% 58% 55% 45%/50% 40% 60% 50%}50%{border-radius:58% 42% 40% 60%/40% 60% 40% 60%}}
-@keyframes scroll{to{transform:translateX(-50%)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-@keyframes zz{0%{opacity:0;transform:translate(0,0)}50%{opacity:1}100%{opacity:0;transform:translate(20px,-30px)}}
-@keyframes ride{0%,100%{transform:translateX(-14px) rotate(-3deg)}50%{transform:translateX(14px) rotate(3deg)}}
-@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
-@keyframes orbit{from{transform:rotate(0) translateX(min(42vw,520px)) rotate(0)}to{transform:rotate(360deg) translateX(min(42vw,520px)) rotate(-360deg)}}
-
-/* ---------- Responsive ---------- */
 @media (max-width:1024px){
-  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .flow-step:nth-child(2)::after{display:none}
-  .grid{grid-template-columns:repeat(3,1fr)}
-  .trust-grid{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .steps,.flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .top-r .btn-ghost{display:none}
 }
 @media (max-width:860px){
-  .nav-links,.nav .btn{display:none}
-  .burger{display:block}
-  .hero{padding-top:120px}
-  .hero-grid,.story-grid,.list-grid{grid-template-columns:1fr}
-  .hero-visual{height:420px}
-  .float-card{width:180px}.float-card .thumb{height:110px;font-size:50px}
-  .story-sticky{top:80px;height:300px;z-index:1}
-  .stage .big{font-size:90px}
-  .steps-col{padding:0}
-  .step{min-height:55vh}
-  .how-grid{grid-template-columns:1fr}
-  .flow,.rules,.handover{grid-template-columns:1fr}
-  .flow-step:not(:last-child)::after{display:none}
-  .about{grid-template-columns:1fr}
-  .promise,.earn-grid,.shop-band{grid-template-columns:1fr}
-  .buy-steps{grid-template-columns:1fr 1fr}
-  .f-row{grid-template-columns:1fr 1fr}
-  .values{grid-template-columns:1fr}
-  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
-  .side{position:static}
-  .foot{grid-template-columns:1fr 1fr}
+  .tabs{display:none}
+  .hero-grid,.pub-grid,.about,.help,.promise,.earn,.shop{grid-template-columns:1fr}
+  .mock{height:380px}
+  .m-main{width:78%}
+  .m-main .ph{height:140px}
+  .search{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .search .s-q,.search .s-go{grid-column:1/-1}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .card h3{font-size:15px}
+  .card .meta{flex-direction:column;gap:0}
+  .steps,.flow,.ctrl,.values{grid-template-columns:1fr}
   .sheet{grid-template-columns:1fr}
-  .sheet .p-thumb{border-radius:30px 30px 0 0;min-height:200px;font-size:100px}
-  section{padding:80px 0}
+  .sheet .thumb{border-radius:28px 28px 0 0;min-height:200px}
+  .chat-wrap{position:static;height:560px}
+  .shop .btn{justify-self:start!important}
+  .foot{grid-template-columns:1fr 1fr}
+  .foot>div:first-child{grid-column:1/-1}
+  section{padding:56px 0}
+  .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;font-weight:600;color:var(--muted);text-decoration:none;min-height:52px;justify-content:center}
+  .tabbar a.on{color:var(--ink)}
+  .tabbar a.on svg{stroke:var(--coral)}
+  body{padding-bottom:70px}
 }
-@media (max-width:520px){
-  .form{grid-template-columns:1fr;padding:20px}
-  .trust-grid{grid-template-columns:1fr}
-  .p-body h4{font-size:16px}
-  .p-meta{flex-direction:column;gap:2px}
-  .p-thumb{font-size:56px}
-  .tabs button{padding:10px 14px;font-size:14px}
-  .foot{grid-template-columns:1fr}
-  .hero-visual{height:380px}
-  .fc2{right:-10px}
-  .badge-circle{display:none}.badge-core{display:none}
-  .commission{padding:24px}
-  .dates{grid-template-columns:1fr}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  .rv{opacity:1;transform:none}
-}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 
-<!-- ============ NAVIGATION ============ -->
-<header class="nav" id="nav">
-  <div class="wrap nav-in">
-    <a href="#top" class="logo" aria-label="Rebond, accueil"><svg class="logo-mark" viewBox="0 0 80 64" aria-hidden="true"><path class="lm-path" d="M4 54 Q15 4 28 54 Q37 24 46 54 Q52 38 58 54" stroke="#0F1512" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="lm-ball" cx="68" cy="46" r="9" fill="#FF6B4A"/></svg>rebond</a>
-    <nav class="nav-links">
-      <a href="#comment">Comment ça marche</a>
-      <a href="#club">Le Club</a>
-      <a href="#qui">Qui sommes-nous</a>
-      <a href="app/">Se connecter</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M15 8l2 2"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A7 7 0 1 0 17 17.5M4 10h9M4 14h9"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M7 11V6a1.5 1.5 0 0 1 3 0v4M10 10V4.5a1.5 1.5 0 0 1 3 0V10M13 10V5.5a1.5 1.5 0 0 1 3 0V12M16 9.5a1.5 1.5 0 0 1 3 0V14a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-2.7L3.5 14a1.6 1.6 0 0 1 2.5-2l1 1"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9 5.5 4h13L20 9M4 9h16v11H4zM9 20v-6h6v6"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h14l-3-3M20 16H6l3 3"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="logo" href="#louer" aria-label="Spoloc, accueil"><span id="logoMark" style="display:grid"></span>spoloc</a>
+    <nav class="tabs" id="tabs" aria-label="Pages">
+      <span class="pill" aria-hidden="true"></span>
+      <a class="tab" href="#louer" data-v="louer">Louer</a>
+      <a class="tab" href="#publier" data-v="publier">Publier</a>
+      <a class="tab" href="#qui" data-v="qui">Qui sommes-nous</a>
+      <a class="tab" href="#aide" data-v="aide">Aide</a>
     </nav>
-    <a href="app/" class="btn btn-dark">Ouvrir l'app <span class="arr">→</span></a>
-    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="top-r">
+      <a class="btn btn-ghost btn-sm" href="app/">Se connecter</a>
+      <a class="btn btn-dark btn-sm" href="app/">Mon compte</a>
+    </div>
   </div>
 </header>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#marketplace">Marketplace</a>
-  <a href="#comment">Comment ça marche</a>
-  <a href="#deposer">Mettre en location</a>
-  <a href="#club">Le Club</a>
-  <a href="#paiement">Comment ça se passe</a>
-  <a href="#qui">Qui sommes-nous</a>
-  <a href="#faq">FAQ</a>
-  <a href="app/">Se connecter</a>
+
+<main>
+<!-- ======================= LOUER ======================= -->
+<div class="view" id="v-louer" hidden>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Paris et petite couronne</span>
+        <h1>Le matos de sport de vos voisins, <em>dès une demi-journée.</em></h1>
+        <p class="sub">Paddle, tente, crash pad, vélo de voyage : louez ce qu'il vous faut pour le week-end, sans l'acheter. Paiement, caution et remise protégés.</p>
+        <form class="search" id="search" role="search">
+          <div class="s-box s-q"><label for="q">Quoi&nbsp;?</label><input id="q" placeholder="Paddle, tente, marque…" autocomplete="off"></div>
+          <div class="s-box"><label for="d1">Du</label><input id="d1" type="date"></div>
+          <div class="s-box"><label for="d2">Au</label><input id="d2" type="date"></div>
+          <button class="btn btn-dark s-go" type="submit" style="min-height:56px;border-radius:15px"><svg class="i"><use href="#i-search"/></svg>Chercher</button>
+        </form>
+        <div class="trust">
+          <span><svg class="i"><use href="#i-clock"/></svg>Dès une demi-journée</span>
+          <span><svg class="i"><use href="#i-lock"/></svg>Paiement et caution sécurisés</span>
+          <span><svg class="i"><use href="#i-key"/></svg>Remise prouvée</span>
+          <span><svg class="i"><use href="#i-tag"/></svg>Rachetable si coup de cœur</span>
+        </div>
+      </div>
+      <div class="mock" aria-hidden="true">
+        <div class="m-card m-half"><i></i>Après-midi · 13 h – 20 h</div>
+        <div class="m-card m-main">
+          <div class="ph" id="mockPic"></div>
+          <h4>Paddle gonflable 10'6</h4>
+          <div class="m-tags"><span>Très bon état</span><span class="ok">✓ Marque vérifiée</span><span>Rachetable</span></div>
+          <div class="meta"><span>Paris 15e · 10,5 kg</span><span><b>20 €</b> / jour</span></div>
+        </div>
+        <div class="m-card m-code"><small>Code de retrait</small><b>4821</b></div>
+        <div class="m-card m-dep"><span class="ic"><svg class="i"><use href="#i-lock"/></svg></span><div><b>Caution bloquée</b><span>300 €, jamais débitée</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalogue" style="padding-top:20px">
+    <div class="wrap">
+      <div class="cats" id="cats" aria-label="Catégories"></div>
+      <div class="result" id="result"></div>
+      <div class="grid" id="grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="eyebrow">Comment ça marche</span><h2>Quatre étapes, zéro mauvaise surprise.</h2></div><p>Tout se passe sur Spoloc : la demande, le paiement, la caution, la messagerie et la remise.</p></div>
+      <div class="steps">
+        <div class="step rv"><span class="n">1</span><div class="ic" style="background:#DCEEFF"><svg class="i"><use href="#i-search"/></svg></div><h3>Trouvez</h3><p>Par sport, dates et quartier. État, marque, dimensions et poids sur chaque fiche.</p></div>
+        <div class="step rv d1"><span class="n">2</span><div class="ic" style="background:#E8F8C2"><svg class="i"><use href="#i-cal"/></svg></div><h3>Demandez</h3><p>Une demi-journée, un week-end ou jusqu'à 30 jours. Le propriétaire accepte, vous payez en ligne.</p></div>
+        <div class="step rv d2"><span class="n">3</span><div class="ic" style="background:#FBEBCB"><svg class="i"><use href="#i-key"/></svg></div><h3>Récupérez</h3><p>En main propre, livré ou en boutique partenaire. Photos, code à 4 chiffres, signature.</p></div>
+        <div class="step rv d3"><span class="n">4</span><div class="ic" style="background:#FFE1D8"><svg class="i"><use href="#i-swap"/></svg></div><h3>Rendez ou gardez</h3><p>Retour signé, caution libérée. Coup de cœur ? Faites une offre de rachat.</p></div>
+      </div>
+    </div>
+  </section>
 </div>
 
-<main id="top">
-
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Location d'équipements sportifs entre particuliers</span>
-      <h1>
-        <span class="line"><span>Libérez</span></span>
-        <span class="line"><span>vos <span class="hl">équipements.</span></span></span>
-      </h1>
-      <p class="hero-sub">Votre <span class="rotator" id="rotator"><span class="on">vélo</span><span>paddle</span><span>kayak</span><span>tente</span><span>snowboard</span></span> dort au garage ? <strong>Mettez-le en location</strong> et laissez-le vivre de nouvelles aventures. Besoin d'un équipement pour un week-end ? <strong>Louez-le à côté de chez vous.</strong></p>
-      <div class="hero-ctas">
-        <a href="#marketplace" class="btn btn-dark magnetic">Explorer la marketplace <span class="arr">→</span></a>
-        <a href="#deposer" class="btn btn-ghost magnetic">Mettre en location</a>
-        <a href="#film-sec" class="btn" style="padding-inline:10px">▶ Voir le film (20 s)</a>
-      </div>
-      <div class="hero-proof">
-        <div><b>0 €</b>pour publier</div>
-        <div><b>Points</b>à chaque location</div>
-        <div><b>1 jour</b>minimum de location</div>
-      </div>
-    </div>
-
-    <div class="hero-visual" aria-hidden="true">
-      <div class="blob"></div>
-      <svg class="badge-circle" viewBox="0 0 120 120"><defs><path id="c" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#c">LIBÉREZ • LOUEZ • REPARTEZ • </textPath></text></svg>
-      <div class="badge-core">↻</div>
-      <div class="float-card fc1"><div class="thumb" style="background:var(--sky)">🚴</div><h4>Vélo gravel</h4><p>Lyon <b>18 €/j</b></p></div>
-      <div class="float-card fc2"><div class="thumb" style="background:var(--lime)">🏄</div><h4>Paddle gonflable</h4><p>Biarritz <b>22 €/j</b></p></div>
-      <div class="float-card fc3"><div class="thumb" style="background:var(--sand)">⛺</div><h4>Tente 3 places</h4><p>Annecy <b>12 €/j</b></p></div>
-      <div class="live-pill"><i></i>Nouvelle réservation</div>
-    </div>
-  </div>
-
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track" id="marquee"></div>
-  </div>
-</section>
-
-<!-- ============ LE FILM (motion) ============ -->
-<section class="film-sec" id="film-sec">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Le film · 20 secondes</span><h2>D'un garage à une nouvelle vie.</h2></div>
-      <p>Alex met son vélo en location. Sam le loue, l'adore… et finit par le lui racheter.</p>
-    </div>
-
-    <div class="film rv" id="film" role="img" aria-label="Animation : Alex publie son vélo, Sam le loue, Alex est payé, Sam fait une offre d'achat acceptée">
-      <button class="film-btn" id="filmBtn" aria-label="Lecture">▶</button>
-
-      <!-- 1. Je dépose -->
-      <div class="scene s1">
-        <div class="say pop" style="--d:.1s;left:6%;top:10%">Mon vélo dort au garage… 😴</div>
-        <div class="char" data-who="alex" data-wave style="left:9%"><span class="ntag">Alex · propriétaire</span></div>
-        <div class="phone up" style="--d:.2s">
-          <div class="ph-top">rebond</div>
-          <div class="ph-photo pop" style="--d:.9s"><span>🚲</span></div>
-          <div class="ph-line grow" style="--d:1.2s;width:85%"></div>
-          <div class="ph-line grow" style="--d:1.35s;width:55%"></div>
-          <div class="ph-price pop" style="--d:1.6s">18 €/jour</div>
-          <div class="ph-btn">Publier</div>
-          <div class="ph-ok pop" style="--d:2.5s"><span>✓ En ligne !</span></div>
-          <div class="flash"></div>
-        </div>
-        <div class="chip-f pop" style="--d:1.8s;left:70%;top:30%">📍 Lyon</div>
-        <div class="chip-f pop" style="--d:2s;left:72%;top:44%">🔒 Caution 300 €</div>
-        <div class="chip-f pop" style="--d:2.2s;left:69%;top:58%">⚡ Publié en 3 min</div>
-      </div>
-
-      <!-- 2. Il est loué -->
-      <div class="scene s2">
-        <div class="mcard up" style="--d:.1s">
-          <div class="m-thumb"><span>🚲</span></div>
-          <div class="m-title">Vélo gravel taille M</div>
-          <div class="m-meta">Lyon · 18 €/jour</div>
-        </div>
-        <div class="cal up" style="--d:.3s">
-          <div class="cal-h">Novembre</div>
-          <div class="cal-g" id="calGrid"></div>
-          <div class="cal-f pop" style="--d:2s">3 jours × 18 € = <b>54 €</b></div>
-        </div>
-        <div class="stamp" style="--d:1.6s;left:60%;top:56%">RÉSERVÉ</div>
-        <div class="notif pop" style="--d:1.3s">🔔 Sam a réservé 3 jours</div>
-      </div>
-
-      <!-- 3. Remise -->
-      <div class="scene s3">
-        <div class="ground"></div>
-        <div class="char" data-who="alex" style="left:10%"><span class="ntag">Alex</span></div>
-        <div class="char flip" data-who="sam" data-wave style="right:10%"><span class="ntag">Sam · locataire</span></div>
-        <div class="bike-t">🚲</div>
-        <div class="shake pop" style="--d:2.2s">🤝</div>
-        <div class="chip-f pop" style="--d:2.5s;left:50%;top:44%;translate:-50% 0">🔒 Caution bloquée, pas débitée</div>
-        <div class="say pop" style="--d:2.7s;right:8%;top:12%">Merci ! 🙌</div>
-      </div>
-
-      <!-- 4. Je suis payé -->
-      <div class="scene s4">
-        <div class="char" data-who="alex" data-wave style="left:14%"><span class="ntag">Alex</span></div>
-        <div class="coins"><i style="--d:.2s;left:58%"></i><i style="--d:.45s;left:70%"></i><i style="--d:.7s;left:64%"></i><i style="--d:.95s;left:78%"></i><i style="--d:1.2s;left:61%"></i><i style="--d:1.45s;left:74%"></i></div>
-        <div class="pay up" style="--d:.2s">
-          <div class="pay-h">💸 Paiement reçu</div>
-          <div class="pay-amt">+<span id="cnt">0</span> €</div>
-          <div class="pay-s">Versé sur votre compte</div>
-        </div>
-        <div class="pay-txt up" style="--d:1.6s">Votre vélo a travaillé<br>pour vous.</div>
-      </div>
-
-      <!-- 5. Sam profite -->
-      <div class="scene s5">
-        <div class="sun"></div>
-        <div class="cloud" style="top:14%;--d:0s"></div>
-        <div class="cloud" style="top:26%;--d:-6s;scale:.7"></div>
-        <svg class="hills" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0 60 L0 35 Q60 5 120 30 T240 25 T400 30 L400 60Z" fill="#7FC77A"/><path d="M0 60 L0 45 Q80 25 160 42 T320 38 T400 44 L400 60Z" fill="#5DB35B"/></svg>
-        <div class="road"></div>
-        <div class="title-f up" style="--d:.3s">Sam roule.<br><span>Sans avoir acheté.</span></div>
-        <div class="rider">
-          <div class="char-in" data-who="sam"></div>
-          <div class="bike">🚲</div>
-          <span class="heart" style="--d:.6s;left:10%">❤️</span>
-          <span class="heart" style="--d:1.2s;left:60%">💚</span>
-          <span class="heart" style="--d:1.8s;left:35%">❤️</span>
-        </div>
-      </div>
-
-      <!-- 6. Il l'achète -->
-      <div class="scene s6">
-        <div class="chat up" style="--d:.1s">
-          <div class="chat-h"><span>S</span> Sam · à propos de « Vélo gravel »</div>
-          <div class="b r pop" style="--d:.4s">Je l'adore 😍 Tu me le vendrais ?</div>
-          <div class="b r offer-b pop" style="--d:.9s">💰 Offre d'achat · <b>320 €</b></div>
-          <div class="b l typing"><i></i><i></i><i></i></div>
-          <div class="b l pop" style="--d:2.2s">Deal ! Il est à toi 🤝</div>
-        </div>
-        <div class="stamp sold" style="--d:2.9s;left:58%;top:58%">VENDU</div>
-        <div class="confetti" id="confetti"></div>
-      </div>
-    </div>
-
-    <div class="chapters" id="chapters"></div>
-    <div class="film-cap" id="filmCap"><h3></h3><p></p></div>
-  </div>
-</section>
-
-<!-- ============ COMMENT ÇA MARCHE ============ -->
-<section id="comment">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Comment ça marche</span><h2>Deux façons de jouer.</h2></div>
-      <p>Que vous ayez du matériel à partager ou une sortie à préparer, tout se fait en quelques clics.</p>
-    </div>
-    <div class="tabs rv" id="tabs">
-      <span class="pill"></span>
-      <button class="on" data-tab="louer">Je loue</button>
-      <button data-tab="proposer">Je mets en location</button>
-    </div>
-    <div class="how-panel on" data-panel="louer">
-      <div class="how-grid">
-        <div class="how-card rv"><span class="n">1</span><div class="ic" style="background:var(--sky)">🔎</div><h3>Trouvez</h3><p>Cherchez par sport, ville et dates. Comparez les annonces et les profils des propriétaires.</p></div>
-        <div class="how-card rv d1"><span class="n">2</span><div class="ic" style="background:var(--lime)">📅</div><h3>Réservez</h3><p>Jusqu'à 30 jours. Vous payez en ligne une fois la demande acceptée ; la caution est seulement bloquée, pas débitée.</p></div>
-        <div class="how-card rv d2"><span class="n">3</span><div class="ic" style="background:var(--sand)">🏔️</div><h3>Profitez</h3><p>Récupérez le matériel, partez, rendez-le à la date prévue. La caution est libérée.</p></div>
-      </div>
-    </div>
-    <div class="how-panel" data-panel="proposer">
-      <div class="how-grid">
-        <div class="how-card"><span class="n">1</span><div class="ic" style="background:var(--coral)">📸</div><h3>Publiez</h3><p>Photos, prix à la journée, caution. Option : acceptez qu'on vous le rachète. Publier est gratuit.</p></div>
-        <div class="how-card"><span class="n">2</span><div class="ic" style="background:var(--lime)">✅</div><h3>Acceptez</h3><p>Vous recevez les demandes et choisissez à qui vous louez, et quand.</p></div>
-        <div class="how-card"><span class="n">3</span><div class="ic" style="background:var(--sky)">💸</div><h3>Encaissez</h3><p>Vous touchez 100 % du prix que vous avez fixé, versé le lendemain de la remise. Et des points à chaque location.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MARKETPLACE ============ -->
-<section class="market" id="marketplace">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Marketplace</span><h2>Le matos des autres, pour vos aventures.</h2></div>
-      <p>Des équipements proposés par des particuliers, disponibles à la journée.</p>
-    </div>
-    <div class="toolbar rv">
-      <label class="search">🔍
-        <input id="q" type="search" placeholder="Vélo, paddle, ski, ville…" aria-label="Rechercher">
-        <select id="sort" aria-label="Trier">
-          <option value="recent">Plus récents</option>
-          <option value="asc">Prix croissant</option>
-          <option value="desc">Prix décroissant</option>
-        </select>
-      </label>
-    </div>
-    <div class="chips rv" id="chips"></div>
-    <div class="grid" id="grid"></div>
-    <div class="market-cta"><a href="#deposer" class="btn btn-lime magnetic">Vous aussi, libérez votre matériel <span class="arr">→</span></a></div>
-  </div>
-</section>
-
-<!-- ============ DÉPOSER ============ -->
-<section id="deposer">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Mettre en location</span><h2>Publiez en 3 minutes.</h2></div>
-      <p>Votre annonce se met à jour en direct à droite. Publier est gratuit.</p>
-    </div>
-    <div class="list-grid">
-      <form class="form rv" id="listForm">
-        <div class="field full"><label for="f-title">Titre de l'annonce</label><input id="f-title" required maxlength="60" placeholder="Ex. Vélo gravel taille M"></div>
-        <div class="field"><label for="f-cat">Catégorie</label><select id="f-cat"></select></div>
-        <div class="field"><label for="f-city">Ville</label><input id="f-city" required placeholder="Ex. Nantes"></div>
-        <div class="field"><label for="f-price">Prix par jour (€)</label><input id="f-price" type="number" min="1" step="1" value="20" required></div>
-        <div class="field"><label for="f-dep">Caution (€)</label><input id="f-dep" type="number" min="0" step="10" value="200"></div>
-        <div class="field"><label for="f-cond">État</label><select id="f-cond"><option value="Neuf">Neuf, jamais servi</option><option value="Très bon état">Très bon état</option><option value="Bon état" selected>Bon état, traces d'usage</option><option value="État correct">État correct, usé mais fonctionnel</option></select></div>
-        <div class="field"><label for="f-brand">Marque et modèle</label><input id="f-brand" maxlength="80" placeholder="Ex. Red Paddle Co Ride 10'6"></div>
-        <div class="field full"><label>Dimensions (cm) et poids</label><div class="f-row"><input id="f-l" type="number" min="1" placeholder="Long." aria-label="Longueur en cm"><input id="f-w" type="number" min="1" placeholder="Larg." aria-label="Largeur en cm"><input id="f-h" type="number" min="1" placeholder="Haut." aria-label="Hauteur en cm"><input id="f-kg" type="number" min="0.1" step="0.1" placeholder="kg" aria-label="Poids en kg"></div></div>
-        <div class="buy-opt">
-          <label class="switch"><input type="checkbox" id="f-verif"><span>Faire vérifier la marque<small>Photo de l'étiquette, du numéro de série ou de la facture : après contrôle, badge « Marque vérifiée ».</small></span></label>
-          <label class="switch"><input type="checkbox" id="f-hand" checked><span>Remise en main propre</span></label>
-          <label class="switch"><input type="checkbox" id="f-del"><span>Je peux livrer (frais à fixer)</span></label>
-          <label class="switch"><input type="checkbox" id="f-shop"><span>Dépôt en boutique partenaire</span></label>
-        </div>
-        <div class="buy-opt">
-          <label class="switch"><input type="checkbox" id="f-buy"><span>J'accepte qu'on me le rachète<small>Les locataires pourront vous faire une offre. Vous restez libre de refuser.</small></span></label>
-          <div class="field" id="f-buy-box" hidden><label for="f-buy-price">Prix de vente souhaité (€, facultatif)</label><input id="f-buy-price" type="number" min="1" step="5" placeholder="Ex. 350"></div>
-        </div>
-        <div class="field full"><label for="f-desc">Description</label><textarea id="f-desc" placeholder="État, taille, accessoires fournis, conditions de retrait…"></textarea></div>
-        <div class="field full"><label>Photos</label><div class="drop" id="drop">📷 Cliquez pour ajouter des photos<br><small>Elles seront stockées dans Supabase Storage</small><input type="file" id="f-img" accept="image/*" hidden multiple></div></div>
-        <div class="full"><button class="btn btn-dark" type="submit" style="width:100%;justify-content:center">Publier mon annonce <span class="arr">→</span></button></div>
-      </form>
-
-      <aside class="side">
-        <span class="preview-label">Aperçu de votre annonce</span>
-        <div class="p-card" id="preview" style="animation:none"></div>
-        <div class="sim">
-          <h3>Combien ça rapporte ?</h3>
-          <p>Estimation selon le nombre de jours loués par mois.</p>
-          <input type="range" id="days" min="1" max="20" value="4" aria-label="Jours loués par mois">
-          <div class="row"><span><b id="daysLbl">4</b> jours / mois</span><span id="perDay">20 €/jour</span></div>
-          <div class="earn" id="earn">80 €</div>
-          <div class="row" style="margin-top:6px"><span>par mois pour vous</span><span id="earnYear">960 € / an</span></div>
-        </div>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PAIEMENT, CAUTION, REMISE ============ -->
-<section id="paiement" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Paiement et caution</span><h2>Votre argent est protégé, à chaque étape.</h2></div>
-      <p>Tout passe par Rebond, via Stripe, le prestataire de paiement utilisé par des millions d'entreprises. Ni liquide, ni virement entre inconnus.</p>
-    </div>
-    <div class="flow">
-      <div class="flow-step rv"><span class="when">1 · La demande est acceptée</span><h3>Le locataire paie en ligne</h3><p>Carte bancaire. L'argent est conservé par Stripe : le propriétaire ne reçoit rien tant que le matériel n'a pas été remis.</p><span class="amt" style="background:#DCEEFF;color:#0B4F8A">Paiement sécurisé</span></div>
-      <div class="flow-step rv d1"><span class="when">2 · La veille du retrait</span><h3>La caution est bloquée</h3><p>Une empreinte bancaire réserve le montant de la caution sur la carte, sans le débiter.</p><span class="amt" style="background:#FBEBCB;color:#7A5200">Bloquée, pas débitée</span></div>
-      <div class="flow-step rv d2"><span class="when">3 · Le jour J</span><h3>Photos, code, signature</h3><p>Le propriétaire photographie l'objet, le locataire lui donne son code à 4 chiffres et signe sur l'écran. Le propriétaire est payé le lendemain.</p><span class="amt" style="background:#E6F7B0;color:#3E5200">100 % pour le propriétaire</span></div>
-      <div class="flow-step rv d3"><span class="when">4 · Le retour</span><h3>Retour signé, caution libérée</h3><p>Le locataire photographie l'objet rendu, saisit le code du propriétaire, qui signe. Casse ou vol : la caution est retenue, photos à l'appui.</p><span class="amt" style="background:#EEECE6;color:#3F4642">Libérée ou retenue</span></div>
-    </div>
-    <div class="rules">
-      <div class="rule rv"><b>30 j</b><div><h3>30 jours maximum</h3><p>D'une journée à un mois. Au-delà, on vous propose plutôt de racheter l'objet.</p></div></div>
-      <div class="rule rv d1"><b>4</b><div><h3>Chiffres, photos, signature</h3><p>Chaque remise et chaque retour sont prouvés : impossible de dire « je ne l'ai jamais reçu ».</p></div></div>
-      <div class="rule rv d2"><b>✓</b><div><h3>Protégé sur Rebond seulement</h3><p>Caution, photos, avis et aide en cas de litige n'existent que si vous payez sur le site. Les coordonnées s'affichent après le paiement.</p></div></div>
-    </div>
-    <div class="sec-head rv" style="margin:70px 0 24px"><div><span class="eyebrow">Récupérer le matériel</span><h2>Simple comme un rendez-vous.</h2></div></div>
-    <div class="handover">
-      <div class="ho rv"><div class="ic">🤝</div><h3>En main propre</h3><p>Le propriétaire propose des créneaux, vous en choisissez un. Rendez-vous dans un lieu simple : devant chez lui, une gare, un parking.</p></div>
-      <div class="ho rv d1"><div class="ic">🚲</div><h3>Livraison par le propriétaire</h3><p>S'il le propose, il apporte le matériel près de chez vous ou sur votre lieu d'activité, contre quelques euros fixés dans l'annonce.</p></div>
-      <div class="ho rv d2"><div class="ic">🏪</div><h3>En boutique partenaire</h3><p>Le propriétaire dépose l'objet dans une boutique de sport partenaire ; vous le récupérez aux heures d'ouverture, avec votre code. Plus besoin de se croiser.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ ACHAT ============ -->
-<section id="achat" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Option d'achat</span><h2>Vous l'avez adopté ? Rachetez-le.</h2></div>
-      <p>Si le propriétaire a coché « J'accepte qu'on me le rachète », l'annonce affiche le badge Rachetable. La vente suit le même circuit protégé que la location.</p>
-    </div>
-    <div class="buy-steps">
-      <div class="bstep rv"><span class="n">1</span><h3>Option activée</h3><p>Le propriétaire accepte la vente et peut indiquer un prix souhaité.</p></div>
-      <div class="bstep rv d1"><span class="n">2</span><h3>Vous faites une offre</h3><p>Pendant ou après une location, depuis la fiche de l'objet.</p></div>
-      <div class="bstep rv d2"><span class="n">3</span><h3>Il accepte</h3><p>Vous payez en ligne ; l'argent reste bloqué jusqu'à la remise.</p></div>
-      <div class="bstep rv d3"><span class="n">4</span><h3>Remise prouvée</h3><p>Photos, votre code à 4 chiffres, votre signature.</p></div>
-      <div class="bstep rv"><span class="n">5</span><h3>C'est à vous</h3><p>Le vendeur est payé, l'annonce passe en « vendu », chacun gagne des points.</p></div>
-    </div>
-    <div class="shop-band rv">
+<!-- ======================= PUBLIER ======================= -->
+<div class="view" id="v-publier" hidden>
+  <section class="pub-hero">
+    <div class="wrap pub-grid">
       <div>
-        <h3>Vous avez une boutique de sport ?</h3>
-        <ul><li>Devenez point de dépôt et de retrait</li><li>Des clients du quartier passent chez vous chaque semaine</li><li>Une rémunération à chaque objet géré</li></ul>
+        <span class="eyebrow">Mettre en location</span>
+        <h1>Votre matos dort&nbsp;? <em>Faites-le travailler.</em></h1>
+        <p class="sub">Publiez en quelques minutes, fixez vos prix et vos conditions, acceptez les demandes une par une. Vous touchez 100 % de votre prix.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px">
+          <a class="btn btn-dark" href="app/#/publier"><svg class="i"><use href="#i-plus"/></svg>Publier mon annonce</a>
+          <a class="btn btn-ghost" href="#aide">Une question&nbsp;?</a>
+        </div>
       </div>
-      <a class="btn btn-dark" href="mailto:[ton-email]?subject=Boutique%20partenaire" style="justify-self:end">Devenir partenaire <span class="arr">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LE CLUB ============ -->
-<section class="club" id="club">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div><span class="eyebrow">Le Club</span><h2>Ici, chaque location vous rapporte.</h2></div>
-      <p>Des avantages qui restent, des points à chaque location, et des amis qui vous font gagner.</p>
-    </div>
-    <div class="promise">
-      <div class="prom rv" style="background:var(--lime);color:var(--ink)"><span class="k">0 €</span><h3>Pour les propriétaires, à vie</h3><p>Publier, louer, être payé : vous touchez toujours 100 % du prix que vous fixez.</p></div>
-      <div class="prom rv d1" style="background:var(--coral);color:var(--ink)"><span class="k">÷ 2</span><h3>Membres fondateurs, à vie</h3><p>Les 500 premiers inscrits paient deux fois moins de frais de service. Pour toujours.</p></div>
-    </div>
-    <div class="earn-grid">
-      <div class="panel rv">
-        <h3>Gagnez des points</h3>
-        <div class="line"><span>Chaque euro loué ou prêté</span><b>1 pt</b></div>
-        <div class="line"><span>Chaque euro acheté ou vendu</span><b>1 pt</b></div>
-        <div class="line"><span>Votre première annonce</span><b>50 pts</b></div>
-        <div class="line"><span>Chaque avis laissé</span><b>20 pts</b></div>
-        <div class="line"><span>Chaque ami parrainé, pour vous deux</span><b>200 pts</b></div>
-      </div>
-      <div class="panel rv d1">
-        <h3>Échangez-les</h3>
-        <div class="line"><span>Frais de service offerts</span><b>300 pts</b></div>
-        <div class="line"><span>5 € sur une location</span><b>600 pts</b></div>
-        <div class="line"><span>Bon de 10 € en boutique partenaire</span><b>1 000 pts</b></div>
-        <div class="line"><span>Une journée offerte (jusqu'à 30 €)</span><b>2 000 pts</b></div>
+      <div class="sim rv">
+        <h3>Combien ça peut rapporter&nbsp;?</h3>
+        <div class="row"><span>Prix par jour</span><b id="sP" style="color:var(--paper)">20 €</b></div>
+        <input type="range" id="rP" min="5" max="60" value="20" aria-label="Prix par jour">
+        <div class="row"><span>Jours loués par mois</span><b id="sD" style="color:var(--paper)">4</b></div>
+        <input type="range" id="rD" min="1" max="20" value="4" aria-label="Jours loués par mois">
+        <div class="earn" id="sE">80 €</div>
+        <div class="yr">par mois pour vous, soit <b id="sY" style="color:var(--paper)">960 €</b> par an</div>
       </div>
     </div>
-    <div class="ref-band rv">
-      <h3>Invitez un ami : 200 points chacun après sa première location.</h3>
-      <a class="btn btn-dark" href="app/#/club">Mon lien de parrainage <span class="arr">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ============ QUI SOMMES-NOUS ============ -->
-<section id="qui">
-  <div class="wrap about">
-    <div class="about-card rv">
-      <div class="ph" aria-hidden="true">T</div>
-      <h3>Tim</h3>
-      <div class="role">Fondateur de Rebond</div>
-      <p>[Deux phrases sur toi : ton sport, l'objet qui dormait chez toi et qui t'a donné l'idée.]</p>
-      <span class="todo">À compléter, avec ta photo</span>
-    </div>
-    <div class="about-txt rv d1">
-      <span class="eyebrow">Qui sommes-nous</span>
-      <h2 style="font-size:clamp(38px,5.6vw,64px);font-weight:800;margin:14px 0 22px">On achète trop de matos qu'on n'utilise pas.</h2>
-      <p>Un paddle sert deux semaines par an. Des skis de rando, quelques sorties. Le reste du temps, ils prennent la poussière au garage, pendant que d'autres hésitent à se lancer parce que le matériel coûte cher.</p>
-      <p><strong>Rebond met les deux en relation</strong>, près de chez vous, pour une journée ou un mois. Le propriétaire gagne de l'argent avec ce qui dormait, le locataire essaie un sport sans tout acheter, et un objet de moins sort de l'usine.</p>
-      <div class="values">
-        <div class="value"><b>Local</b><span>Du matériel à quelques minutes de chez vous.</span></div>
-        <div class="value"><b>Honnête</b><span>Le prix affiché est le prix payé. Aucune surprise.</span></div>
-        <div class="value"><b>Protégé</b><span>Paiement, caution et photos à chaque location.</span></div>
+  </section>
+  <section style="padding-top:30px">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="eyebrow">Vous gardez la main</span><h2>Vos règles, votre matériel.</h2></div></div>
+      <div class="ctrl">
+        <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-euro"/></svg></div><h3>Vos prix</h3><p>À la journée et à la demi-journée, plus la caution que vous jugez juste.</p></div>
+        <div class="ctl rv d1"><div class="ic"><svg class="i"><use href="#i-check"/></svg></div><h3>Vous acceptez</h3><p>Chaque demande vous est soumise : vous acceptez ou refusez, sans justification.</p></div>
+        <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-camera"/></svg></div><h3>Une fiche précise</h3><p>État, marque, modèle, dimensions, poids. Ajoutez une preuve pour le badge « Marque vérifiée ».</p></div>
+        <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-hand"/></svg></div><h3>Main propre</h3><p>Vous proposez vos créneaux et un lieu simple.</p></div>
+        <div class="ctl rv d1"><div class="ic"><svg class="i"><use href="#i-truck"/></svg></div><h3>Livraison</h3><p>Si vous le souhaitez, contre des frais que vous fixez.</p></div>
+        <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-store"/></svg></div><h3>Boutique partenaire</h3><p>Déposez l'objet, il est retiré sans que vous ayez à vous déplacer.</p></div>
       </div>
-      <p style="margin-top:22px;font-size:16px">Une question, une idée, un magasin partenaire ? Écrivez-nous : <a href="mailto:[ton-email]" style="font-weight:600">[ton email]</a></p>
     </div>
-  </div>
-</section>
+  </section>
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="eyebrow">Protégé à chaque étape</span><h2>Jamais de « je ne l'ai pas reçu ».</h2></div><p>La messagerie masque automatiquement les numéros et emails : tout reste sur Spoloc, donc tout reste protégé.</p></div>
+      <div class="flow">
+        <div class="fs rv"><span class="when">Demande acceptée</span><h3>Paiement en ligne</h3><p>L'argent est conservé jusqu'à la remise.</p></div>
+        <div class="fs rv d1"><span class="when">Veille du retrait</span><h3>Caution bloquée</h3><p>Une empreinte bancaire, jamais débitée sauf casse ou vol.</p></div>
+        <div class="fs rv d2"><span class="when">Jour J</span><h3>Photos, code, signature</h3><p>Vous êtes payé le lendemain.</p></div>
+        <div class="fs rv d3"><span class="when">Retour</span><h3>État comparé</h3><p>Photos de retour, code, signature, caution libérée.</p></div>
+      </div>
+      <div class="zero rv"><b>0 €</b><h3>Pour les propriétaires, à vie. Publier, louer et être payé ne vous coûte rien.</h3></div>
+    </div>
+  </section>
+</div>
 
-<!-- ============ FAQ ============ -->
-<section id="faq" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv" style="justify-content:center;text-align:center"><div><span class="eyebrow">FAQ</span><h2>Questions fréquentes</h2></div></div>
-    <div class="faq rv">
-      <details><summary>Combien coûte Rebond ?</summary><p>Publier une annonce est gratuit, pour toujours. Le montant exact à payer (location, frais de service, livraison éventuelle) est affiché avant le paiement, sans surprise. Les membres fondateurs paient deux fois moins de frais de service, à vie.</p></details>
-      <details><summary>Que se passe-t-il si le matériel est abîmé ?</summary><p>La caution fixée par le propriétaire est bloquée pendant la location. En cas de dommage constaté au retour, tout ou partie peut être retenu après échange entre les deux parties.</p></details>
-      <details><summary>Qui fixe le prix ?</summary><p>Le propriétaire choisit librement son prix à la journée et le montant de la caution.</p></details>
-      <details><summary>Comment se passe le paiement ?</summary><p>Vous payez en ligne par carte, sur Rebond, une fois votre demande acceptée. L'argent est conservé par notre prestataire de paiement Stripe et n'est versé au propriétaire que le lendemain de la remise du matériel.</p></details>
-      <details><summary>Combien de temps peut-on louer ?</summary><p>De 1 à 30 jours. Pour un besoin plus long, demandez au propriétaire s'il accepte de vendre.</p></details>
-      <details><summary>Comment récupère-t-on l'équipement ?</summary><p>En main propre sur un créneau proposé par le propriétaire, ou livré près de chez vous s'il propose la livraison. Des points de retrait chez des commerçants partenaires arrivent bientôt.</p></details>
-      <details><summary>Peut-on acheter l'objet qu'on a loué ?</summary><p>Oui, si le propriétaire a activé l'option « rachat » sur son annonce. Vous lui faites une offre, il accepte ou refuse. Le paiement se fait sur Rebond, puis l'objet est remis avec photos, code et signature.</p></details>
-      <details><summary>Pourquoi ne pas payer directement le propriétaire ?</summary><p>Parce qu'en dehors de Rebond, vous perdez tout : pas de caution, pas de photos d'état, pas d'avis, pas d'aide en cas de litige. Et le propriétaire n'a aucune garantie d'être payé.</p></details>
-      <details><summary>Puis-je refuser une demande de location ?</summary><p>Oui. Chaque demande doit être acceptée par le propriétaire avant d'être confirmée.</p></details>
+<!-- ======================= QUI SOMMES-NOUS ======================= -->
+<div class="view" id="v-qui" hidden>
+  <section style="padding-top:0">
+    <div class="wrap about">
+      <div class="founder rv">
+        <div class="ph" aria-hidden="true">T</div>
+        <h3>Tim</h3>
+        <div class="role">Fondateur de Spoloc</div>
+        <p>[Deux phrases sur toi : ton sport, l'objet qui dormait chez toi et qui t'a donné l'idée.]</p>
+        <span class="todo">À compléter, avec ta photo</span>
+      </div>
+      <div class="about-t rv d1">
+        <span class="eyebrow">Qui sommes-nous</span>
+        <h1>On achète trop de matos qu'on n'utilise pas.</h1>
+        <p>Un paddle sert deux semaines par an. Une tente, trois week-ends. Le reste du temps, ils prennent la place qu'on n'a pas, dans des appartements où chaque mètre compte.</p>
+        <p><strong>Spoloc met ce matériel en circulation</strong>, entre voisins, pour une demi-journée ou un mois. Le propriétaire gagne de l'argent avec ce qui dormait, le locataire part en week-end sans tout acheter.</p>
+        <div class="values">
+          <div class="value"><b>Local</b><span>Du matériel à quelques stations de chez vous.</span></div>
+          <div class="value"><b>Protégé</b><span>Paiement, caution, photos et signature à chaque remise.</span></div>
+          <div class="value"><b>Honnête</b><span>Le prix affiché est le prix payé.</span></div>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+  <section class="club" id="club">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="eyebrow">Le Club Spoloc</span><h2>Ici, chaque location vous rapporte.</h2></div><p>Des avantages qui restent, des points à chaque location, et des amis qui vous font gagner.</p></div>
+      <div class="promise">
+        <div class="prom rv" style="background:var(--lime)"><span class="k">0 €</span><h3>Pour les propriétaires, à vie</h3><p>Vous touchez toujours 100 % du prix que vous fixez.</p></div>
+        <div class="prom rv d1" style="background:var(--coral)"><span class="k">÷ 2</span><h3>Membres fondateurs, à vie</h3><p>Les 500 premiers inscrits paient deux fois moins de frais de service. Pour toujours.</p></div>
+      </div>
+      <div class="earn">
+        <div class="panel rv"><h3>Gagnez des points</h3>
+          <div class="line"><span>Chaque euro loué, prêté, acheté ou vendu</span><b>1 pt</b></div>
+          <div class="line"><span>Votre première annonce</span><b>50 pts</b></div>
+          <div class="line"><span>Chaque avis laissé</span><b>20 pts</b></div>
+          <div class="line"><span>Chaque ami parrainé, pour vous deux</span><b>200 pts</b></div>
+        </div>
+        <div class="panel rv d1"><h3>Échangez-les</h3>
+          <div class="line"><span>Frais de service offerts</span><b>300 pts</b></div>
+          <div class="line"><span>5 € sur une location</span><b>600 pts</b></div>
+          <div class="line"><span>Bon de 10 € en boutique partenaire</span><b>1 000 pts</b></div>
+          <div class="line"><span>Une journée offerte (jusqu'à 30 €)</span><b>2 000 pts</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="wrap">
+      <div class="shop rv">
+        <div><h3>Vous avez une boutique de sport&nbsp;?</h3>
+          <ul><li><svg class="i"><use href="#i-check"/></svg>Devenez point de dépôt et de retrait</li><li><svg class="i"><use href="#i-check"/></svg>Des clients du quartier passent chez vous chaque semaine</li><li><svg class="i"><use href="#i-check"/></svg>Une rémunération à chaque objet géré</li></ul>
+        </div>
+        <a class="btn btn-dark" href="mailto:[ton-email]?subject=Boutique%20partenaire%20Spoloc" style="justify-self:end">Devenir partenaire</a>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv" style="justify-content:center;text-align:center"><div><span class="eyebrow">Questions fréquentes</span><h2>Bon à savoir</h2></div></div>
+      <div class="faq rv">
+        <details><summary>Combien de temps peut-on louer ?</summary><p>D'une demi-journée (matin 8 h–13 h ou après-midi 13 h–20 h) jusqu'à 30 jours.</p></details>
+        <details><summary>Comment se passe le paiement ?</summary><p>En ligne par carte, sur Spoloc, une fois la demande acceptée. L'argent n'est versé au propriétaire que le lendemain de la remise.</p></details>
+        <details><summary>Pourquoi ne pas échanger nos numéros ?</summary><p>Parce qu'en dehors de Spoloc, vous perdez la caution, les photos, la signature et notre aide en cas de litige. La messagerie masque automatiquement numéros, emails et liens.</p></details>
+        <details><summary>Peut-on acheter l'objet loué ?</summary><p>Oui, si le propriétaire a activé l'option rachat. Faites une offre depuis la fiche ; la vente suit le même circuit protégé.</p></details>
+        <details><summary>Combien ça coûte ?</summary><p>Publier est gratuit pour toujours. Le total exact est affiché avant de payer, sans surprise.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
 
-<!-- ============ CTA FINAL ============ -->
-<section class="final">
-  <span class="orbit" style="animation-delay:0s">🏀</span>
-  <span class="orbit" style="animation-delay:-6s">🎿</span>
-  <span class="orbit" style="animation-delay:-12s">🛶</span>
-  <div class="wrap rv">
-    <h2>Rien ne doit<br><em>dormir.</em></h2>
-    <div class="hero-ctas" style="margin-top:36px">
-      <a href="app/" class="btn btn-dark magnetic">Louer un équipement <span class="arr">→</span></a>
-      <a href="#deposer" class="btn btn-lime magnetic">Mettre en location</a>
+<!-- ======================= AIDE ======================= -->
+<div class="view" id="v-aide" hidden>
+  <section style="padding-top:0">
+    <div class="wrap help">
+      <div class="rv">
+        <span class="eyebrow">Aide</span>
+        <h1>Une question&nbsp;? On vous répond tout de suite.</h1>
+        <p class="lead">L'assistant Spoloc connaît la location, le paiement, la caution et la remise du matériel. C'est gratuit, et il s'enrichit de chaque question posée.</p>
+        <div class="topics" id="topics">
+          <button class="topic" data-ask="Comment se passe le paiement ?"><span class="ic"><svg class="i"><use href="#i-card"/></svg></span><span><b>Paiement</b><span>Quand et comment payer</span></span></button>
+          <button class="topic" data-ask="Comment fonctionne la caution ?"><span class="ic"><svg class="i"><use href="#i-lock"/></svg></span><span><b>Caution</b><span>Bloquée, jamais débitée</span></span></button>
+          <button class="topic" data-ask="Comment récupérer le matériel ?"><span class="ic"><svg class="i"><use href="#i-key"/></svg></span><span><b>Retrait et retour</b><span>Code, photos, signature</span></span></button>
+          <button class="topic" data-ask="Comment mettre mon matériel en location ?"><span class="ic"><svg class="i"><use href="#i-plus"/></svg></span><span><b>Publier</b><span>Mettre votre matériel en location</span></span></button>
+          <button class="topic" data-ask="Que se passe-t-il si le matériel est abîmé ou volé ?"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><span><b>Casse ou vol</b><span>Ce qui se passe</span></span></button>
+        </div>
+      </div>
+      <div class="chat-wrap rv d1" id="chatEmbed"></div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 </main>
 
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><a href="#top" class="logo" aria-label="Rebond, accueil"><svg class="logo-mark" viewBox="0 0 80 64" aria-hidden="true"><path class="lm-path" d="M4 54 Q15 4 28 54 Q37 24 46 54 Q52 38 58 54" stroke="#F3F1EA" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="lm-ball" cx="68" cy="46" r="9" fill="#FF6B4A"/></svg>rebond</a><p style="margin-top:14px;max-width:300px;font-size:14px">La marketplace de location d'équipements sportifs entre particuliers.</p></div>
-      <div><h5>Louer</h5><ul><li><a href="#marketplace">Marketplace</a></li><li><a href="#comment">Comment ça marche</a></li></ul></div>
-      <div><h5>Proposer</h5><ul><li><a href="#deposer">Déposer une annonce</a></li><li><a href="#paiement">Paiement et caution</a></li></ul></div>
-      <div><h5>Infos</h5><ul><li><a href="#qui">Qui sommes-nous</a></li><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><a href="#louer" class="logo" id="logoFoot"></a><p style="margin-top:14px;max-width:320px;font-size:14px">La location de matériel de sport entre particuliers, à Paris et en petite couronne.</p></div>
+      <div><h5>Spoloc</h5><ul><li><a href="#louer">Louer</a></li><li><a href="#publier">Publier</a></li><li><a href="#qui">Qui sommes-nous</a></li><li><a href="#aide">Aide</a></li></ul></div>
+      <div><h5>Infos</h5><ul><li><a href="app/">Mon compte</a></li><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="mailto:[ton-email]">Contact</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span>© <span id="yr"></span> Rebond</span><span>Donnez du rebond à votre matos.</span></div>
+    <div class="foot-b"><span>© <span id="yr"></span> Spoloc</span><span>Le sport, en location.</span></div>
   </div>
 </footer>
 
-<!-- ============ MODAL RÉSERVATION ============ -->
+<nav class="tabbar" aria-label="Pages">
+  <a href="#louer" data-v="louer"><svg class="i"><use href="#i-grid"/></svg>Louer</a>
+  <a href="#publier" data-v="publier"><svg class="i"><use href="#i-plus"/></svg>Publier</a>
+  <a href="#qui" data-v="qui"><svg class="i"><use href="#i-users"/></svg>À propos</a>
+  <a href="#aide" data-v="aide"><svg class="i"><use href="#i-chat"/></svg>Aide</a>
+</nav>
+
 <div class="modal" id="modal" aria-hidden="true">
-  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="m-title">
-    <div class="p-thumb" id="m-thumb"></div>
-    <div class="sheet-body">
-      <button class="close" id="m-close" aria-label="Fermer">✕</button>
-      <span class="eyebrow" id="m-cat"></span>
-      <h3 id="m-title"></h3>
-      <p id="m-desc" style="color:var(--muted)"></p>
-      <div class="owner"><span class="av" id="m-av"></span><span id="m-owner"></span></div>
-      <div class="dates">
-        <div class="field"><label for="m-start">Début</label><input type="date" id="m-start"></div>
-        <div class="field"><label for="m-end">Fin</label><input type="date" id="m-end"></div>
-      </div>
-      <div class="quote" id="m-quote"></div>
-      <button class="btn btn-dark" id="m-book">Demander à réserver <span class="arr">→</span></button>
-      <p style="font-size:13px;color:var(--muted);margin-top:10px">Location de 1 à 30 jours. Vous ne payez qu'une fois la demande acceptée.</p>
-      <button class="btn btn-ghost" id="m-offer-toggle">💰 Proposer de l'acheter</button>
-      <div id="m-offer" hidden style="margin-top:14px;padding:16px;border-radius:14px;background:var(--paper)">
-        <div class="field"><label for="m-offer-amt">Votre offre (€)</label><input type="number" id="m-offer-amt" min="1" step="5"></div>
-        <p id="m-offer-info" style="font-size:13px;color:var(--muted);margin-top:8px"></p>
-        <button class="btn btn-lime" id="m-offer-send">Envoyer l'offre <span class="arr">→</span></button>
-      </div>
-    </div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <button class="close" id="mClose" aria-label="Fermer"><svg class="i"><use href="#i-x"/></svg></button>
+    <div class="thumb" id="mThumb"></div>
+    <div class="sheet-b" id="mBody"></div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
+<script src="assets/spoloc.js"></script>
 <script>
-/* =========================================================
-   CONFIGURATION
-   ========================================================= */
-const CONFIG = {
-  COMMISSION_RATE: 0.06,   // frais de service sur une location (réglés dans Supabase : platform_settings)
-  COMMISSION_MIN: 1,       // plancher en € par location
-  SALE_RATE: 0.08,         // frais de service sur une vente
-  SALE_MIN: 2,
-  CURRENCY: "€",
-  // SUPABASE_URL: "https://xxxx.supabase.co",
-  // SUPABASE_ANON_KEY: "ey...",
-};
-// const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const eur = c => (c/100).toLocaleString("fr-FR",{style:"currency",currency:"EUR",minimumFractionDigits:c%100?2:0,maximumFractionDigits:2});
+const SL = window.Spoloc;
+const COND = { neuf:"Neuf", tres_bon:"Très bon état", bon:"Bon état", correct:"État correct" };
+const MODE = { hand:"Main propre", delivery:"Livraison", shop:"Boutique partenaire" };
 
-/* Catégories : correspondra à la table `categories` */
-const CATEGORIES = [
-  {slug:"velo", label:"Vélo", icon:"🚴", color:"var(--sky)"},
-  {slug:"glisse-eau", label:"Paddle & surf", icon:"🏄", color:"var(--lime)"},
-  {slug:"kayak", label:"Kayak", icon:"🛶", color:"#BDE7D8"},
-  {slug:"montagne", label:"Ski & snow", icon:"🎿", color:"#E3E8FF"},
-  {slug:"camping", label:"Camping", icon:"⛺", color:"var(--sand)"},
-  {slug:"raquette", label:"Raquettes", icon:"🎾", color:"#FFE08A"},
-  {slug:"fitness", label:"Fitness", icon:"🏋️", color:"#FFC9BB"},
-  {slug:"escalade", label:"Escalade", icon:"🧗", color:"#D9C8FF"},
-];
-
-/* Données de démo : même forme que la table `listings` de Supabase */
-let LISTINGS = [
-  {id:1, title:"Vélo gravel carbone taille M", category:"velo", price_per_day:25, deposit:400, city:"Lyon", owner:"Julien", description:"Groupe Shimano GRX, pneus 40 mm, casque fourni.", created_at:"2026-11-09", condition:"Très bon état", brand:"Canyon", verified:true},
-  {id:2, title:"Paddle gonflable 10'6 + pagaie", category:"glisse-eau", price_per_day:22, deposit:200, city:"Biarritz", owner:"Léa", description:"Gilet, leash et sac de transport inclus.", created_at:"2026-11-08", buyout:true, buyout_price:320, condition:"Très bon état", brand:"Red Paddle Co", verified:true},
-  {id:3, title:"Kayak biplace sit-on-top", category:"kayak", price_per_day:30, deposit:300, city:"Annecy", owner:"Marc", description:"Deux pagaies, bidon étanche. Galerie de toit possible.", created_at:"2026-11-07", condition:"Bon état", brand:"Rotomod", verified:false},
-  {id:4, title:"Snowboard 156 + fixations", category:"montagne", price_per_day:18, deposit:250, city:"Grenoble", owner:"Inès", description:"Fart récent, idéal all-mountain.", created_at:"2026-11-10", condition:"Bon état", brand:"Burton", verified:false},
-  {id:5, title:"Tente 3 places ultra-légère", category:"camping", price_per_day:12, deposit:150, city:"Annecy", owner:"Tom", description:"1,9 kg, montage en 5 minutes.", created_at:"2026-11-05", buyout:true, buyout_price:140, condition:"Neuf", brand:"MSR", verified:true},
-  {id:6, title:"Raquettes de padel (x2) + balles", category:"raquette", price_per_day:8, deposit:80, city:"Paris", owner:"Sarah", description:"Parfait pour tester le padel avant d'acheter.", created_at:"2026-11-06"},
-  {id:7, title:"VTT électrique tout suspendu", category:"velo", price_per_day:45, deposit:800, city:"Chambéry", owner:"Hugo", description:"Batterie 625 Wh, autonomie journée.", created_at:"2026-11-04", buyout:true, buyout_price:1900, condition:"Très bon état", brand:"Specialized", verified:true},
-  {id:8, title:"Kit d'escalade complet", category:"escalade", price_per_day:15, deposit:150, city:"Fontainebleau", owner:"Nora", description:"Baudrier, chaussons 41, crash pad.", created_at:"2026-11-03"},
-  {id:9, title:"Skis de rando + peaux", category:"montagne", price_per_day:28, deposit:350, city:"Chamonix", owner:"Paul", description:"Fixations Dynafit, peaux neuves.", created_at:"2026-11-02", condition:"Très bon état", brand:"Dynafit", verified:false},
-  {id:10, title:"Rameur à air", category:"fitness", price_per_day:10, deposit:200, city:"Bordeaux", owner:"Emma", description:"Pliable, livraison possible dans Bordeaux.", created_at:"2026-11-01"},
-  {id:11, title:"Planche de surf 7'2 mousse", category:"glisse-eau", price_per_day:15, deposit:120, city:"Hossegor", owner:"Lucas", description:"Idéale débutant, combinaison M en option.", created_at:"2026-10-30", buyout:true, buyout_price:180},
-  {id:12, title:"Réchaud + popote 2 personnes", category:"camping", price_per_day:5, deposit:40, city:"Marseille", owner:"Chloé", description:"Cartouche de gaz non fournie.", created_at:"2026-10-29"},
-];
-
-/* =========================================================
-   CALCUL DU PRIX & COMMISSION
-   En production, refaire ce calcul côté serveur (fonction Supabase)
-   ========================================================= */
-const eur = n => (Math.round(n*100)/100).toLocaleString("fr-FR",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})+" "+CONFIG.CURRENCY;
-function computeQuote(pricePerDay, days){
-  const subtotal = pricePerDay * days;
-  const fee = Math.max(Math.round(subtotal * CONFIG.COMMISSION_RATE * 100) / 100, CONFIG.COMMISSION_MIN);
-  return {days, subtotal, fee, total: subtotal + fee, ownerPayout: subtotal};
-}
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const cat = slug => CATEGORIES.find(c=>c.slug===slug) || CATEGORIES[0];
-const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2800)}
-
-/* =========================================================
-   NAV
-   ========================================================= */
+$("#logoMark").innerHTML = SL.logo();
+$("#logoFoot").innerHTML = SL.logo("#F3F1EA") + "spoloc";
+$("#mockPic").innerHTML = SL.catIcon("glisse-eau", 96);
 $("#yr").textContent = new Date().getFullYear();
-let lastY = 0;
-addEventListener("scroll",()=>{const y=scrollY;$("#nav").classList.toggle("hide",y>lastY&&y>200&&!$("#mobileMenu").classList.contains("open"));lastY=y},{passive:true});
-$("#burger").addEventListener("click",()=>{$("#burger").classList.toggle("open");$("#mobileMenu").classList.toggle("open")});
-$$("#mobileMenu a").forEach(a=>a.addEventListener("click",()=>{$("#burger").classList.remove("open");$("#mobileMenu").classList.remove("open")}));
-
-/* Mots qui tournent */
-(()=>{const w=$$("#rotator span");let i=0;setInterval(()=>{w[i].classList.remove("on");w[i].classList.add("out");const p=w[i];setTimeout(()=>p.classList.remove("out"),650);i=(i+1)%w.length;w[i].classList.add("on")},2200)})();
-
-/* Marquee */
-(()=>{const words=["Vélo","Paddle","Ski","Kayak","Tente","Padel","Escalade","Surf","Snowboard","Rameur"];const html=words.map(w=>`<span>${w}</span>`).join("");$("#marquee").innerHTML=html+html})();
-
-/* Boutons magnétiques (desktop) */
-if(matchMedia("(hover:hover)").matches){
-  $$(".magnetic").forEach(b=>{
-    b.addEventListener("mousemove",e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.3}px)`});
-    b.addEventListener("mouseleave",()=>b.style.transform="");
-  });
-}
-
-/* Révélation au scroll */
-const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
-$$(".rv").forEach(el=>io.observe(el));
-
-/* Story : étapes qui pilotent la scène */
-const stepIO = new IntersectionObserver(es=>es.forEach(e=>{
-  if(e.isIntersecting){const n=e.target.dataset.step;
-    $$(".step").forEach(s=>s.classList.toggle("on",s.dataset.step===n));
-    $$(".stage").forEach(s=>s.classList.toggle("on",s.dataset.stage===n));}
-}),{rootMargin:"-45% 0px -45% 0px"});
-$$(".step").forEach(s=>stepIO.observe(s));
 
 /* Onglets */
-function movePill(btn){const p=$("#tabs .pill");p.style.width=btn.offsetWidth+"px";p.style.transform=`translateX(${btn.offsetLeft-6}px)`}
-$$("#tabs button").forEach(b=>b.addEventListener("click",()=>{
-  $$("#tabs button").forEach(x=>x.classList.toggle("on",x===b));movePill(b);
-  $$(".how-panel").forEach(p=>p.classList.toggle("on",p.dataset.panel===b.dataset.tab));
-}));
-addEventListener("load",()=>movePill($("#tabs button.on")));
-addEventListener("resize",()=>movePill($("#tabs button.on")));
-
-/* =========================================================
-   MARKETPLACE
-   ========================================================= */
-let state = {cat:"all", q:"", sort:"recent"};
-$("#chips").innerHTML = `<button class="chip on" data-cat="all">Tout</button>` + CATEGORIES.map(c=>`<button class="chip" data-cat="${c.slug}">${c.icon} ${c.label}</button>`).join("");
-$("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;state.cat=b.dataset.cat;$$(".chip").forEach(c=>c.classList.toggle("on",c===b));render()});
-$("#q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render()});
-$("#sort").addEventListener("change",e=>{state.sort=e.target.value;render()});
-
-function cardHTML(l){
-  const c=cat(l.category);
-  return `<article class="p-card" data-id="${l.id}" tabindex="0">
-    <div class="p-thumb" style="background:${c.color}">
-      ${l.image_url?`<img src="${esc(l.image_url)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:`<span class="em">${c.icon}</span>`}
-      <span class="tag">${c.label}</span>${l.buyout?`<span class="buy">Rachetable</span>`:""}
-      <button class="fav" aria-label="Ajouter aux favoris" data-fav>♡</button>${l.verified?`<span class="ver">✓ Marque vérifiée</span>`:""}
-    </div>
-    <div class="p-body"><h4>${esc(l.title)}</h4>${l.condition||l.brand?`<p class="cond">${esc([l.condition,l.brand].filter(Boolean).join(" · "))}</p>`:""}
-      <div class="p-meta"><span>📍 ${esc(l.city)}</span><span><b>${eur(l.price_per_day)}</b> / jour</span></div>
-    </div></article>`;
+const VIEWS = ["louer","publier","qui","aide"];
+const fab = SL.mountFab({ page:"site" });
+let chatEmbed = null;
+function movePill(){ const on = $("#tabs .tab.on"), p = $("#tabs .pill"); if (!on || !on.offsetWidth) return; p.style.width = on.offsetWidth + "px"; p.style.transform = `translateX(${on.offsetLeft}px)`; }
+function show(){
+  const h = location.hash.slice(1);
+  const v = VIEWS.includes(h) ? h : (h === "club" ? "qui" : "louer");
+  VIEWS.forEach(x => $("#v-"+x).hidden = x !== v);
+  $$("[data-v]").forEach(a => a.classList.toggle("on", a.dataset.v === v));
+  movePill();
+  fab.hide(v === "aide");
+  if (v === "aide" && !chatEmbed) chatEmbed = SL.mountChat($("#chatEmbed"), { id:"page", page:"aide", suggestions:5 });
+  if (h === "club") setTimeout(() => $("#club").scrollIntoView({ behavior:"smooth" }), 60); else scrollTo({ top:0 });
+  observe();
 }
-function render(){
-  /* Version Supabase :
-     let q = supabase.from("listings").select("*, categories(slug,label), profiles(first_name)").eq("status","active");
-     if(state.cat!=="all") q = q.eq("categories.slug", state.cat);
-     if(state.q) q = q.or(`title.ilike.%${state.q}%,city.ilike.%${state.q}%`);
-     const {data} = await q.order(...);
-  */
-  let list = LISTINGS.filter(l=>(state.cat==="all"||l.category===state.cat) && (!state.q||(l.title+" "+l.city).toLowerCase().includes(state.q)));
-  if(state.sort==="asc") list.sort((a,b)=>a.price_per_day-b.price_per_day);
-  else if(state.sort==="desc") list.sort((a,b)=>b.price_per_day-a.price_per_day);
-  else list.sort((a,b)=>b.created_at.localeCompare(a.created_at));
-  $("#grid").innerHTML = list.length ? list.map((l,i)=>cardHTML(l).replace('class="p-card"',`class="p-card" style="animation-delay:${i*45}ms"`)).join("") : `<div class="empty">Aucun équipement ne correspond. Et si vous étiez le premier à en proposer un ?</div>`;
-}
-$("#grid").addEventListener("click",e=>{
-  if(e.target.closest("[data-fav]")){const f=e.target.closest("[data-fav]");f.textContent=f.textContent==="♡"?"♥":"♡";f.style.color=f.textContent==="♥"?"var(--coral)":"";e.stopPropagation();return}
-  const c=e.target.closest(".p-card");if(c) openModal(+c.dataset.id);
-});
-$("#grid").addEventListener("keydown",e=>{if(e.key==="Enter"){const c=e.target.closest(".p-card");if(c)openModal(+c.dataset.id)}});
-render();
+addEventListener("hashchange", show);
+addEventListener("resize", movePill);
+document.fonts && document.fonts.ready.then(movePill);
+$("#topics").addEventListener("click", e => { const b = e.target.closest("[data-ask]"); if (b && chatEmbed) chatEmbed.ask(b.dataset.ask); });
 
-/* =========================================================
-   MODAL RÉSERVATION
-   ========================================================= */
-let current=null;
-const iso = d => d.toISOString().slice(0,10);
-function openModal(id){
-  current = LISTINGS.find(l=>l.id===id); if(!current) return;
-  const c=cat(current.category);
-  $("#m-thumb").style.background=c.color;
-  $("#m-thumb").innerHTML=current.image_url?`<img src="${esc(current.image_url)}" alt="" style="width:100%;height:100%;object-fit:cover">`:c.icon;
-  $("#m-cat").textContent=c.label+" · "+current.city;
-  $("#m-title").textContent=current.title;
-  $("#m-desc").textContent=current.description||"";
-  $("#m-av").textContent=(current.owner||"?")[0];
-  $("#m-owner").textContent=`Proposé par ${current.owner||"un membre"} · caution ${eur(current.deposit||0)}`;
-  const t=new Date();t.setDate(t.getDate()+1);const e=new Date(t);e.setDate(e.getDate()+2);
-  $("#m-start").min=iso(new Date());$("#m-start").value=iso(t);$("#m-end").value=iso(e);$("#m-end").min=iso(t);
-  updateQuote();
-  $("#m-offer").hidden=true;
-  $("#m-offer-toggle").style.display=current.buyout?"":"none";
-  $("#m-offer-toggle").textContent=current.buyout_price?`💰 Rachetable · ${eur(current.buyout_price)} souhaités`:"💰 Proposer de l'acheter";
-  $("#modal").classList.add("open");$("#modal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
-}
-function closeModal(){$("#modal").classList.remove("open");$("#modal").setAttribute("aria-hidden","true");document.body.style.overflow=""}
-const addD=(v,n)=>{const d=new Date(v);d.setDate(d.getDate()+n);return iso(d)};
-function rentalDays(){const s=new Date($("#m-start").value),e=new Date($("#m-end").value);return Math.max(1,Math.round((e-s)/864e5)+1)}
-function updateQuote(){
-  if(!current) return;
-  $("#m-end").min=$("#m-start").value;
-  $("#m-end").max=addD($("#m-start").value,29);
-  if($("#m-end").value<$("#m-start").value) $("#m-end").value=$("#m-start").value;
-  if($("#m-end").value>$("#m-end").max){ $("#m-end").value=$("#m-end").max; toast("30 jours maximum par location."); }
-  const q=computeQuote(current.price_per_day,rentalDays());
-  $("#m-quote").innerHTML=`<div><span>${eur(current.price_per_day)} × ${q.days} jour${q.days>1?"s":""}</span><span>${eur(q.subtotal)}</span></div>
-    <div><span>Frais de service</span><span>${eur(q.fee)}</span></div>
-    <div class="tot"><span>Total</span><span>${eur(q.total)}</span></div>
-    <div style="color:var(--muted);font-size:13px"><span>Caution bloquée, non débitée</span><span>${eur(current.deposit||0)}</span></div>`;
-}
-$("#m-start").addEventListener("change",updateQuote);
-$("#m-end").addEventListener("change",updateQuote);
-$("#m-close").addEventListener("click",closeModal);
-$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
-addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-$("#m-book").addEventListener("click",async()=>{
-  const q=computeQuote(current.price_per_day,rentalDays());
-  /* Version Supabase :
-     await supabase.from("bookings").insert({listing_id:current.id, start_date:$("#m-start").value, end_date:$("#m-end").value, status:"pending"});
-     (montants et commission recalculés côté serveur)
-  */
-  closeModal();toast(`Demande envoyée à ${current.owner} · total ${eur(q.total)}`);
-});
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold:.12 });
+function observe(){ $$(".view:not([hidden]) .rv:not(.in)").forEach(el => io.observe(el)); }
 
-/* =========================================================
-   FORMULAIRE DE DÉPÔT + SIMULATEUR
-   ========================================================= */
-$("#f-cat").innerHTML=CATEGORIES.map(c=>`<option value="${c.slug}">${c.icon} ${c.label}</option>`).join("");
-let previewImg=null;
-$("#drop").addEventListener("click",()=>$("#f-img").click());
-$("#f-img").addEventListener("change",e=>{
-  const f=e.target.files[0];if(!f)return;
-  previewImg=URL.createObjectURL(f);
-  $("#drop").firstChild.textContent=`📷 ${e.target.files.length} photo(s) ajoutée(s)`;
-  updatePreview();
-});
-function formData(){return{
-  id:Date.now(), title:$("#f-title").value.trim()||"Votre équipement", category:$("#f-cat").value,
-  city:$("#f-city").value.trim()||"Votre ville", price_per_day:Math.max(1,+$("#f-price").value||0),
-  deposit:+$("#f-dep").value||0, description:$("#f-desc").value.trim(), owner:"Vous",
-  buyout:$("#f-buy").checked, buyout_price:$("#f-buy").checked?(+$("#f-buy-price").value||null):null,
-  condition:$("#f-cond").value, brand:$("#f-brand").value.trim(), verified:false,
-  image_url:previewImg, created_at:iso(new Date())+"T"+Date.now()
-}}
-function updatePreview(){
-  const d=formData();
-  $("#preview").innerHTML=cardHTML(d).replace(/^<article[^>]*>|<\/article>$/g,"");
-  const days=+$("#days").value, earn=d.price_per_day*days;
-  $("#daysLbl").textContent=days;$("#perDay").textContent=eur(d.price_per_day)+"/jour";
-  $("#earn").textContent=eur(earn);$("#earnYear").textContent=eur(earn*12)+" / an";
-}
-["#f-title","#f-cat","#f-city","#f-price","#f-dep","#days","#f-buy-price","#f-cond","#f-brand"].forEach(s=>$(s).addEventListener("input",updatePreview));
-$("#f-buy").addEventListener("change",()=>{$("#f-buy-box").hidden=!$("#f-buy").checked;updatePreview()});
-updatePreview();
-$("#listForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const d=formData();
-  /* Version Supabase :
-     1. upload photos : supabase.storage.from("listing-images").upload(`${user.id}/${Date.now()}.jpg`, file)
-     2. insert : supabase.from("listings").insert({owner_id:user.id, title, category_id, price_per_day_cents, deposit_cents, city, description, buyout_enabled, buyout_price_cents, status:"active"})
-  */
-  LISTINGS.unshift(d);
-  state.cat="all";$$(".chip").forEach(c=>c.classList.toggle("on",c.dataset.cat==="all"));
-  render();e.target.reset();$("#f-buy-box").hidden=true;previewImg=null;$("#drop").firstChild.textContent="📷 Cliquez pour ajouter des photos";updatePreview();
-  toast("Annonce publiée 🎉 Elle apparaît dans la marketplace.");
-  setTimeout(()=>$("#marketplace").scrollIntoView({behavior:"smooth"}),600);
-});
+/* Catalogue : vraies annonces Supabase, sinon exemples */
+const CATS = [["velo","Vélo"],["glisse-eau","Paddle & surf"],["kayak","Kayak"],["montagne","Ski & rando"],["camping","Bivouac"],["escalade","Escalade"],["raquette","Raquettes"],["fitness","Fitness"]];
+const EXAMPLES = [
+  ["d2","Paddle gonflable 10'6 + pagaie","glisse-eau",2000,1200,30000,"Paris 15e","tres_bon","Red Paddle Co","Ride 10'6",[320,86,15],10.5,true,true,["hand","delivery","shop"]],
+  ["d5","Tente 2 places ultra-légère","camping",1200,700,15000,"Paris 20e","neuf","MSR","Hubba Hubba 2",[46,15,15],1.3,true,true,["hand","shop"]],
+  ["d7","Crash pad d'escalade","escalade",1000,600,15000,"Paris 13e","bon","Black Diamond","Mondo",[132,107,13],7.5,false,true,["hand","delivery"]],
+  ["d1","Vélo gravel carbone taille M","velo",2500,1500,40000,"Paris 11e","tres_bon","Canyon","Grizl CF SL 7",[175,45,100],9.2,true,false,["hand","shop"]],
+  ["d4","Skis de rando + peaux","montagne",2800,null,35000,"Paris 18e","tres_bon","Dynafit","Blacklight 88",[177,12,8],2.6,true,false,["hand"]],
+  ["d3","Kayak biplace gonflable","kayak",3000,1800,30000,"Saint-Maur","bon","Gumotex","Solar",[410,85,25],17,false,false,["hand"]],
+  ["d8","Vélo de voyage + sacoches","velo",2200,null,40000,"Paris 12e","bon","Riverside","Touring 520",[180,60,105],14,false,true,["hand"]],
+  ["d9","Réchaud + popote 2 personnes","camping",500,300,4000,"Montreuil","tres_bon","Jetboil","Flash",[18,11,11],0.4,false,false,["hand","shop"]],
+].map(([id,title,cat,price,half,deposit,city,condition,brand,model,dims,weight,verified,buyout,modes]) => ({ id,title,cat,catLabel:(CATS.find(c => c[0]===cat)||["",""])[1],price,half,deposit,city,condition,brand,model,dims,weight,verified,buyout,modes,img:null,example:true }));
+const F = { cat:null, q:"", d1:"", d2:"" };
+let LIST = [], seq = 0;
 
-/* =========================================================
-   LE FILM : 6 scènes enchaînées, lecture auto quand visible
-   ========================================================= */
-(()=>{
-  const film=$("#film"); if(!film) return;
-  const scenes=$$("#film .scene");
-  const CH=[
-    {t:"Je dépose", h:"Je dépose mon article", d:"Alex publie son vélo qui dormait au garage. Photo, prix à la journée, caution : en ligne en 3 minutes.", ms:3800},
-    {t:"Il est loué", h:"Il est loué", d:"Sam réserve 3 jours. Le calendrier se remplit, la réservation est confirmée.", ms:3600},
-    {t:"Remise", h:"Remise en main propre", d:"Alex et Sam se retrouvent. La caution est bloquée, pas débitée.", ms:3800},
-    {t:"Je suis payé", h:"Je récupère ma thune", d:"Alex reçoit 54 € pour un vélo qui ne lui servait pas.", ms:3600},
-    {t:"Sam profite", h:"Sam profite", d:"Sam roule sans avoir eu à acheter un vélo neuf.", ms:3600},
-    {t:"Il l'achète", h:"Et s'il l'achetait ?", d:"Conquis, Sam fait une offre d'achat depuis la messagerie. Alex accepte : le vélo change de maison.", ms:4800},
-  ];
-  const person=(shirt,skin,hair,wave)=>`<svg viewBox="0 0 100 170" aria-hidden="true">
-    <path d="M18 170 Q18 100 50 100 Q82 100 82 170Z" fill="${shirt}"/>
-    ${wave?`<path class="wave" d="M76 118 Q96 104 92 80" stroke="${shirt}" stroke-width="13" stroke-linecap="round" fill="none"/><circle class="wave" cx="92" cy="78" r="7" fill="${skin}"/>`:""}
-    <rect x="43" y="82" width="14" height="20" rx="6" fill="${skin}"/>
-    <circle cx="50" cy="62" r="25" fill="${skin}"/>
-    <path d="M25 60 Q24 34 50 34 Q77 34 75 60 Q70 46 52 46 Q36 46 25 60Z" fill="${hair}"/>
-    <circle cx="41" cy="64" r="2.8" fill="#0F1512"/><circle cx="59" cy="64" r="2.8" fill="#0F1512"/>
-    <path d="M41 73 Q50 82 59 73" stroke="#0F1512" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
-  $$("#film [data-who]").forEach(el=>{
-    const alex=el.dataset.who==="alex";
-    el.insertAdjacentHTML("beforeend", alex ? person("#FF6B4A","#F1C7A5","#2B1D14",el.hasAttribute("data-wave")) : person("#2F6FED","#C68B62","#161616",el.hasAttribute("data-wave")));
+$("#cats").innerHTML = `<button class="chip on" data-c="">Tout</button>` + CATS.map(([s,l]) => `<button class="chip" data-c="${s}">${SL.catIcon(s,18)}${l}</button>`).join("");
+$("#cats").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; F.cat = b.dataset.c || null; $$("#cats .chip").forEach(c => c.classList.toggle("on", c === b)); load(); });
+const today = new Date().toISOString().slice(0,10);
+$("#d1").min = $("#d2").min = today;
+$("#d1").addEventListener("change", () => { $("#d2").min = $("#d1").value || today; });
+$("#search").addEventListener("submit", e => { e.preventDefault(); F.q = $("#q").value.trim(); F.d1 = $("#d1").value; F.d2 = $("#d2").value || F.d1; load(); $("#catalogue").scrollIntoView({ behavior:"smooth" }); });
+
+async function fetchReal(){
+  const sel = "*,categories(slug,label),listing_images(path,position)";
+  const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 6000);
+  const r = await fetch(`${SL.SUPABASE_URL}/rest/v1/rpc/search_listings?select=${encodeURIComponent(sel)}`, {
+    method:"POST", signal:ctl.signal, headers:{ apikey:SL.SUPABASE_KEY, Authorization:`Bearer ${SL.SUPABASE_KEY}`, "Content-Type":"application/json" },
+    body: JSON.stringify({ p_category:F.cat, p_q:F.q || null, p_start:F.d1 || null, p_end:F.d2 || null }),
   });
-  // calendrier
-  $("#calGrid").innerHTML=Array.from({length:14},(_,k)=>{const d=10+k,b=[14,15,16].indexOf(d);return `<span class="${b>-1?"bk":""}" style="${b>-1?`--d:${.6+b*.25}s`:""}">${d}</span>`}).join("");
-  // confettis
-  const cols=["#C9F23B","#FF6B4A","#9DD4FF","#F2D9A8","#2F6FED"];
-  $("#confetti").innerHTML=Array.from({length:22},(_,k)=>`<i style="left:${Math.random()*100}%;background:${cols[k%5]};--d:${(2.9+Math.random()*.5).toFixed(2)}s"></i>`).join("");
-  // chapitres
-  $("#chapters").innerHTML=CH.map((c,k)=>`<button data-i="${k}" aria-label="${c.h}"><span class="bar"><i></i></span><span class="lbl"><b>0${k+1}</b><span class="t">${c.t}</span></span></button>`).join("");
-  const btns=$$("#chapters button");
-  let i=0, el=0, playing=false, userPaused=false, last=0;
-  function count(){const c=$("#cnt"),t0=performance.now();(function f(t){const p=Math.min(1,Math.max(0,(t-t0-500)/1100));c.textContent=Math.round(54*(1-Math.pow(1-p,3)));if(p<1&&i===3)requestAnimationFrame(f)})(t0)}
-  function show(n){
-    i=n; el=0;
-    scenes.forEach(s=>s.classList.remove("on")); void film.offsetWidth; scenes[n].classList.add("on");
-    btns.forEach((b,k)=>{b.classList.toggle("on",k===n);b.querySelector("i").style.width=k<n?"100%":"0%"});
-    const cap=$("#filmCap");cap.querySelector("h3").textContent=CH[n].h;cap.querySelector("p").textContent=CH[n].d;
-    cap.classList.remove("swap");void cap.offsetWidth;cap.classList.add("swap");
-    if(n===3){$("#cnt").textContent="0";count()}
-  }
-  function setPlay(p){playing=p;film.classList.toggle("paused",!p);$("#filmBtn").textContent=p?"❚❚":"▶";$("#filmBtn").setAttribute("aria-label",p?"Pause":"Lecture")}
-  function tick(t){
-    const dt=last?Math.min(t-last,100):0; last=t;
-    if(playing){el+=dt;btns[i].querySelector("i").style.width=Math.min(100,el/CH[i].ms*100)+"%";if(el>=CH[i].ms)show((i+1)%scenes.length)}
-    requestAnimationFrame(tick);
-  }
-  film.addEventListener("click",()=>{userPaused=playing;setPlay(!playing)});
-  btns.forEach(b=>b.addEventListener("click",()=>{show(+b.dataset.i);userPaused=false;setPlay(true)}));
-  new IntersectionObserver(([e])=>{if(e.isIntersecting&&!userPaused)setPlay(true);else if(!e.isIntersecting)setPlay(false)},{threshold:.35}).observe(film);
-  show(0); setPlay(false); requestAnimationFrame(tick);
-})();
-
-/* =========================================================
-   OFFRE D'ACHAT (fiche produit)
-   ========================================================= */
-function offerInfo(){
-  const amt=Math.max(1,+$("#m-offer-amt").value||0);
-  const fee=Math.max(Math.round(amt*CONFIG.SALE_RATE*100)/100,CONFIG.SALE_MIN);
-  $("#m-offer-info").textContent=`Si ${current.owner||"le propriétaire"} accepte : ${eur(amt+fee)} au total, frais de service compris. Remise avec photos, code et signature.`;
+  clearTimeout(tm);
+  if (!r.ok) throw new Error("catalogue");
+  return (await r.json()).map(l => ({
+    id:l.id, title:l.title, cat:l.categories?.slug, catLabel:l.categories?.label || "", price:l.price_per_day_cents, half:l.price_half_day_cents,
+    deposit:l.deposit_cents, city:l.city, condition:l.condition, brand:l.brand, model:l.model, dims:[l.length_cm,l.width_cm,l.height_cm],
+    weight:l.weight_kg ? +l.weight_kg : null, verified:!!l.brand_verified, buyout:!!l.buyout_enabled, modes:l.handover_modes || ["hand"],
+    img:(l.listing_images||[]).sort((a,b) => a.position-b.position).map(i => `${SL.SUPABASE_URL}/storage/v1/object/public/listing-images/${i.path}`)[0] || null,
+  }));
 }
-$("#m-offer-toggle").addEventListener("click",()=>{
-  const box=$("#m-offer");box.hidden=!box.hidden;
-  if(!box.hidden){$("#m-offer-amt").value=current.buyout_price||Math.round(current.price_per_day*15/5)*5;offerInfo();$("#m-offer-amt").focus()}
-});
-$("#m-offer-amt").addEventListener("input",offerInfo);
-$("#m-offer-send").addEventListener("click",()=>{
-  const amt=Math.max(1,+$("#m-offer-amt").value||0);
-  /* Version Supabase :
-     await supabase.from("purchase_offers").insert({listing_id:current.id, buyer_id:user.id, amount_cents:amt*100, status:"pending"});
-  */
-  closeModal();toast(`Offre de ${eur(amt)} envoyée à ${current.owner} 💰`);
-});
+function filterExamples(){
+  const q = F.q.toLowerCase();
+  return EXAMPLES.filter(l => (!F.cat || l.cat === F.cat) && (!q || [l.title,l.city,l.brand,l.model].join(" ").toLowerCase().includes(q)));
+}
+function card(l, i){
+  return `<button class="card" data-id="${esc(l.id)}" style="animation-delay:${Math.min(i,10)*45}ms" aria-label="${esc(l.title)}, ${esc(eur(l.price))} par jour">
+    <div class="thumb" style="background:${SL.catTint(l.cat)}">${l.img ? `<img src="${esc(l.img)}" alt="" loading="lazy">` : `<span class="pic">${SL.catIcon(l.cat, 84)}</span>`}
+      <span class="badge b-tl">${esc(l.catLabel)}</span>${l.buyout ? `<span class="badge b-bl">Rachetable</span>` : ""}${l.verified ? `<span class="badge b-br">✓ Marque vérifiée</span>` : ""}</div>
+    <h3>${esc(l.title)}</h3>
+    <p class="cond">${esc([COND[l.condition], l.brand].filter(Boolean).join(" · "))}</p>
+    <div class="meta"><span>${esc(l.city)}</span><span><b>${eur(l.price)}</b> / jour</span></div>
+  </button>`;
+}
+async function load(){
+  const my = ++seq;
+  $("#grid").innerHTML = Array.from({length:8}, () => `<div class="skel"></div>`).join("");
+  let list = [];
+  try { list = await fetchReal(); } catch {}
+  if (my !== seq) return;
+  const examples = !list.length;
+  LIST = examples ? filterExamples() : list;
+  const fmt = d => new Date(d).toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
+  const dates = F.d1 ? ` · ${fmt(F.d1)}${F.d2 && F.d2 !== F.d1 ? " – " + fmt(F.d2) : ""}` : "";
+  $("#result").innerHTML = `<span><b>${LIST.length}</b> équipement${LIST.length>1?"s":""}${dates}</span>${examples ? `<span class="demo-note">Exemples d'annonces, en attendant les premières publications</span>` : ""}`;
+  $("#grid").innerHTML = LIST.length ? LIST.map(card).join("") : `<div class="empty"><h3>Rien pour l'instant</h3><p>Essayez d'autres dates ou une autre catégorie.</p></div>`;
+}
+$("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) openItem(c.dataset.id); });
 
+function openItem(id){
+  const l = LIST.find(x => x.id === id); if (!l) return;
+  const half = l.half || Math.round(l.price * 0.6);
+  const dims = (l.dims||[]).filter(Boolean);
+  const specs = [["État", COND[l.condition]], ["Marque", l.brand ? `${l.brand}${l.model ? " · " + l.model : ""}` : null], ["Dimensions", dims.length ? dims.join(" × ") + " cm" : null], ["Poids", l.weight ? String(l.weight).replace(".", ",") + " kg" : null]].filter(x => x[1]);
+  $("#mThumb").style.background = SL.catTint(l.cat);
+  $("#mThumb").innerHTML = l.img ? `<img src="${esc(l.img)}" alt="">` : SL.catIcon(l.cat, 140);
+  $("#mBody").innerHTML = `
+    <div class="facts"><span class="fact">${esc(l.catLabel)}</span><span class="fact"><svg class="i" style="width:15px;height:15px"><use href="#i-pin"/></svg>${esc(l.city)}</span>${l.verified ? `<span class="fact ok">✓ Marque vérifiée</span>` : ""}${l.buyout ? `<span class="fact">Rachetable</span>` : ""}</div>
+    <h2 id="mTitle">${esc(l.title)}</h2>
+    <div class="prices"><div class="price"><span>Demi-journée</span><b>${eur(half)}</b></div><div class="price"><span>Journée</span><b>${eur(l.price)}</b></div></div>
+    ${specs.length ? `<div class="specs">${specs.map(([k,v]) => `<div class="spec"><span>${k}</span><b>${esc(v)}</b></div>`).join("")}</div>` : ""}
+    <p style="font-size:14px;color:var(--muted)">Remise : ${l.modes.map(m => MODE[m]).join(", ")}. Caution ${eur(l.deposit)}, bloquée et jamais débitée sauf casse ou vol.</p>
+    <a class="btn btn-dark" href="${l.example ? "app/?demo#/annonce/" + esc(l.id) : "app/#/annonce/" + esc(l.id)}">Choisir mes dates</a>
+    ${l.example ? `<p style="font-size:13px;color:var(--muted)">Annonce d'exemple : l'app s'ouvre en mode démo.</p>` : ""}`;
+  $("#modal").classList.add("open"); $("#modal").setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden"; document.body.classList.add("over");
+}
+function closeItem(){ $("#modal").classList.remove("open"); $("#modal").setAttribute("aria-hidden","true"); document.body.style.overflow = ""; document.body.classList.remove("over"); }
+$("#mClose").addEventListener("click", closeItem);
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeItem(); });
+addEventListener("keydown", e => { if (e.key === "Escape") closeItem(); });
+
+function sim(){ const p = +$("#rP").value, d = +$("#rD").value; $("#sP").textContent = p + " €"; $("#sD").textContent = d; $("#sE").textContent = (p*d).toLocaleString("fr-FR") + " €"; $("#sY").textContent = (p*d*12).toLocaleString("fr-FR") + " €"; }
+$("#rP").addEventListener("input", sim); $("#rD").addEventListener("input", sim); sim();
+
+show(); load();
 </script>
 </body>
 </html>

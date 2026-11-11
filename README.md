@@ -1,12 +1,14 @@
-# Rebond
+# Spoloc
 
-*Donnez du rebond à votre matos.*
+*Le sport, en location.*
 
-Rebond (ex-Location Ferro) est une marketplace de location d'équipements sportifs entre particuliers : une personne met en location un équipement dont elle se sert peu, une autre le loue, et peut aussi proposer de l'acheter.
+Spoloc (ex-Rebond, ex-Location Ferro) est une marketplace de location d'équipements sportifs entre particuliers : une personne met en location un équipement dont elle se sert peu, une autre le loue, et peut aussi proposer de l'acheter.
 
 ## Contenu
 
-- `index.html` : le site complet (accueil animé, film en 6 scènes, marketplace, dépôt d'annonce, offre d'achat, FAQ). Responsive, sans dépendance de build.
+- `index.html` : le site public en onglets (Louer, Publier, Qui sommes-nous, Aide avec l'assistant)
+- `app/index.html` : l'espace connecté (réservation, remises, messagerie, club)
+- `assets/spoloc.js` : pictogrammes, logo et assistant gratuit (réponses dans la table `assistant_faq`)
 
 ## Commission
 
