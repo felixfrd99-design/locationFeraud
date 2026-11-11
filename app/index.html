@@ -124,6 +124,11 @@ main{padding:28px 0 120px}
 .thumb{aspect-ratio:4/3.3;border-radius:var(--r);display:grid;place-items:center;font-size:72px;position:relative;overflow:hidden}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .thumb .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.92);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.thumb .buy{position:absolute;left:12px;bottom:12px;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.offer{border:1.5px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.offer h3{font-size:19px}
+.offer-row{display:flex;gap:10px}
+.offer-row .input{flex:1}
 .thumb .mine{position:absolute;right:12px;top:12px;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
 .card .em{transition:transform .5s var(--ease)}
 .card:hover .em{transform:scale(1.12) rotate(-6deg)}
@@ -421,6 +426,7 @@ function supaApi(){
   const vm = l => ({
     id:l.id, title:l.title, city:l.city, description:l.description||"",
     price:l.price_per_day_cents, deposit:l.deposit_cents, ownerId:l.owner_id,
+    buyout:!!l.buyout_enabled, buyoutPrice:l.buyout_price_cents || null,
     owner:l.profiles?.first_name || "Un membre", cat:l.categories?.slug, catLabel:l.categories?.label || "",
     img:(l.listing_images||[]).slice().sort((a,b)=>a.position-b.position).map(i=>pub(i.path))[0] || null,
   });
@@ -464,6 +470,11 @@ function supaApi(){
       return data.map(b => ({ ...b, listing: b.listings ? vm(b.listings) : null }));
     },
     async cancel(id){ const { error } = await sb.from("bookings").update({ status:"cancelled" }).eq("id", id); if (error) fail(error); },
+    async offer(id, cents){
+      // Commission recalculée par la base (trigger offers_prepare) ; refusée si le rachat n'est pas activé
+      const { data, error } = await sb.from("purchase_offers").insert({ listing_id:id, amount_cents:cents }).select().single();
+      if (error) fail(error); return data;
+    },
   };
 }
 
@@ -486,7 +497,8 @@ function demoApi(){
     ["d10","Rameur à air","fitness",1000,20000,"Bordeaux","Emma","Pliable, livraison possible dans Bordeaux."],
     ["d11","Planche de surf 7'2 mousse","glisse-eau",1500,12000,"Hossegor","Lucas","Idéale débutant, combinaison M en option."],
     ["d12","Réchaud + popote 2 personnes","camping",500,4000,"Marseille","Chloé","Cartouche de gaz non fournie."],
-  ].map(([id,title,cat,price,deposit,city,owner,description]) => ({ id,title,cat,catLabel:label(cat),price,deposit,city,owner,ownerId:"o-"+id,description,img:null }));
+  ].map(([id,title,cat,price,deposit,city,owner,description]) => ({ id,title,cat,catLabel:label(cat),price,deposit,city,owner,ownerId:"o-"+id,description,img:null,
+      buyout: ["d2","d5","d7","d11"].includes(id), buyoutPrice: ({ d2:32000, d5:14000, d7:190000, d11:18000 })[id] || null }));
   const t = today();
   // Périodes déjà prises par d'autres (démo)
   const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,1),addDays(t,2)],[addDays(t,9),addDays(t,11)]], d7:[[addDays(t,6),addDays(t,9)]], d3:[[addDays(t,0),addDays(t,4)]] };
@@ -536,6 +548,12 @@ function demoApi(){
     },
     async myBookings(){ await wait(250); return bookings.map(b => ({ ...b, listing: L.find(l => l.id===b.listing_id) })); },
     async cancel(id){ await wait(250); const b = bookings.find(x => x.id===id); if (b && ["pending","accepted"].includes(b.status)) { b.status = "cancelled"; save(); } },
+    async offer(id, cents){
+      await wait(400);
+      const l = L.find(x => x.id===id);
+      if (!l?.buyout) throw new Error("Le propriétaire n'a pas ouvert cet objet au rachat");
+      return { amount_cents:cents, fee_cents:feeFor(cents), total_cents:cents+feeFor(cents), status:"pending" };
+    },
   };
   return api;
 }
@@ -643,7 +661,7 @@ function cardHTML(l, i){
   const lk = look(l.cat), mine = S.user && l.ownerId === S.user.id;
   return `<button class="card" data-id="${esc(l.id)}" style="animation-delay:${Math.min(i,12)*40}ms" aria-label="${esc(l.title)}, ${esc(l.city)}, ${esc(eur(l.price))} par jour">
     <div class="thumb" style="background:${lk.color}">${l.img ? `<img src="${esc(l.img)}" alt="" loading="lazy">` : `<span class="em" aria-hidden="true">${lk.icon}</span>`}
-      <span class="tag">${esc(l.catLabel)}</span>${mine ? `<span class="mine">Votre annonce</span>` : ""}</div>
+      <span class="tag">${esc(l.catLabel)}</span>${mine ? `<span class="mine">Votre annonce</span>` : ""}${l.buyout ? `<span class="buy">Rachetable</span>` : ""}</div>
     <h3>${esc(l.title)}</h3>
     <div class="meta"><span>${esc(l.city)}</span><span><b>${eur(l.price)}</b> / jour</span></div>
   </button>`;
@@ -716,10 +734,17 @@ function drawDetail(){
       ${mine ? `<p class="demo-box" style="display:block">C'est votre annonce : vous ne pouvez pas la louer.</p>` : `
       <div><h3 style="font-size:20px;margin-bottom:10px">Choisissez vos dates</h3><div class="cal" id="cal"></div></div>
       <div class="quote" id="quote"></div>
-      <p class="note">Vous ne payez rien maintenant. Le propriétaire reçoit votre demande et l'accepte ou la refuse ; le paiement se fait ensuite.</p>`}
+      <p class="note">De 1 à 30 jours. Vous ne payez rien maintenant : une fois la demande acceptée, vous payez en ligne, puis la caution est bloquée (pas débitée) la veille du retrait et libérée au retour.</p>
+      ${l.buyout ? `<div class="offer">
+        <h3>Il vous plaît ? ${esc(l.owner)} accepte de le vendre</h3>
+        <p class="note">${l.buyoutPrice ? `Prix souhaité : <b style="color:var(--ink)">${eur(l.buyoutPrice)}</b>. ` : ""}Faites une offre, ${esc(l.owner)} l'accepte ou la refuse. Frais de ${Math.round(S.settings.rate*100)} % inclus au paiement.</p>
+        <div class="offer-row"><label class="sr" for="offerAmt">Votre offre en euros</label><input class="input" id="offerAmt" type="number" min="1" step="5" value="${l.buyoutPrice ? Math.round(l.buyoutPrice/100) : ""}" placeholder="Votre offre (€)"><button class="btn btn-ghost" id="offerBtn">Envoyer l'offre</button></div>
+        <p class="note" id="offerInfo"></p>
+      </div>` : ""}`}
     </div>`;
   $("#dScroll").scrollTop = 0;
   if (!mine) drawCal();
+  offerPreview();
   drawFoot();
 }
 function rangeHasBusy(a, b){ for (let d = a; d <= b; d = addDays(d,1)) if (S.cal.busy.has(d)) return true; return false; }
@@ -733,8 +758,9 @@ function drawCal(){
   for (let i = 0; i < startDow; i++) cells += `<span></span>`;
   for (let d = 1; d <= nDays; d++) {
     const ds = iso(new Date(y, mo, d)), past = ds < t, isBusy = busy.has(ds);
+    const tooFar = start && !end && ds > addDays(start, 29);
     const sel = ds === start || ds === end, inR = start && end && ds > start && ds < end;
-    cells += `<button class="day${isBusy?" busy":""}${sel?" sel":""}${inR?" in":""}${ds===t?" today":""}" data-d="${ds}" ${past||isBusy?"disabled":""} aria-pressed="${sel}" aria-label="${parse(ds).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${isBusy?", indisponible":""}">${d}</button>`;
+    cells += `<button class="day${isBusy?" busy":""}${sel?" sel":""}${inR?" in":""}${ds===t?" today":""}" data-d="${ds}" ${past||isBusy||tooFar?"disabled":""} aria-pressed="${sel}" aria-label="${parse(ds).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${isBusy?", indisponible":""}">${d}</button>`;
   }
   box.innerHTML = `
     <div class="cal-h">
@@ -743,7 +769,7 @@ function drawCal(){
       <button class="cal-nav" data-nav="1" aria-label="Mois suivant"><svg class="i"><use href="#i-right"/></svg></button>
     </div>
     <div class="cal-g">${["L","M","M","J","V","S","D"].map(x => `<span class="dow">${x}</span>`).join("")}${cells}</div>
-    <div class="cal-legend"><span><i style="background:var(--ink)"></i>Vos dates</span><span><i style="background:#E7E5DE"></i>Déjà loué</span></div>`;
+    <div class="cal-legend"><span><i style="background:var(--ink)"></i>Vos dates</span><span><i style="background:#E7E5DE"></i>Déjà loué</span><span>30 jours maximum</span></div>`;
   drawQuote();
 }
 document.addEventListener("click", e => {
@@ -754,6 +780,7 @@ document.addEventListener("click", e => {
   const d = day.dataset.d, c = S.cal;
   if (!c.start || (c.start && c.end)) { c.start = d; c.end = null; }
   else if (d < c.start) { c.start = d; }
+  else if (dayCount(c.start, d) > 30) { toast("30 jours maximum par location."); c.start = d; c.end = null; }
   else if (rangeHasBusy(c.start, d)) { toast("Certaines dates de cette période sont déjà prises."); c.start = d; c.end = null; }
   else c.end = d;
   drawCal(); drawFoot();
@@ -799,6 +826,21 @@ async function book(){
     try { const ranges = await api.busy(S.d.id); const set = new Set(); ranges.forEach(r => { for (let d=r.start_date; d<=r.end_date; d=addDays(d,1)) set.add(d); }); S.cal.busy = set; S.cal.start = S.cal.end = null; drawCal(); drawFoot(); } catch {}
   }
 }
+
+function offerPreview(){
+  const box = $("#offerInfo"); if (!box) return;
+  const v = Math.round((+$("#offerAmt").value || 0) * 100);
+  box.textContent = v > 0 ? `Si l'offre est acceptée, vous paierez ${eur(v + feeFor(v))}, dont ${eur(feeFor(v))} de frais.` : "";
+}
+document.addEventListener("input", e => { if (e.target.id === "offerAmt") offerPreview(); });
+document.addEventListener("click", async e => {
+  if (!e.target.closest("#offerBtn")) return;
+  const btn = $("#offerBtn"), v = Math.round((+$("#offerAmt").value || 0) * 100);
+  if (v <= 0) { toast("Indiquez un montant."); return; }
+  btn.disabled = true; btn.textContent = "Envoi…";
+  try { await api.offer(S.d.id, v); toast(`Offre de ${eur(v)} envoyée à ${S.d.owner}.`); btn.textContent = "Offre envoyée"; }
+  catch (ex) { toast(ex.message); btn.disabled = false; btn.textContent = "Envoyer l'offre"; }
+});
 
 /* =========================================================
    MES LOCATIONS

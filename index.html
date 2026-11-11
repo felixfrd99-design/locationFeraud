@@ -23,7 +23,7 @@
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -353,6 +353,46 @@ section{padding:110px 0}
 .commission h3{font-size:clamp(26px,3vw,38px);max-width:620px}
 .commission .pct{font-family:var(--display);font-weight:800;font-size:clamp(64px,9vw,120px);letter-spacing:-.05em;line-height:.9}
 
+/* ---------- Paiement & remise ---------- */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;position:relative;counter-reset:fl}
+.flow-step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;position:relative}
+.flow-step .when{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.flow-step h3{font-size:22px;margin:10px 0 8px}
+.flow-step p{color:var(--muted);font-size:15px}
+.flow-step .amt{display:inline-flex;margin-top:14px;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px}
+.flow-step:not(:last-child)::after{content:"→";position:absolute;right:-14px;top:50%;translate:0 -50%;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--lime);display:grid;place-items:center;font-size:14px;z-index:1}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.rule{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:24px;display:flex;gap:16px;align-items:flex-start}
+.rule b{font-family:var(--display);font-size:34px;color:var(--lime);line-height:1;flex:none;letter-spacing:-.03em}
+.rule h3{font-size:19px;margin-bottom:4px}
+.rule p{color:#B9C0BC;font-size:14px}
+.handover{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}
+.ho{border:1.5px dashed var(--line);border-radius:var(--r);padding:22px}
+.ho h3{font-size:19px;margin:10px 0 6px}
+.ho p{color:var(--muted);font-size:14px}
+.ho .ic{font-size:26px}
+.soon{font-size:11px;font-weight:600;background:var(--sand);border-radius:999px;padding:3px 8px;margin-left:6px;vertical-align:middle;font-family:var(--body);letter-spacing:0}
+/* ---------- Rachat (dépôt) ---------- */
+.buy-opt{grid-column:1/-1;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:16px;display:grid;gap:12px;background:var(--paper)}
+.switch{display:flex;align-items:center;gap:12px;cursor:pointer;font-weight:600}
+.switch input{width:22px;height:22px;accent-color:var(--ink)}
+.switch small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.p-thumb .buy{position:absolute;left:12px;bottom:12px;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+/* ---------- Qui sommes-nous ---------- */
+.about{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}
+.about-card{background:var(--ink);color:var(--paper);border-radius:32px;padding:36px;position:relative;overflow:hidden}
+.about-card .ph{width:96px;height:96px;border-radius:50%;background:var(--sand);display:grid;place-items:center;color:var(--ink);font-family:var(--display);font-weight:800;font-size:36px;margin-bottom:18px}
+.about-card h3{font-size:30px}
+.about-card .role{color:var(--lime);font-weight:600;margin:4px 0 16px}
+.about-card p{color:#B9C0BC}
+.about-card .todo{display:inline-block;margin-top:14px;background:rgba(201,242,59,.14);color:var(--lime);border-radius:8px;padding:4px 8px;font-size:13px}
+.about-txt p{font-size:18px;color:#3F4642;margin-bottom:14px}
+.about-txt p strong{color:var(--ink)}
+.values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+.value{background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px}
+.value b{display:block;font-family:var(--display);font-size:18px;margin-bottom:4px}
+.value span{font-size:14px;color:var(--muted)}
+
 /* ---------- FAQ ---------- */
 .faq{max-width:860px;margin-inline:auto}
 .faq details{border-bottom:1px solid var(--line);padding:22px 0}
@@ -413,6 +453,8 @@ footer a:hover{color:var(--lime)}
 
 /* ---------- Responsive ---------- */
 @media (max-width:1024px){
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow-step:nth-child(2)::after{display:none}
   .grid{grid-template-columns:repeat(3,1fr)}
   .trust-grid{grid-template-columns:repeat(2,1fr)}
 }
@@ -428,6 +470,10 @@ footer a:hover{color:var(--lime)}
   .steps-col{padding:0}
   .step{min-height:55vh}
   .how-grid{grid-template-columns:1fr}
+  .flow,.rules,.handover{grid-template-columns:1fr}
+  .flow-step:not(:last-child)::after{display:none}
+  .about{grid-template-columns:1fr}
+  .values{grid-template-columns:1fr}
   .grid{grid-template-columns:repeat(2,1fr);gap:14px}
   .side{position:static}
   .foot{grid-template-columns:1fr 1fr}
@@ -465,7 +511,8 @@ footer a:hover{color:var(--lime)}
       <a href="#marketplace">Marketplace</a>
       <a href="#comment">Comment ça marche</a>
       <a href="#deposer">Mettre en location</a>
-      <a href="#faq">FAQ</a>
+      <a href="#paiement">Paiement</a>
+      <a href="#qui">Qui sommes-nous</a>
       <a href="app/">Se connecter</a>
     </nav>
     <a href="app/" class="btn btn-dark">Ouvrir l'app <span class="arr">→</span></a>
@@ -476,6 +523,8 @@ footer a:hover{color:var(--lime)}
   <a href="#marketplace">Marketplace</a>
   <a href="#comment">Comment ça marche</a>
   <a href="#deposer">Mettre en location</a>
+  <a href="#paiement">Paiement</a>
+  <a href="#qui">Qui sommes-nous</a>
   <a href="#faq">FAQ</a>
   <a href="app/">Se connecter</a>
 </div>
@@ -640,15 +689,15 @@ footer a:hover{color:var(--lime)}
     <div class="how-panel on" data-panel="louer">
       <div class="how-grid">
         <div class="how-card rv"><span class="n">1</span><div class="ic" style="background:var(--sky)">🔎</div><h3>Trouvez</h3><p>Cherchez par sport, ville et dates. Comparez les annonces et les profils des propriétaires.</p></div>
-        <div class="how-card rv d1"><span class="n">2</span><div class="ic" style="background:var(--lime)">📅</div><h3>Réservez</h3><p>Choisissez vos dates, payez en ligne. La caution est seulement bloquée, pas débitée.</p></div>
+        <div class="how-card rv d1"><span class="n">2</span><div class="ic" style="background:var(--lime)">📅</div><h3>Réservez</h3><p>Jusqu'à 30 jours. Vous payez en ligne une fois la demande acceptée ; la caution est seulement bloquée, pas débitée.</p></div>
         <div class="how-card rv d2"><span class="n">3</span><div class="ic" style="background:var(--sand)">🏔️</div><h3>Profitez</h3><p>Récupérez le matériel, partez, rendez-le à la date prévue. La caution est libérée.</p></div>
       </div>
     </div>
     <div class="how-panel" data-panel="proposer">
       <div class="how-grid">
-        <div class="how-card"><span class="n">1</span><div class="ic" style="background:var(--coral)">📸</div><h3>Publiez</h3><p>Photos, description, prix à la journée et caution. Publier est gratuit.</p></div>
+        <div class="how-card"><span class="n">1</span><div class="ic" style="background:var(--coral)">📸</div><h3>Publiez</h3><p>Photos, prix à la journée, caution. Option : acceptez qu'on vous le rachète. Publier est gratuit.</p></div>
         <div class="how-card"><span class="n">2</span><div class="ic" style="background:var(--lime)">✅</div><h3>Acceptez</h3><p>Vous recevez les demandes et choisissez à qui vous louez, et quand.</p></div>
-        <div class="how-card"><span class="n">3</span><div class="ic" style="background:var(--sky)">💸</div><h3>Encaissez</h3><p>Vous êtes payé après la remise du matériel. Rebond ne prélève que 10 %.</p></div>
+        <div class="how-card"><span class="n">3</span><div class="ic" style="background:var(--sky)">💸</div><h3>Encaissez</h3><p>Vous touchez 100 % de votre prix, versé le lendemain de la remise. Les 10 % de frais sont payés par le locataire.</p></div>
       </div>
     </div>
   </div>
@@ -691,6 +740,10 @@ footer a:hover{color:var(--lime)}
         <div class="field"><label for="f-city">Ville</label><input id="f-city" required placeholder="Ex. Nantes"></div>
         <div class="field"><label for="f-price">Prix par jour (€)</label><input id="f-price" type="number" min="1" step="1" value="20" required></div>
         <div class="field"><label for="f-dep">Caution (€)</label><input id="f-dep" type="number" min="0" step="10" value="200"></div>
+        <div class="buy-opt">
+          <label class="switch"><input type="checkbox" id="f-buy"><span>J'accepte qu'on me le rachète<small>Les locataires pourront vous faire une offre. Vous restez libre de refuser.</small></span></label>
+          <div class="field" id="f-buy-box" hidden><label for="f-buy-price">Prix de vente souhaité (€, facultatif)</label><input id="f-buy-price" type="number" min="1" step="5" placeholder="Ex. 350"></div>
+        </div>
         <div class="field full"><label for="f-desc">Description</label><textarea id="f-desc" placeholder="État, taille, accessoires fournis, conditions de retrait…"></textarea></div>
         <div class="field full"><label>Photos</label><div class="drop" id="drop">📷 Cliquez pour ajouter des photos<br><small>Elles seront stockées dans Supabase Storage</small><input type="file" id="f-img" accept="image/*" hidden multiple></div></div>
         <div class="full"><button class="btn btn-dark" type="submit" style="width:100%;justify-content:center">Publier mon annonce <span class="arr">→</span></button></div>
@@ -712,21 +765,54 @@ footer a:hover{color:var(--lime)}
   </div>
 </section>
 
-<!-- ============ CONFIANCE ============ -->
-<section style="padding-top:0">
+<!-- ============ PAIEMENT, CAUTION, REMISE ============ -->
+<section id="paiement" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv">
-      <div><span class="eyebrow">Confiance</span><h2>Louer sereinement.</h2></div>
+      <div><span class="eyebrow">Paiement et caution</span><h2>Votre argent est protégé, à chaque étape.</h2></div>
+      <p>Tout passe par Rebond, via Stripe, le prestataire de paiement utilisé par des millions d'entreprises. Ni liquide, ni virement entre inconnus.</p>
     </div>
-    <div class="trust-grid">
-      <div class="trust rv"><div class="ic">🔒</div><h3>Paiement sécurisé</h3><p>Le paiement passe par la plateforme. Le propriétaire est payé une fois la location commencée.</p></div>
-      <div class="trust rv d1"><div class="ic">🛡️</div><h3>Caution bloquée</h3><p>Une empreinte bancaire est prise au moment de la réservation et libérée au retour.</p></div>
-      <div class="trust rv d2"><div class="ic">🪪</div><h3>Profils vérifiés</h3><p>Email et téléphone vérifiés, avis laissés après chaque location.</p></div>
-      <div class="trust rv d3"><div class="ic">💬</div><h3>Messagerie intégrée</h3><p>Organisez le retrait et le retour directement avec l'autre personne.</p></div>
+    <div class="flow">
+      <div class="flow-step rv"><span class="when">1 · La demande est acceptée</span><h3>Le locataire paie en ligne</h3><p>Carte bancaire. L'argent est conservé par Stripe : le propriétaire ne reçoit rien tant que le matériel n'a pas été remis.</p><span class="amt" style="background:#DCEEFF;color:#0B4F8A">Prix + 10 % de frais</span></div>
+      <div class="flow-step rv d1"><span class="when">2 · La veille du retrait</span><h3>La caution est bloquée</h3><p>Une empreinte bancaire réserve le montant de la caution sur la carte, sans le débiter.</p><span class="amt" style="background:#FBEBCB;color:#7A5200">Bloquée, pas débitée</span></div>
+      <div class="flow-step rv d2"><span class="when">3 · Le jour J</span><h3>Remise et photos</h3><p>Photos de l'état dans l'app, puis le locataire donne son code de remise. Le propriétaire est payé dès le lendemain.</p><span class="amt" style="background:#E6F7B0;color:#3E5200">100 % pour le propriétaire</span></div>
+      <div class="flow-step rv d3"><span class="when">4 · Le retour</span><h3>La caution est libérée</h3><p>Nouvelles photos. Tout va bien : la caution est relâchée. En cas de casse ou de vol, tout ou partie est retenu, photos à l'appui.</p><span class="amt" style="background:#EEECE6;color:#3F4642">Libérée ou retenue</span></div>
     </div>
-    <div class="commission rv">
-      <h3>Une seule commission, transparente, sur chaque location. Rien pour publier, rien caché.</h3>
-      <div class="pct" id="pctLbl">10%</div>
+    <div class="rules">
+      <div class="rule rv"><b>30 j</b><div><h3>30 jours maximum</h3><p>D'une journée à un mois. Au-delà, on vous propose plutôt de racheter l'objet.</p></div></div>
+      <div class="rule rv d1"><b>10 %</b><div><h3>Des frais légers</h3><p>10 % payés par le locataire (2 € minimum). Gratuit pour publier, gratuit pour le propriétaire.</p></div></div>
+      <div class="rule rv d2"><b>✓</b><div><h3>Protégé sur Rebond seulement</h3><p>Caution, photos, avis et aide en cas de litige n'existent que si vous payez sur le site. Les coordonnées s'affichent après le paiement.</p></div></div>
+    </div>
+    <div class="sec-head rv" style="margin:70px 0 24px"><div><span class="eyebrow">Récupérer le matériel</span><h2>Simple comme un rendez-vous.</h2></div></div>
+    <div class="handover">
+      <div class="ho rv"><div class="ic">🤝</div><h3>En main propre</h3><p>Le propriétaire propose des créneaux, vous en choisissez un. Rendez-vous dans un lieu simple : devant chez lui, une gare, un parking.</p></div>
+      <div class="ho rv d1"><div class="ic">🚲</div><h3>Livraison par le propriétaire</h3><p>S'il le propose, il apporte le matériel près de chez vous ou sur votre lieu d'activité, contre quelques euros fixés dans l'annonce.</p></div>
+      <div class="ho rv d2"><div class="ic">🏪</div><h3>Point Rebond <span class="soon">bientôt</span></h3><p>Des commerces partenaires gardent le matériel : le propriétaire le dépose, vous le récupérez quand ça vous arrange.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUI SOMMES-NOUS ============ -->
+<section id="qui">
+  <div class="wrap about">
+    <div class="about-card rv">
+      <div class="ph" aria-hidden="true">T</div>
+      <h3>Tim</h3>
+      <div class="role">Fondateur de Rebond</div>
+      <p>[Deux phrases sur toi : ton sport, l'objet qui dormait chez toi et qui t'a donné l'idée.]</p>
+      <span class="todo">À compléter, avec ta photo</span>
+    </div>
+    <div class="about-txt rv d1">
+      <span class="eyebrow">Qui sommes-nous</span>
+      <h2 style="font-size:clamp(38px,5.6vw,64px);font-weight:800;margin:14px 0 22px">On achète trop de matos qu'on n'utilise pas.</h2>
+      <p>Un paddle sert deux semaines par an. Des skis de rando, quelques sorties. Le reste du temps, ils prennent la poussière au garage, pendant que d'autres hésitent à se lancer parce que le matériel coûte cher.</p>
+      <p><strong>Rebond met les deux en relation</strong>, près de chez vous, pour une journée ou un mois. Le propriétaire gagne de l'argent avec ce qui dormait, le locataire essaie un sport sans tout acheter, et un objet de moins sort de l'usine.</p>
+      <div class="values">
+        <div class="value"><b>Local</b><span>Du matériel à quelques minutes de chez vous.</span></div>
+        <div class="value"><b>Honnête</b><span>10 % de frais, affichés avant de payer. Rien de caché.</span></div>
+        <div class="value"><b>Protégé</b><span>Paiement, caution et photos à chaque location.</span></div>
+      </div>
+      <p style="margin-top:22px;font-size:16px">Une question, une idée, un magasin partenaire ? Écrivez-nous : <a href="mailto:[ton-email]" style="font-weight:600">[ton email]</a></p>
     </div>
   </div>
 </section>
@@ -739,7 +825,11 @@ footer a:hover{color:var(--lime)}
       <details><summary>Combien coûte Rebond ?</summary><p id="faqFee">Publier une annonce est gratuit. Des frais de service de 10 % sont ajoutés au prix de chaque location, avec un minimum par réservation.</p></details>
       <details><summary>Que se passe-t-il si le matériel est abîmé ?</summary><p>La caution fixée par le propriétaire est bloquée pendant la location. En cas de dommage constaté au retour, tout ou partie peut être retenu après échange entre les deux parties.</p></details>
       <details><summary>Qui fixe le prix ?</summary><p>Le propriétaire choisit librement son prix à la journée et le montant de la caution.</p></details>
-      <details><summary>Comment récupère-t-on l'équipement ?</summary><p>En main propre, au lieu et à l'heure convenus avec le propriétaire via la messagerie.</p></details>
+      <details><summary>Comment se passe le paiement ?</summary><p>Vous payez en ligne par carte, sur Rebond, une fois votre demande acceptée. L'argent est conservé par notre prestataire de paiement Stripe et n'est versé au propriétaire que le lendemain de la remise du matériel.</p></details>
+      <details><summary>Combien de temps peut-on louer ?</summary><p>De 1 à 30 jours. Pour un besoin plus long, demandez au propriétaire s'il accepte de vendre.</p></details>
+      <details><summary>Comment récupère-t-on l'équipement ?</summary><p>En main propre sur un créneau proposé par le propriétaire, ou livré près de chez vous s'il propose la livraison. Des points de retrait chez des commerçants partenaires arrivent bientôt.</p></details>
+      <details><summary>Peut-on acheter l'objet qu'on a loué ?</summary><p>Oui, si le propriétaire a activé l'option « rachat » sur son annonce. Vous lui faites une offre, il accepte ou refuse. Les mêmes frais de 10 % s'appliquent, et le paiement se fait aussi sur Rebond.</p></details>
+      <details><summary>Pourquoi ne pas payer directement le propriétaire ?</summary><p>Parce qu'en dehors de Rebond, vous perdez tout : pas de caution, pas de photos d'état, pas d'avis, pas d'aide en cas de litige. Et le propriétaire n'a aucune garantie d'être payé.</p></details>
       <details><summary>Puis-je refuser une demande de location ?</summary><p>Oui. Chaque demande doit être acceptée par le propriétaire avant d'être confirmée.</p></details>
     </div>
   </div>
@@ -765,8 +855,8 @@ footer a:hover{color:var(--lime)}
     <div class="foot">
       <div><a href="#top" class="logo" aria-label="Rebond, accueil"><svg class="logo-mark" viewBox="0 0 80 64" aria-hidden="true"><path class="lm-path" d="M4 54 Q15 4 28 54 Q37 24 46 54 Q52 38 58 54" stroke="#F3F1EA" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="lm-ball" cx="68" cy="46" r="9" fill="#FF6B4A"/></svg>rebond</a><p style="margin-top:14px;max-width:300px;font-size:14px">La marketplace de location d'équipements sportifs entre particuliers.</p></div>
       <div><h5>Louer</h5><ul><li><a href="#marketplace">Marketplace</a></li><li><a href="#comment">Comment ça marche</a></li></ul></div>
-      <div><h5>Proposer</h5><ul><li><a href="#deposer">Déposer une annonce</a></li><li><a href="#faq">Commission</a></li></ul></div>
-      <div><h5>Infos</h5><ul><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h5>Proposer</h5><ul><li><a href="#deposer">Déposer une annonce</a></li><li><a href="#paiement">Paiement et caution</a></li></ul></div>
+      <div><h5>Infos</h5><ul><li><a href="#qui">Qui sommes-nous</a></li><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Contact</a></li></ul></div>
     </div>
     <div class="foot-bottom"><span>© <span id="yr"></span> Rebond</span><span>Donnez du rebond à votre matos.</span></div>
   </div>
@@ -788,6 +878,7 @@ footer a:hover{color:var(--lime)}
       </div>
       <div class="quote" id="m-quote"></div>
       <button class="btn btn-dark" id="m-book">Demander à réserver <span class="arr">→</span></button>
+      <p style="font-size:13px;color:var(--muted);margin-top:10px">Location de 1 à 30 jours. Vous ne payez qu'une fois la demande acceptée.</p>
       <button class="btn btn-ghost" id="m-offer-toggle">💰 Proposer de l'acheter</button>
       <div id="m-offer" hidden style="margin-top:14px;padding:16px;border-radius:14px;background:var(--paper)">
         <div class="field"><label for="m-offer-amt">Votre offre (€)</label><input type="number" id="m-offer-amt" min="1" step="5"></div>
@@ -828,16 +919,16 @@ const CATEGORIES = [
 /* Données de démo : même forme que la table `listings` de Supabase */
 let LISTINGS = [
   {id:1, title:"Vélo gravel carbone taille M", category:"velo", price_per_day:25, deposit:400, city:"Lyon", owner:"Julien", description:"Groupe Shimano GRX, pneus 40 mm, casque fourni.", created_at:"2026-11-09"},
-  {id:2, title:"Paddle gonflable 10'6 + pagaie", category:"glisse-eau", price_per_day:22, deposit:200, city:"Biarritz", owner:"Léa", description:"Gilet, leash et sac de transport inclus.", created_at:"2026-11-08"},
+  {id:2, title:"Paddle gonflable 10'6 + pagaie", category:"glisse-eau", price_per_day:22, deposit:200, city:"Biarritz", owner:"Léa", description:"Gilet, leash et sac de transport inclus.", created_at:"2026-11-08", buyout:true, buyout_price:320},
   {id:3, title:"Kayak biplace sit-on-top", category:"kayak", price_per_day:30, deposit:300, city:"Annecy", owner:"Marc", description:"Deux pagaies, bidon étanche. Galerie de toit possible.", created_at:"2026-11-07"},
   {id:4, title:"Snowboard 156 + fixations", category:"montagne", price_per_day:18, deposit:250, city:"Grenoble", owner:"Inès", description:"Fart récent, idéal all-mountain.", created_at:"2026-11-10"},
-  {id:5, title:"Tente 3 places ultra-légère", category:"camping", price_per_day:12, deposit:150, city:"Annecy", owner:"Tom", description:"1,9 kg, montage en 5 minutes.", created_at:"2026-11-05"},
+  {id:5, title:"Tente 3 places ultra-légère", category:"camping", price_per_day:12, deposit:150, city:"Annecy", owner:"Tom", description:"1,9 kg, montage en 5 minutes.", created_at:"2026-11-05", buyout:true, buyout_price:140},
   {id:6, title:"Raquettes de padel (x2) + balles", category:"raquette", price_per_day:8, deposit:80, city:"Paris", owner:"Sarah", description:"Parfait pour tester le padel avant d'acheter.", created_at:"2026-11-06"},
-  {id:7, title:"VTT électrique tout suspendu", category:"velo", price_per_day:45, deposit:800, city:"Chambéry", owner:"Hugo", description:"Batterie 625 Wh, autonomie journée.", created_at:"2026-11-04"},
+  {id:7, title:"VTT électrique tout suspendu", category:"velo", price_per_day:45, deposit:800, city:"Chambéry", owner:"Hugo", description:"Batterie 625 Wh, autonomie journée.", created_at:"2026-11-04", buyout:true, buyout_price:1900},
   {id:8, title:"Kit d'escalade complet", category:"escalade", price_per_day:15, deposit:150, city:"Fontainebleau", owner:"Nora", description:"Baudrier, chaussons 41, crash pad.", created_at:"2026-11-03"},
   {id:9, title:"Skis de rando + peaux", category:"montagne", price_per_day:28, deposit:350, city:"Chamonix", owner:"Paul", description:"Fixations Dynafit, peaux neuves.", created_at:"2026-11-02"},
   {id:10, title:"Rameur à air", category:"fitness", price_per_day:10, deposit:200, city:"Bordeaux", owner:"Emma", description:"Pliable, livraison possible dans Bordeaux.", created_at:"2026-11-01"},
-  {id:11, title:"Planche de surf 7'2 mousse", category:"glisse-eau", price_per_day:15, deposit:120, city:"Hossegor", owner:"Lucas", description:"Idéale débutant, combinaison M en option.", created_at:"2026-10-30"},
+  {id:11, title:"Planche de surf 7'2 mousse", category:"glisse-eau", price_per_day:15, deposit:120, city:"Hossegor", owner:"Lucas", description:"Idéale débutant, combinaison M en option.", created_at:"2026-10-30", buyout:true, buyout_price:180},
   {id:12, title:"Réchaud + popote 2 personnes", category:"camping", price_per_day:5, deposit:40, city:"Marseille", owner:"Chloé", description:"Cartouche de gaz non fournie.", created_at:"2026-10-29"},
 ];
 
@@ -919,7 +1010,7 @@ function cardHTML(l){
   return `<article class="p-card" data-id="${l.id}" tabindex="0">
     <div class="p-thumb" style="background:${c.color}">
       ${l.image_url?`<img src="${esc(l.image_url)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:`<span class="em">${c.icon}</span>`}
-      <span class="tag">${c.label}</span>
+      <span class="tag">${c.label}</span>${l.buyout?`<span class="buy">Rachetable</span>`:""}
       <button class="fav" aria-label="Ajouter aux favoris" data-fav>♡</button>
     </div>
     <div class="p-body"><h4>${esc(l.title)}</h4>
@@ -965,14 +1056,19 @@ function openModal(id){
   $("#m-start").min=iso(new Date());$("#m-start").value=iso(t);$("#m-end").value=iso(e);$("#m-end").min=iso(t);
   updateQuote();
   $("#m-offer").hidden=true;
+  $("#m-offer-toggle").style.display=current.buyout?"":"none";
+  $("#m-offer-toggle").textContent=current.buyout_price?`💰 Rachetable · ${eur(current.buyout_price)} souhaités`:"💰 Proposer de l'acheter";
   $("#modal").classList.add("open");$("#modal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
 }
 function closeModal(){$("#modal").classList.remove("open");$("#modal").setAttribute("aria-hidden","true");document.body.style.overflow=""}
+const addD=(v,n)=>{const d=new Date(v);d.setDate(d.getDate()+n);return iso(d)};
 function rentalDays(){const s=new Date($("#m-start").value),e=new Date($("#m-end").value);return Math.max(1,Math.round((e-s)/864e5)+1)}
 function updateQuote(){
   if(!current) return;
   $("#m-end").min=$("#m-start").value;
+  $("#m-end").max=addD($("#m-start").value,29);
   if($("#m-end").value<$("#m-start").value) $("#m-end").value=$("#m-start").value;
+  if($("#m-end").value>$("#m-end").max){ $("#m-end").value=$("#m-end").max; toast("30 jours maximum par location."); }
   const q=computeQuote(current.price_per_day,rentalDays());
   $("#m-quote").innerHTML=`<div><span>${eur(current.price_per_day)} × ${q.days} jour${q.days>1?"s":""}</span><span>${eur(q.subtotal)}</span></div>
     <div><span>Frais de service (${Math.round(CONFIG.COMMISSION_RATE*100)} %${q.fee===CONFIG.COMMISSION_MIN&&q.subtotal*CONFIG.COMMISSION_RATE<CONFIG.COMMISSION_MIN?", minimum":""})</span><span>${eur(q.fee)}</span></div>
@@ -1009,6 +1105,7 @@ function formData(){return{
   id:Date.now(), title:$("#f-title").value.trim()||"Votre équipement", category:$("#f-cat").value,
   city:$("#f-city").value.trim()||"Votre ville", price_per_day:Math.max(1,+$("#f-price").value||0),
   deposit:+$("#f-dep").value||0, description:$("#f-desc").value.trim(), owner:"Vous",
+  buyout:$("#f-buy").checked, buyout_price:$("#f-buy").checked?(+$("#f-buy-price").value||null):null,
   image_url:previewImg, created_at:iso(new Date())+"T"+Date.now()
 }}
 function updatePreview(){
@@ -1018,18 +1115,19 @@ function updatePreview(){
   $("#daysLbl").textContent=days;$("#perDay").textContent=eur(d.price_per_day)+"/jour";
   $("#earn").textContent=eur(earn);$("#earnYear").textContent=eur(earn*12)+" / an";
 }
-["#f-title","#f-cat","#f-city","#f-price","#f-dep","#days"].forEach(s=>$(s).addEventListener("input",updatePreview));
+["#f-title","#f-cat","#f-city","#f-price","#f-dep","#days","#f-buy-price"].forEach(s=>$(s).addEventListener("input",updatePreview));
+$("#f-buy").addEventListener("change",()=>{$("#f-buy-box").hidden=!$("#f-buy").checked;updatePreview()});
 updatePreview();
 $("#listForm").addEventListener("submit",async e=>{
   e.preventDefault();
   const d=formData();
   /* Version Supabase :
      1. upload photos : supabase.storage.from("listing-images").upload(`${user.id}/${Date.now()}.jpg`, file)
-     2. insert : supabase.from("listings").insert({owner_id:user.id, title, category_id, price_per_day_cents, deposit_cents, city, description, status:"active"})
+     2. insert : supabase.from("listings").insert({owner_id:user.id, title, category_id, price_per_day_cents, deposit_cents, city, description, buyout_enabled, buyout_price_cents, status:"active"})
   */
   LISTINGS.unshift(d);
   state.cat="all";$$(".chip").forEach(c=>c.classList.toggle("on",c.dataset.cat==="all"));
-  render();e.target.reset();previewImg=null;$("#drop").firstChild.textContent="📷 Cliquez pour ajouter des photos";updatePreview();
+  render();e.target.reset();$("#f-buy-box").hidden=true;previewImg=null;$("#drop").firstChild.textContent="📷 Cliquez pour ajouter des photos";updatePreview();
   toast("Annonce publiée 🎉 Elle apparaît dans la marketplace.");
   setTimeout(()=>$("#marketplace").scrollIntoView({behavior:"smooth"}),600);
 });
@@ -1100,7 +1198,7 @@ function offerInfo(){
 }
 $("#m-offer-toggle").addEventListener("click",()=>{
   const box=$("#m-offer");box.hidden=!box.hidden;
-  if(!box.hidden){$("#m-offer-amt").value=Math.round(current.price_per_day*15/5)*5;offerInfo();$("#m-offer-amt").focus()}
+  if(!box.hidden){$("#m-offer-amt").value=current.buyout_price||Math.round(current.price_per_day*15/5)*5;offerInfo();$("#m-offer-amt").focus()}
 });
 $("#m-offer-amt").addEventListener("input",offerInfo);
 $("#m-offer-send").addEventListener("click",()=>{
@@ -1112,7 +1210,6 @@ $("#m-offer-send").addEventListener("click",()=>{
 });
 
 /* Textes liés à la config */
-$("#pctLbl").textContent=Math.round(CONFIG.COMMISSION_RATE*100)+"%";
 $("#faqFee").textContent=`Publier une annonce est gratuit. Des frais de service de ${Math.round(CONFIG.COMMISSION_RATE*100)} % sont ajoutés au prix de chaque location${CONFIG.COMMISSION_MIN?`, avec un minimum de ${eur(CONFIG.COMMISSION_MIN)} par réservation`:""}. Le propriétaire touche 100 % du prix qu'il a fixé.`;
 </script>
 </body>
