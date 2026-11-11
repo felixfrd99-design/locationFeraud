@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rebond — Mon espace</title>
-<meta name="description" content="Trouvez et louez des équipements sportifs près de chez vous.">
+<meta name="description" content="Louez, prêtez et rachetez du matériel de sport près de chez vous.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1512'/%3E%3Cpath d='M10 46 Q18 10 27 46 Q33 26 39 46 Q43 34 47 46' stroke='%23FF6B4A' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='54' cy='40' r='6' fill='%23F3F1EA'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,8 +21,9 @@
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden;overflow-x:clip}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
-button,input,select{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:inherit}
 h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;line-height:1.05}
@@ -31,7 +32,6 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;line-height:1.05}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
-/* Logo */
 .logo{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.045em;text-decoration:none}
 .logo svg{width:36px;height:29px;overflow:visible}
 .lm-path{stroke-dasharray:140;stroke-dashoffset:140;animation:draw 1.1s .1s var(--ease) forwards}
@@ -39,24 +39,25 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes hop{0%,60%,100%{transform:none}30%{transform:translateY(-12px)}}
 
-/* Boutons & champs */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:0;font-weight:600;font-size:15px;transition:transform .25s var(--ease),background .2s,box-shadow .25s;text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;border:0;font-weight:600;font-size:15px;transition:transform .25s var(--ease),background .2s,box-shadow .25s;text-decoration:none;white-space:nowrap}
 .btn:active{transform:scale(.97)}
 .btn-dark{background:var(--ink);color:var(--paper)}
 .btn-dark:hover{box-shadow:0 10px 24px -10px rgba(15,21,18,.6)}
 .btn-lime{background:var(--lime);color:var(--ink)}
 .btn-ghost{background:transparent;border:1.5px solid var(--line)}
 .btn-ghost:hover{border-color:var(--ink)}
+.btn-sm{min-height:44px;padding:0 16px;font-size:14px}
 .btn[disabled]{opacity:.45;pointer-events:none}
 .btn-block{width:100%}
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:13px;font-weight:600}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.field .lbl{font-size:13px;font-weight:600}
 .input{width:100%;min-height:48px;border:1.5px solid var(--line);background:var(--card);border-radius:var(--r-sm);padding:0 14px;outline:none;transition:border-color .2s}
+textarea.input{padding:12px 14px;min-height:96px;resize:vertical}
 .input:focus{border-color:var(--ink)}
 .err{font-size:14px;color:#B3261E;min-height:20px}
 .note{font-size:13px;color:var(--muted)}
 
-/* ---------------- Auth ---------------- */
+/* Connexion */
 .auth{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
 .auth-brand{background:var(--ink);color:var(--paper);padding:40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
 .auth-brand .logo{color:var(--paper)}
@@ -73,20 +74,23 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke
 .seg button{border:0;background:none;min-height:42px;border-radius:999px;font-weight:600;color:var(--muted);transition:background .25s,color .25s}
 .seg button.on{background:var(--ink);color:var(--paper)}
 .demo-box{background:var(--lime);border-radius:var(--r-sm);padding:14px 16px;font-size:14px;display:flex;flex-direction:column;gap:10px}
-.demo-box b{font-weight:600}
+.ref-box{background:var(--card);border:1.5px dashed var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:14px}
 
-/* ---------------- Shell ---------------- */
-.top{position:sticky;top:0;z-index:30;background:rgba(243,241,234,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.top-in{display:flex;align-items:center;gap:18px;height:68px}
+/* Coquille */
+.top{position:sticky;top:0;z-index:30;background:rgba(243,241,234,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:14px;height:68px}
 .app-tag{font-family:var(--body);font-size:12px;font-weight:600;background:var(--ink);color:var(--lime);border-radius:999px;padding:2px 8px;letter-spacing:0}
-.tabs{display:flex;gap:4px;margin-left:24px}
-.tab{display:inline-flex;align-items:center;gap:8px;border:0;background:none;padding:10px 16px;border-radius:999px;font-weight:600;color:var(--muted);text-decoration:none;min-height:44px}
+.tabs{display:flex;gap:2px;margin-left:16px}
+.tab{display:inline-flex;align-items:center;gap:8px;border:0;background:none;padding:10px 14px;border-radius:999px;font-weight:600;color:var(--muted);text-decoration:none;min-height:44px;white-space:nowrap}
 .tab:hover{color:var(--ink)}
 .tab.on{background:var(--card);color:var(--ink);box-shadow:0 1px 0 var(--line)}
-.tab .count{background:var(--coral);color:#fff;font-size:12px;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 6px}
-.top-right{margin-left:auto;position:relative}
-.avatar{width:44px;height:44px;border-radius:50%;border:0;background:var(--sand);font-family:var(--display);font-weight:800;font-size:18px}
-.menu{position:absolute;right:0;top:54px;width:240px;background:var(--card);border-radius:var(--r-sm);box-shadow:0 20px 50px -20px rgba(15,21,18,.4);border:1px solid var(--line);padding:8px;display:flex;flex-direction:column;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s}
+.count{background:var(--coral);color:#fff;font-size:12px;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 6px}
+.top-right{margin-left:auto;position:relative;display:flex;align-items:center;gap:10px}
+.pts-pill{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:0 12px;min-height:44px;font-weight:600;font-size:14px;text-decoration:none}
+.pts-pill b{font-family:var(--display);font-size:17px}
+.avatar{width:44px;height:44px;border-radius:50%;border:0;background:var(--sand);font-family:var(--display);font-weight:800;font-size:18px;position:relative}
+.avatar.founder::after{content:"★";position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--lime);font-size:11px;display:grid;place-items:center}
+.menu{position:absolute;right:0;top:54px;width:250px;background:var(--card);border-radius:var(--r-sm);box-shadow:0 20px 50px -20px rgba(15,21,18,.4);border:1px solid var(--line);padding:8px;display:flex;flex-direction:column;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s}
 .menu.open{opacity:1;transform:none;pointer-events:auto}
 .menu .who{padding:10px 12px;border-bottom:1px solid var(--line);margin-bottom:6px}
 .menu .who b{display:block}
@@ -101,6 +105,7 @@ main{padding:28px 0 120px}
 .hello{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px}
 .hello h1{font-size:clamp(32px,4.4vw,52px);font-weight:800}
 .hello p{color:var(--muted);margin-top:6px}
+.sec-t{font-size:24px;margin:34px 0 14px;display:flex;align-items:center;gap:10px}
 
 /* Filtres */
 .filters{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px;margin-bottom:16px}
@@ -116,39 +121,39 @@ main{padding:28px 0 120px}
 .result-line b{color:var(--ink)}
 .link-btn{border:0;background:none;text-decoration:underline;font-weight:600;color:var(--ink);min-height:44px}
 
-/* Grille */
+/* Cartes */
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .card{border:0;background:none;text-align:left;border-radius:var(--r);transition:transform .35s var(--ease);animation:pop .5s var(--ease) both;padding:0}
 .card:hover{transform:translateY(-5px)}
 @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 .thumb{aspect-ratio:4/3.3;border-radius:var(--r);display:grid;place-items:center;font-size:72px;position:relative;overflow:hidden}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.thumb .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.92);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
-.thumb .buy{position:absolute;left:12px;bottom:12px;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
-.offer{border:1.5px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
-.offer h3{font-size:19px}
-.offer-row{display:flex;gap:10px}
-.offer-row .input{flex:1}
-.thumb .mine{position:absolute;right:12px;top:12px;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.badge{position:absolute;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;line-height:1.2}
+.b-tl{left:12px;top:12px;background:rgba(255,255,255,.92)}
+.b-tr{right:12px;top:12px;background:var(--ink);color:var(--lime)}
+.b-bl{left:12px;bottom:12px;background:var(--ink);color:var(--lime)}
+.b-br{right:12px;bottom:12px;background:#E6F7B0;color:#3E5200}
 .card .em{transition:transform .5s var(--ease)}
 .card:hover .em{transform:scale(1.12) rotate(-6deg)}
 .card h3{font-size:18px;margin:12px 4px 4px;line-height:1.2}
 .card .meta{display:flex;justify-content:space-between;align-items:baseline;margin:0 4px;font-size:14px;color:var(--muted);gap:8px}
 .card .meta b{font-family:var(--display);font-size:19px;color:var(--ink)}
+.cond{font-size:13px;color:var(--muted);margin:2px 4px 0}
 .skel{border-radius:var(--r);background:linear-gradient(90deg,#e8e5dc 0%,#f3f1ea 50%,#e8e5dc 100%);background-size:200% 100%;animation:shimmer 1.2s infinite;aspect-ratio:4/4.3}
 @keyframes shimmer{to{background-position:-200% 0}}
-.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:14px}
-.empty h3{color:var(--ink);font-size:26px}
+.empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:14px;background:var(--card);border:1px dashed var(--line);border-radius:var(--r)}
+.empty h3{color:var(--ink);font-size:24px}
 
-/* Mes locations */
+/* Lignes (locations, offres) */
 .bk-list{display:grid;gap:14px}
-.bk{display:grid;grid-template-columns:120px 1fr auto;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;animation:pop .45s var(--ease) both}
-.bk .thumb{aspect-ratio:1;font-size:46px;border-radius:16px}
+.bk{display:grid;grid-template-columns:110px 1fr auto;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;animation:pop .45s var(--ease) both}
+.bk .thumb{aspect-ratio:1;font-size:44px;border-radius:16px}
 .bk h3{font-size:20px}
 .bk .sub{color:var(--muted);font-size:14px;margin-top:4px}
 .bk .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .bk .total{font-family:var(--display);font-weight:800;font-size:22px;text-align:right}
 .bk .actions{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.bk .actions .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px}
 .status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
 .st-pending{background:#FBEBCB;color:#7A5200}
@@ -156,11 +161,13 @@ main{padding:28px 0 120px}
 .st-paid,.st-in_progress{background:#DCEEFF;color:#0B4F8A}
 .st-completed{background:#E7E5DE;color:#3F4642}
 .st-declined,.st-cancelled{background:#EEECE6;color:#6B716C}
+.code{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border-radius:12px;padding:8px 12px;font-size:13px}
+.code b{font-family:var(--display);font-size:22px;letter-spacing:.2em;color:var(--lime)}
 
-/* Fiche (panneau) */
+/* Fiche */
 .scrim{position:fixed;inset:0;z-index:60;background:rgba(15,21,18,.5);opacity:0;pointer-events:none;transition:opacity .3s}
 .scrim.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;z-index:61;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);transform:translateX(105%);transition:transform .45s var(--ease);display:flex;flex-direction:column}
+.sheet{position:fixed;z-index:61;top:0;right:0;bottom:0;width:min(540px,100%);background:var(--card);transform:translateX(105%);transition:transform .45s var(--ease);display:flex;flex-direction:column}
 .sheet.open{transform:none}
 .sheet-scroll{overflow-y:auto;flex:1;overscroll-behavior:contain}
 .sheet .thumb{border-radius:0;aspect-ratio:16/10;font-size:110px}
@@ -171,10 +178,25 @@ main{padding:28px 0 120px}
 .owner .av{width:36px;height:36px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;color:var(--ink)}
 .facts{display:flex;gap:8px;flex-wrap:wrap}
 .fact{background:var(--paper);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+.fact.ok{background:#E6F7B0;color:#3E5200}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.spec{background:var(--paper);border-radius:12px;padding:10px 12px}
+.spec span{display:block;font-size:12px;color:var(--muted)}
+.spec b{font-size:15px}
+.modes{display:grid;gap:8px}
+.mode{display:flex;gap:12px;align-items:flex-start;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer}
+.mode:has(input:checked){border-color:var(--ink);background:var(--paper)}
+.mode input{width:20px;height:20px;accent-color:var(--ink);margin-top:2px;flex:none}
+.mode b{display:block}
+.mode span{font-size:13px;color:var(--muted)}
 .sheet-foot{border-top:1px solid var(--line);padding:14px 22px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:14px;background:var(--card)}
 .sheet-foot .sum{flex:1;min-width:0}
 .sheet-foot .sum b{font-family:var(--display);font-size:22px;display:block}
 .sheet-foot .sum span{font-size:13px;color:var(--muted)}
+.offer{border:1.5px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.offer h3{font-size:19px}
+.offer-row{display:flex;gap:10px}
+.offer-row .input{flex:1}
 
 /* Calendrier */
 .cal{border:1px solid var(--line);border-radius:var(--r);padding:14px}
@@ -198,46 +220,100 @@ main{padding:28px 0 120px}
 .quote div{display:flex;justify-content:space-between;gap:10px}
 .quote .tot{border-top:1px solid var(--line);padding-top:10px;font-weight:700;font-size:16px}
 
-/* Barre du bas (mobile) */
-.tabbar{display:none}
+/* Remise (photos + code + signature) */
+.dlg{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(15,21,18,.55);opacity:0;pointer-events:none;transition:opacity .25s}
+.dlg.open{opacity:1;pointer-events:auto}
+.dlg-card{width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--card);border-radius:28px;padding:24px;display:grid;gap:16px;position:relative;transform:translateY(20px);transition:transform .35s var(--ease)}
+.dlg.open .dlg-card{transform:none}
+.dlg-card h2{font-size:28px;padding-right:44px}
+.steps{display:flex;gap:6px}
+.steps i{flex:1;height:4px;border-radius:4px;background:var(--line)}
+.steps i.on{background:var(--ink)}
+.shots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.shots img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px}
+.shot-add{aspect-ratio:1;border:2px dashed var(--line);border-radius:12px;display:grid;place-items:center;text-align:center;font-size:12px;color:var(--muted);cursor:pointer;padding:6px}
+.shot-add:hover{border-color:var(--ink)}
+.sig-wrap{border:1.5px solid var(--line);border-radius:var(--r-sm);background:var(--paper);position:relative}
+.sig-wrap canvas{display:block;width:100%;height:170px;touch-action:none;cursor:crosshair}
+.sig-wrap .hint{position:absolute;left:14px;bottom:10px;font-size:12px;color:var(--muted);pointer-events:none}
+.sig-wrap .clear{position:absolute;right:8px;top:8px;border:0;background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;min-height:36px}
+.code-in{font-family:var(--display);font-size:30px;letter-spacing:.4em;text-align:center}
 
-/* Toast */
+/* Publier */
+.pub{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
+.form{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.form .full{grid-column:1/-1}
+.form h3{grid-column:1/-1;font-size:20px;margin-top:6px}
+.dims{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-weight:600}
+.check input{width:20px;height:20px;accent-color:var(--ink);margin-top:2px;flex:none}
+.check small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.box{border:1.5px solid var(--line);border-radius:var(--r-sm);padding:14px;display:grid;gap:12px;background:var(--paper)}
+.pub-side{position:sticky;top:90px;display:grid;gap:14px}
+
+/* Club */
+.club-hero{background:var(--ink);color:var(--paper);border-radius:28px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+.club-hero .big{font-family:var(--display);font-weight:800;font-size:64px;color:var(--lime);line-height:1;letter-spacing:-.04em}
+.club-hero p{color:#B9C0BC}
+.founder{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;margin-top:12px}
+.club-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px;align-content:start}
+.ccard h3{font-size:20px}
+.ccard ul{list-style:none;display:grid;gap:8px;font-size:14px}
+.ccard li{display:flex;justify-content:space-between;gap:10px}
+.ccard li b{font-family:var(--display);white-space:nowrap}
+.reward{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.reward:last-child{border-bottom:0}
+.reward .p{font-family:var(--display);font-weight:800;white-space:nowrap}
+.reward.ok .p{color:#3E5200}
+.ref-code{display:flex;gap:8px;align-items:center}
+.ref-code b{font-family:var(--display);font-size:26px;letter-spacing:.12em;background:var(--paper);border-radius:12px;padding:6px 12px}
+
+.tabbar{display:none}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:90;transform:translate(-50%,160%);opacity:0;visibility:hidden;transition:transform .45s var(--ease),opacity .3s,visibility .3s;background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:999px;font-weight:500;max-width:calc(100% - 32px);text-align:center}
 .toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
-
-/* Réservation confirmée */
-.done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:40px 24px}
+.done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:30px 20px}
 .done .ok{width:84px;height:84px;border-radius:50%;background:var(--lime);display:grid;place-items:center;animation:popIn .5s var(--ease)}
 .done .ok svg{width:40px;height:40px;stroke:var(--ink);stroke-width:3}
 @keyframes popIn{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1)}100%{transform:none;opacity:1}}
 
-@media (max-width:1024px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:1024px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tab .t{display:none}
+}
 @media (max-width:860px){
   .auth{grid-template-columns:1fr}
-  .auth-brand{padding:24px 20px 36px;min-height:auto;gap:36px}
+  .auth-brand{padding:24px 20px 36px;gap:36px}
   .auth-brand h1{font-size:42px}
-  .auth-brand p{font-size:16px}
   .bounce-art{display:none}
   .auth-side{padding:28px 16px 40px;align-items:flex-start}
-  .tabs{display:none}
+  .tabs,.pts-pill,#pubBtn{display:none}
+  .top-in{gap:8px}
+  .logo .app-tag{display:none}
   .filters{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .f-box{padding:0 10px;gap:6px}
-  .filters .f-q{grid-column:1/-1}
-  .filters .f-act{grid-column:1/-1}
+  .filters .f-q,.filters .f-act{grid-column:1/-1}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
   .card h3{font-size:15px}
   .card .meta{flex-direction:column;gap:0}
   .thumb{font-size:52px}
-  .bk{grid-template-columns:84px 1fr;gap:12px}
-  .bk .actions{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}
+  .bk{grid-template-columns:76px 1fr;gap:12px}
+  .bk .actions{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap}
   .bk .total{text-align:left}
   .sheet{top:auto;left:0;width:100%;max-height:92vh;border-radius:24px 24px 0 0;transform:translateY(105%)}
   .sheet .thumb{border-radius:24px 24px 0 0}
-  .tabbar{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
-  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px;min-height:52px;justify-content:center;position:relative}
+  .pub,.club-grid{grid-template-columns:1fr}
+  .pub-side{position:static}
+  .form{grid-template-columns:1fr;padding:18px}
+  .club-hero{grid-template-columns:1fr}
+  .dlg{place-items:end center;padding:0}
+  .dlg-card{border-radius:24px 24px 0 0;max-height:94vh}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 2px;min-height:52px;justify-content:center;position:relative}
   .tabbar a.on{color:var(--ink)}
   .tabbar a.on svg{stroke:var(--coral)}
-  .tabbar .count{position:absolute;top:2px;left:calc(50% + 6px);background:var(--coral);color:#fff;font-size:11px;border-radius:999px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 5px}
+  .tabbar a.plus svg{background:var(--ink);stroke:var(--lime);border-radius:50%;width:34px;height:34px;padding:7px}
+  .tabbar .count{position:absolute;top:2px;left:calc(50% + 6px);font-size:11px;min-width:18px;height:18px}
   .toast{bottom:calc(84px + env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
@@ -245,11 +321,13 @@ main{padding:28px 0 120px}
 </head>
 <body>
 
-<!-- Icônes -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
   <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 8 12 3l9 5v8l-9 5-9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.3l1.1-6.2L3 9.7l6.2-.9z"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
@@ -258,6 +336,8 @@ main{padding:28px 0 120px}
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 16l-4-4 4-4M6 12h10"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
 </svg>
 
 <!-- ================= CONNEXION ================= -->
@@ -268,7 +348,7 @@ main{padding:28px 0 120px}
     </a>
     <div>
       <h1>Le matos des autres,<br><span>vos aventures.</span></h1>
-      <p>Connectez-vous pour trouver les équipements disponibles près de chez vous et les réserver en quelques clics.</p>
+      <p>Louez près de chez vous, mettez en location ce qui dort au garage, gagnez des points à chaque location.</p>
     </div>
     <svg class="bounce-art" viewBox="0 0 320 160" aria-hidden="true"><path d="M10 150 Q55 -10 110 150 Q145 50 180 150 Q205 90 230 150 Q245 120 260 150" stroke="#C9F23B" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="292" cy="132" r="18" fill="#FF6B4A"/></svg>
   </div>
@@ -279,13 +359,14 @@ main{padding:28px 0 120px}
         <button type="button" class="on" data-mode="in" role="tab" aria-selected="true">Connexion</button>
         <button type="button" data-mode="up" role="tab" aria-selected="false">Inscription</button>
       </div>
+      <div class="ref-box" id="refBox" hidden>Invité par un ami : vous gagnerez tous les deux <b>200 points</b> après votre première location.</div>
       <div class="field" id="fFirst" hidden><label for="first">Prénom</label><input class="input" id="first" autocomplete="given-name" placeholder="Ex. Sam"></div>
       <div class="field"><label for="email">Email</label><input class="input" id="email" type="email" autocomplete="email" placeholder="vous@exemple.fr" required></div>
       <div class="field"><label for="pw">Mot de passe</label><input class="input" id="pw" type="password" autocomplete="current-password" placeholder="6 caractères minimum" required minlength="6"></div>
       <p class="err" id="authErr" role="alert"></p>
       <button class="btn btn-dark btn-block" id="authBtn" type="submit">Se connecter</button>
       <div class="demo-box" id="demoBox" hidden>
-        <span><b>Mode démo.</b> Supabase n'est pas encore branché : tout se passe dans votre navigateur, avec des annonces d'exemple.</span>
+        <span><b>Mode démo.</b> Supabase n'est pas joignable : tout se passe dans votre navigateur, avec des annonces d'exemple.</span>
         <button type="button" class="btn btn-dark" id="demoBtn">Entrer en démo</button>
       </div>
       <a href="../" class="note" style="text-align:center">← Retour au site</a>
@@ -301,14 +382,19 @@ main{padding:28px 0 120px}
         <svg viewBox="0 0 80 64" aria-hidden="true"><path class="lm-path" d="M4 54 Q15 4 28 54 Q37 24 46 54 Q52 38 58 54" stroke="#0F1512" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="lm-ball" cx="68" cy="46" r="9" fill="#FF6B4A"/></svg>rebond <span class="app-tag">app</span>
       </a>
       <nav class="tabs" aria-label="Sections">
-        <a class="tab" href="#/explorer" data-route="explorer"><svg class="i"><use href="#i-grid"/></svg>Explorer</a>
-        <a class="tab" href="#/locations" data-route="locations"><svg class="i"><use href="#i-cal"/></svg>Mes locations <span class="count" data-count hidden></span></a>
+        <a class="tab" href="#/explorer" data-route="explorer"><svg class="i"><use href="#i-grid"/></svg><span class="t">Explorer</span></a>
+        <a class="tab" href="#/locations" data-route="locations"><svg class="i"><use href="#i-cal"/></svg><span class="t">Mes locations</span> <span class="count" data-count="renter" hidden></span></a>
+        <a class="tab" href="#/materiel" data-route="materiel"><svg class="i"><use href="#i-box"/></svg><span class="t">Mon matériel</span> <span class="count" data-count="owner" hidden></span></a>
+        <a class="tab" href="#/club" data-route="club"><svg class="i"><use href="#i-star"/></svg><span class="t">Club</span></a>
       </nav>
       <div class="top-right">
         <span class="demo-pill" id="demoPill" hidden>Démo</span>
+        <a class="btn btn-dark btn-sm" href="#/publier" id="pubBtn"><svg class="i"><use href="#i-plus"/></svg><span class="t">Publier</span></a>
+        <a class="pts-pill" href="#/club" aria-label="Mes points"><svg class="i" style="width:18px;height:18px"><use href="#i-star"/></svg><b id="ptsTop">0</b> pts</a>
         <button class="avatar" id="avatarBtn" aria-haspopup="true" aria-expanded="false" aria-label="Mon compte"></button>
         <div class="menu" id="menu" role="menu">
           <div class="who"><b id="whoName"></b><span id="whoEmail"></span></div>
+          <a href="#/club" role="menuitem"><svg class="i"><use href="#i-star"/></svg>Club et parrainage</a>
           <a href="../" role="menuitem"><svg class="i"><use href="#i-home"/></svg>Accueil du site</a>
           <button id="logoutBtn" role="menuitem"><svg class="i"><use href="#i-out"/></svg>Se déconnecter</button>
         </div>
@@ -320,10 +406,10 @@ main{padding:28px 0 120px}
     <!-- EXPLORER -->
     <section class="view" id="v-explorer" hidden>
       <div class="hello">
-        <div><h1 id="helloTitle">Qu'est-ce qu'on loue ?</h1><p>Les équipements disponibles près de chez vous, à la journée.</p></div>
+        <div><h1 id="helloTitle">Qu'est-ce qu'on loue ?</h1><p>Du matériel de sport près de chez vous, de 1 à 30 jours.</p></div>
       </div>
       <form class="filters" id="filters" role="search">
-        <div class="f-box f-q"><svg class="i"><use href="#i-search"/></svg><label class="sr" for="q">Rechercher</label><input id="q" type="search" placeholder="Vélo, paddle, ville…" autocomplete="off"></div>
+        <div class="f-box f-q"><svg class="i"><use href="#i-search"/></svg><label class="sr" for="q">Rechercher</label><input id="q" type="search" placeholder="Paddle, tente, marque, ville…" autocomplete="off"></div>
         <div class="f-box"><label for="fStart">Du</label><input id="fStart" type="date"></div>
         <div class="f-box"><label for="fEnd">Au</label><input id="fEnd" type="date"></div>
         <div class="f-act"><button class="btn btn-dark btn-block" type="submit" style="min-height:52px">Rechercher</button></div>
@@ -333,17 +419,127 @@ main{padding:28px 0 120px}
       <div class="grid" id="grid" aria-live="polite"></div>
     </section>
 
-    <!-- MES LOCATIONS -->
+    <!-- MES LOCATIONS (côté locataire) -->
     <section class="view" id="v-locations" hidden>
-      <div class="hello"><div><h1>Mes locations</h1><p>Vos demandes, réservations à venir et locations passées.</p></div></div>
+      <div class="hello"><div><h1>Mes locations</h1><p>Vos demandes, vos codes de retrait, vos retours et vos achats.</p></div></div>
       <div class="bk-list" id="bkList"></div>
+      <h2 class="sec-t">Mes offres d'achat</h2>
+      <div class="bk-list" id="myOffers"></div>
+    </section>
+
+    <!-- MON MATÉRIEL (côté propriétaire) -->
+    <section class="view" id="v-materiel" hidden>
+      <div class="hello"><div><h1>Mon matériel</h1><p>Les demandes reçues, les remises à faire et vos annonces.</p></div><a class="btn btn-dark" href="#/publier"><svg class="i"><use href="#i-plus"/></svg>Publier une annonce</a></div>
+      <h2 class="sec-t">Demandes de location</h2>
+      <div class="bk-list" id="ownerBk"></div>
+      <h2 class="sec-t">Offres d'achat reçues</h2>
+      <div class="bk-list" id="ownerOffers"></div>
+      <h2 class="sec-t">Mes annonces</h2>
+      <div class="grid" id="myListings"></div>
+    </section>
+
+    <!-- PUBLIER -->
+    <section class="view" id="v-publier" hidden>
+      <div class="hello"><div><h1>Mettre en location</h1><p>Plus votre fiche est précise, plus vous louez. Publier est gratuit.</p></div></div>
+      <div class="pub">
+        <form class="form" id="pubForm" novalidate>
+          <h3>L'objet</h3>
+          <div class="field full"><label for="p-title">Titre</label><input class="input" id="p-title" maxlength="80" placeholder="Ex. Paddle gonflable 10'6 avec pagaie" required></div>
+          <div class="field"><label for="p-cat">Catégorie</label><select class="input" id="p-cat"></select></div>
+          <div class="field"><label for="p-cond">État</label><select class="input" id="p-cond">
+            <option value="neuf">Neuf, jamais servi</option><option value="tres_bon">Très bon état</option><option value="bon" selected>Bon état, traces d'usage</option><option value="correct">État correct, usé mais fonctionnel</option>
+          </select></div>
+          <div class="field"><label for="p-brand">Marque</label><input class="input" id="p-brand" maxlength="60" placeholder="Ex. Red Paddle Co"></div>
+          <div class="field"><label for="p-model">Modèle</label><input class="input" id="p-model" maxlength="80" placeholder="Ex. Ride 10'6"></div>
+          <div class="field full"><span class="lbl">Dimensions (cm) et poids</span>
+            <div class="dims" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+              <input class="input" id="p-l" type="number" min="1" placeholder="Long." aria-label="Longueur en cm">
+              <input class="input" id="p-w" type="number" min="1" placeholder="Larg." aria-label="Largeur en cm">
+              <input class="input" id="p-h" type="number" min="1" placeholder="Haut." aria-label="Hauteur en cm">
+              <input class="input" id="p-kg" type="number" min="0.1" step="0.1" placeholder="kg" aria-label="Poids en kg">
+            </div>
+          </div>
+          <div class="field full"><label for="p-desc">Description</label><textarea class="input" id="p-desc" placeholder="Accessoires fournis, taille, défauts éventuels…"></textarea></div>
+          <div class="field full"><span class="lbl">Photos de l'objet</span><label class="shot-add" style="aspect-ratio:auto;min-height:64px"><input type="file" id="p-photos" accept="image/*" multiple hidden><span id="p-photos-l">Ajouter des photos</span></label></div>
+          <div class="box full">
+            <label class="check"><svg class="i"><use href="#i-shield"/></svg><span>Faire vérifier la marque<small>Ajoutez une photo de l'étiquette, du numéro de série ou de la facture. Après contrôle, votre annonce reçoit le badge « Marque vérifiée ».</small></span></label>
+            <label class="shot-add" style="aspect-ratio:auto;min-height:56px"><input type="file" id="p-proof" accept="image/*,application/pdf" hidden><span id="p-proof-l">Ajouter une preuve (photo ou PDF)</span></label>
+          </div>
+
+          <h3>Prix</h3>
+          <div class="field"><label for="p-price">Prix par jour (€)</label><input class="input" id="p-price" type="number" min="1" value="15" required></div>
+          <div class="field"><label for="p-dep">Caution (€)</label><input class="input" id="p-dep" type="number" min="0" step="10" value="150"></div>
+          <div class="field"><label for="p-city">Ville</label><input class="input" id="p-city" placeholder="Ex. Paris 11e" required></div>
+
+          <h3>Remise du matériel</h3>
+          <div class="box full">
+            <label class="check"><input type="checkbox" id="m-hand" checked><span>En main propre<small>Vous convenez d'un créneau avec le locataire.</small></span></label>
+            <label class="check"><input type="checkbox" id="m-del"><span>Je peux livrer<small>Vous apportez le matériel, contre des frais que vous fixez.</small></span></label>
+            <div class="field" id="m-del-box" hidden><label for="m-del-fee">Frais de livraison (€)</label><input class="input" id="m-del-fee" type="number" min="0" value="5"></div>
+            <label class="check"><input type="checkbox" id="m-shop"><span>Dépôt en boutique partenaire<small>Vous déposez l'objet, le locataire le récupère quand il veut.</small></span></label>
+            <div class="field" id="m-shop-box" hidden><label for="m-shop-id">Boutique</label><select class="input" id="m-shop-id"></select></div>
+          </div>
+
+          <h3>Option d'achat</h3>
+          <div class="box full">
+            <label class="check"><input type="checkbox" id="p-buy"><span>J'accepte qu'on me le rachète<small>Les locataires pourront vous faire une offre ; vous restez libre de refuser.</small></span></label>
+            <div class="field" id="p-buy-box" hidden><label for="p-buy-price">Prix de vente souhaité (€, facultatif)</label><input class="input" id="p-buy-price" type="number" min="1" step="5" placeholder="Ex. 350"></div>
+          </div>
+          <p class="err full" id="pubErr" role="alert"></p>
+          <div class="full"><button class="btn btn-dark btn-block" type="submit" id="pubSubmit">Publier l'annonce</button></div>
+        </form>
+        <aside class="pub-side">
+          <span class="note" style="font-weight:600">Aperçu</span>
+          <div id="pubPreview"></div>
+          <div class="ccard"><h3>+50 points</h3><p class="note">pour votre première annonce, puis 1 point par euro loué.</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CLUB -->
+    <section class="view" id="v-club" hidden>
+      <div class="club-hero">
+        <div>
+          <p style="font-weight:600;color:var(--lime)">Mes points</p>
+          <div class="big" id="ptsBig">0</div>
+          <p>1 point par euro loué ou prêté, des bonus pour les avis et le parrainage.</p>
+          <span class="founder" id="founderTag" hidden><svg class="i" style="width:16px;height:16px"><use href="#i-star"/></svg>Membre fondateur : frais de service divisés par deux, à vie</span>
+        </div>
+        <a class="btn btn-lime" href="#/explorer">Gagner des points</a>
+      </div>
+      <div class="club-grid">
+        <div class="ccard">
+          <h3>Gagner des points</h3>
+          <ul>
+            <li><span>Chaque euro loué ou prêté</span><b>1 pt</b></li>
+            <li><span>Chaque euro acheté ou vendu</span><b>1 pt</b></li>
+            <li><span>Première annonce</span><b>50 pts</b></li>
+            <li><span>Avis laissé</span><b>20 pts</b></li>
+            <li><span>Ami parrainé (chacun)</span><b>200 pts</b></li>
+          </ul>
+        </div>
+        <div class="ccard">
+          <h3>Les récompenses</h3>
+          <div id="rewards"></div>
+          <p class="note">L'échange des points arrive bientôt ; vos points sont déjà comptés.</p>
+        </div>
+        <div class="ccard">
+          <h3>Parrainez vos amis</h3>
+          <p class="note">Après sa première location, vous gagnez chacun 200 points.</p>
+          <div class="ref-code"><b id="refCode">——</b><button class="btn btn-ghost btn-sm" id="copyRef">Copier le lien</button></div>
+        </div>
+      </div>
+      <h2 class="sec-t">Historique</h2>
+      <div class="ccard" id="ledger"></div>
     </section>
   </main>
 
   <nav class="tabbar" aria-label="Sections">
     <a href="#/explorer" data-route="explorer"><svg class="i"><use href="#i-grid"/></svg>Explorer</a>
-    <a href="#/locations" data-route="locations"><svg class="i"><use href="#i-cal"/></svg>Locations<span class="count" data-count hidden></span></a>
-    <a href="../"><svg class="i"><use href="#i-home"/></svg>Le site</a>
+    <a href="#/locations" data-route="locations"><svg class="i"><use href="#i-cal"/></svg>Locations<span class="count" data-count="renter" hidden></span></a>
+    <a href="#/publier" data-route="publier" class="plus"><svg class="i"><use href="#i-plus"/></svg>Publier</a>
+    <a href="#/materiel" data-route="materiel"><svg class="i"><use href="#i-box"/></svg>Matériel<span class="count" data-count="owner" hidden></span></a>
+    <a href="#/club" data-route="club"><svg class="i"><use href="#i-star"/></svg>Club</a>
   </nav>
 </div>
 
@@ -355,23 +551,41 @@ main{padding:28px 0 120px}
   <div class="sheet-foot" id="dFoot"></div>
 </aside>
 
+<!-- REMISE : PHOTOS + CODE + SIGNATURE -->
+<div class="dlg" id="hoDlg" role="dialog" aria-modal="true" aria-labelledby="hoTitle" aria-hidden="true">
+  <form class="dlg-card" id="hoForm" novalidate>
+    <button type="button" class="close" id="hoClose" aria-label="Fermer"><svg class="i"><use href="#i-x"/></svg></button>
+    <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    <h2 id="hoTitle"></h2>
+    <p class="note" id="hoIntro"></p>
+    <div class="field"><span class="lbl">1. Photos de l'état (2 minimum)</span>
+      <div class="shots" id="hoShots"><label class="shot-add"><input type="file" id="hoFiles" accept="image/*" capture="environment" multiple hidden><span><svg class="i"><use href="#i-camera"/></svg><br>Prendre</span></label></div>
+    </div>
+    <div class="field"><label for="hoCond">État constaté</label><select class="input" id="hoCond">
+      <option value="neuf">Neuf</option><option value="tres_bon">Très bon état</option><option value="bon" selected>Bon état</option><option value="correct">État correct</option></select></div>
+    <div class="field"><label for="hoCode" id="hoCodeLbl">2. Code</label><input class="input code-in" id="hoCode" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="••••"></div>
+    <div class="field"><span class="lbl" id="hoSigLbl">3. Signature</span>
+      <div class="sig-wrap"><canvas id="hoSig" aria-label="Zone de signature"></canvas><span class="hint">Signez avec le doigt</span><button type="button" class="clear" id="hoSigClear">Effacer</button></div>
+    </div>
+    <div class="field"><label for="hoNotes">Remarque (facultatif)</label><input class="input" id="hoNotes" maxlength="300" placeholder="Ex. petite rayure côté gauche"></div>
+    <p class="err" id="hoErr" role="alert"></p>
+    <button class="btn btn-dark btn-block" type="submit" id="hoSubmit">Valider la remise</button>
+  </form>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
 <script>
 /* =========================================================
    CONFIGURATION
-   Renseigner ces deux valeurs (Supabase › Project Settings › API).
-   La clé publishable est faite pour être publique.
-   NE JAMAIS mettre ici la clé secret / service_role.
+   Clé publishable : publique par conception, la sécurité repose sur les règles RLS.
    ========================================================= */
 const CONFIG = {
   SUPABASE_URL: "https://qdnytvevomychpuuxbym.supabase.co",
   SUPABASE_PUBLISHABLE_KEY: "sb_publishable_I5EZVxCYdLCmY-7hP8GRhw_y4ZvBDIo",
-  // Valeurs d'affichage par défaut, remplacées par la table platform_settings
-  COMMISSION_RATE: 0.10,
-  COMMISSION_MIN_CENTS: 200,
 };
-const DEMO = !CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_PUBLISHABLE_KEY || !window.supabase;
+const FORCE_DEMO = new URLSearchParams(location.search).has("demo");
+const DEMO = FORCE_DEMO || !CONFIG.SUPABASE_URL || !window.supabase;
 
 /* =========================================================
    OUTILS
@@ -387,8 +601,8 @@ const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate()+n); return
 const today = () => iso(new Date());
 const dayCount = (a, b) => Math.round((parse(b) - parse(a)) / 864e5) + 1;
 const fmtDay = s => parse(s).toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
-const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch{ return null; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} } };
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),3200); }
+const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch{ return null; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch{} }, del(k){ try{ localStorage.removeItem(k); }catch{} } };
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),3400); }
 
 const CAT_LOOK = {
   "velo":{icon:"🚴",color:"#9DD4FF"}, "glisse-eau":{icon:"🏄",color:"#C9F23B"}, "kayak":{icon:"🛶",color:"#BDE7D8"},
@@ -396,11 +610,16 @@ const CAT_LOOK = {
   "fitness":{icon:"🏋️",color:"#FFC9BB"}, "escalade":{icon:"🧗",color:"#D9C8FF"},
 };
 const look = slug => CAT_LOOK[slug] || {icon:"🏅",color:"#E7E5DE"};
-const STATUS = {
-  pending:"En attente du propriétaire", accepted:"Acceptée", declined:"Refusée", cancelled:"Annulée",
-  paid:"Payée", in_progress:"En cours", completed:"Terminée",
-};
-function feeFor(cents){ return Math.max(Math.round(cents * S.settings.rate), S.settings.min); }
+const COND = { neuf:"Neuf", tres_bon:"Très bon état", bon:"Bon état", correct:"État correct" };
+const STATUS = { pending:"En attente", accepted:"Acceptée", declined:"Refusée", cancelled:"Annulée", paid:"Payée", in_progress:"En cours", completed:"Terminée" };
+const OSTATUS = { pending:"En attente", accepted:"Acceptée", declined:"Refusée", cancelled:"Retirée", paid:"Payée", completed:"Vendu, remis" };
+const MODE = { hand:"En main propre", delivery:"Livraison", shop:"Boutique partenaire" };
+const REWARDS = [
+  [300, "Frais de service offerts sur une location"],
+  [600, "5 € de réduction sur une location"],
+  [1000, "Bon de 10 € dans une boutique partenaire"],
+  [2000, "Une journée de location offerte (jusqu'à 30 €)"],
+];
 function friendly(msg){
   const m = String(msg || "");
   const map = [
@@ -410,7 +629,9 @@ function friendly(msg){
     [/Email not confirmed/i, "Confirmez votre email avant de vous connecter."],
     [/valid email|invalid format/i, "Adresse email invalide."],
     [/bookings_no_overlap|exclusion/i, "Ces dates viennent d'être prises. Choisissez-en d'autres."],
+    [/bookings_max_30_days/i, "30 jours maximum par location."],
     [/rate limit/i, "Trop de tentatives. Réessayez dans un instant."],
+    [/Failed to fetch|NetworkError/i, "Connexion impossible. Vérifiez votre réseau."],
   ];
   for (const [re, txt] of map) if (re.test(m)) return txt;
   return m.replace(/^.*?ERROR:\s*/, "") || "Une erreur est survenue.";
@@ -421,59 +642,122 @@ function friendly(msg){
    ========================================================= */
 function supaApi(){
   const sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_PUBLISHABLE_KEY);
-  const SEL = "*, categories(slug,label), profiles(first_name), listing_images(path,position)";
+  const SEL = "*, categories(slug,label), profiles!listings_owner_id_fkey(first_name), listing_images(path,position), partner_shops(id,name,address,city,opening_hours)";
   const pub = p => `${CONFIG.SUPABASE_URL}/storage/v1/object/public/listing-images/${p}`;
   const vm = l => ({
-    id:l.id, title:l.title, city:l.city, description:l.description||"",
+    id:l.id, title:l.title, city:l.city, description:l.description||"", status:l.status,
     price:l.price_per_day_cents, deposit:l.deposit_cents, ownerId:l.owner_id,
-    buyout:!!l.buyout_enabled, buyoutPrice:l.buyout_price_cents || null,
     owner:l.profiles?.first_name || "Un membre", cat:l.categories?.slug, catLabel:l.categories?.label || "",
     img:(l.listing_images||[]).slice().sort((a,b)=>a.position-b.position).map(i=>pub(i.path))[0] || null,
+    condition:l.condition, brand:l.brand, model:l.model, verified:!!l.brand_verified,
+    dims:[l.length_cm,l.width_cm,l.height_cm], weight:l.weight_kg ? +l.weight_kg : null,
+    modes:l.handover_modes || ["hand"], deliveryFee:l.delivery_fee_cents ?? null, shop:l.partner_shops || null,
+    buyout:!!l.buyout_enabled, buyoutPrice:l.buyout_price_cents || null,
   });
+  let uid = null;
   const user = async u => {
+    uid = u?.id || null;
     if (!u) return null;
-    const { data } = await sb.from("profiles").select("first_name").eq("id", u.id).maybeSingle();
-    return { id:u.id, email:u.email, firstName:data?.first_name || u.user_metadata?.first_name || "" };
+    const { data } = await sb.from("profiles").select("first_name,is_founder,referral_code").eq("id", u.id).maybeSingle();
+    return { id:u.id, email:u.email, firstName:data?.first_name || u.user_metadata?.first_name || "", founder:!!data?.is_founder, refCode:data?.referral_code || "" };
   };
   const fail = e => { throw new Error(friendly(e?.message)); };
+  const codesFor = async (col, ids) => {
+    if (!ids.length) return {};
+    const { data } = await sb.from("handover_codes").select("booking_id,offer_id,kind,code,used_at").in(col, ids);
+    const map = {}; (data||[]).forEach(c => { const k = c.booking_id || c.offer_id; (map[k] ||= {})[c.kind] = c.used_at ? null : c.code; });
+    return map;
+  };
+  const upload = async (bucket, path, file, type) => {
+    const { error } = await sb.storage.from(bucket).upload(path, file, { contentType:type || file.type, upsert:false });
+    if (error) fail(error);
+    return path;
+  };
   return {
     async session(){ const { data } = await sb.auth.getSession(); return user(data.session?.user); },
     onAuth(cb){ sb.auth.onAuthStateChange((_ev, s) => { setTimeout(async () => cb(await user(s?.user)), 0); }); },
     async signIn(email, pw){ const { error } = await sb.auth.signInWithPassword({ email, password:pw }); if (error) fail(error); },
-    async signUp(email, pw, first){
-      const { data, error } = await sb.auth.signUp({ email, password:pw, options:{ data:{ first_name:first }, emailRedirectTo: location.origin + location.pathname } });
+    async signUp(email, pw, first, ref){
+      const { data, error } = await sb.auth.signUp({ email, password:pw, options:{ data:{ first_name:first, ref:ref||null }, emailRedirectTo: location.origin + location.pathname } });
       if (error) fail(error);
       return { needsConfirm: !data.session };
     },
     async signOut(){ await sb.auth.signOut(); },
-    async categories(){ const { data, error } = await sb.from("categories").select("slug,label").order("sort_order"); if (error) fail(error); return data; },
+    async categories(){ const { data, error } = await sb.from("categories").select("id,slug,label").order("sort_order"); if (error) fail(error); return data; },
+    async shops(){ const { data } = await sb.from("partner_shops").select("id,name,address,city").order("name"); return data || []; },
     async settings(){
-      const { data } = await sb.from("platform_settings").select("commission_rate,commission_min_cents").maybeSingle();
-      return data ? { rate:+data.commission_rate, min:data.commission_min_cents } : null;
+      const { data } = await sb.from("platform_settings").select("*").maybeSingle();
+      return data ? { rate:+data.commission_rate, min:data.commission_min_cents, saleRate:+data.sale_commission_rate, saleMin:data.sale_commission_min_cents, founder:+data.founder_discount } : null;
     },
     async search(f){
       const { data, error } = await sb.rpc("search_listings", { p_category:f.cat||null, p_q:f.q||null, p_start:f.start||null, p_end:f.end||null }).select(SEL);
-      if (error) fail(error); return data.map(vm);
+      if (error) fail(error);
+      const q = (f.q||"").toLowerCase();
+      return data.map(vm);
     },
     async listing(id){ const { data, error } = await sb.from("listings").select(SEL).eq("id", id).maybeSingle(); if (error) fail(error); return data ? vm(data) : null; },
     async busy(id){ const { data, error } = await sb.rpc("listing_busy_ranges", { p_listing:id }); if (error) fail(error); return data; },
-    async book(id, start, end){
-      // Montants et commission recalculés par la base (trigger bookings_prepare)
-      const { data, error } = await sb.from("bookings").insert({ listing_id:id, start_date:start, end_date:end }).select().single();
+    async book(id, start, end, mode){
+      const { data, error } = await sb.from("bookings").insert({ listing_id:id, start_date:start, end_date:end, handover_mode:mode }).select().single();
       if (error) fail(error); return data;
     },
-    async myBookings(uid){
-      const { data, error } = await sb.from("bookings")
-        .select("id,start_date,end_date,days,subtotal_cents,fee_cents,total_cents,deposit_cents,status,created_at, listings(" + SEL + ")")
-        .eq("renter_id", uid).order("created_at", { ascending:false });
+    async renterBookings(){
+      const { data, error } = await sb.from("bookings").select("*, listings(" + SEL + ")").eq("renter_id", uid).order("created_at", { ascending:false });
       if (error) fail(error);
-      return data.map(b => ({ ...b, listing: b.listings ? vm(b.listings) : null }));
+      const codes = await codesFor("booking_id", data.map(b => b.id));
+      return data.map(b => ({ ...b, listing: b.listings ? vm(b.listings) : null, codes: codes[b.id] || {} }));
     },
-    async cancel(id){ const { error } = await sb.from("bookings").update({ status:"cancelled" }).eq("id", id); if (error) fail(error); },
-    async offer(id, cents){
-      // Commission recalculée par la base (trigger offers_prepare) ; refusée si le rachat n'est pas activé
-      const { data, error } = await sb.from("purchase_offers").insert({ listing_id:id, amount_cents:cents }).select().single();
-      if (error) fail(error); return data;
+    async ownerBookings(){
+      const { data, error } = await sb.from("bookings").select("*, listings(" + SEL + "), renter:profiles!bookings_renter_id_fkey(first_name)").eq("owner_id", uid).order("created_at", { ascending:false });
+      if (error) fail(error);
+      const codes = await codesFor("booking_id", data.map(b => b.id));
+      return data.map(b => ({ ...b, listing: b.listings ? vm(b.listings) : null, other: b.renter?.first_name || "Un membre", codes: codes[b.id] || {} }));
+    },
+    async setBooking(id, status){ const { error } = await sb.from("bookings").update({ status }).eq("id", id); if (error) fail(error); },
+    async offer(id, cents){ const { data, error } = await sb.from("purchase_offers").insert({ listing_id:id, amount_cents:cents }).select().single(); if (error) fail(error); return data; },
+    async myOffers(){
+      const { data, error } = await sb.from("purchase_offers").select("*, listings(" + SEL + ")").eq("buyer_id", uid).order("created_at", { ascending:false });
+      if (error) fail(error);
+      const codes = await codesFor("offer_id", data.map(o => o.id));
+      return data.map(o => ({ ...o, listing: o.listings ? vm(o.listings) : null, codes: codes[o.id] || {} }));
+    },
+    async offersReceived(){
+      const { data, error } = await sb.from("purchase_offers").select("*, listings(" + SEL + "), buyer:profiles!purchase_offers_buyer_id_fkey(first_name)").eq("seller_id", uid).order("created_at", { ascending:false });
+      if (error) fail(error);
+      return data.map(o => ({ ...o, listing: o.listings ? vm(o.listings) : null, other: o.buyer?.first_name || "Un membre" }));
+    },
+    async setOffer(id, status){ const { error } = await sb.from("purchase_offers").update({ status }).eq("id", id); if (error) fail(error); },
+    async myListings(){ const { data, error } = await sb.from("listings").select(SEL).eq("owner_id", uid).order("created_at", { ascending:false }); if (error) fail(error); return data.map(vm); },
+    async publish(d, photos, proof){
+      let proofPath = null;
+      if (proof) proofPath = await upload("brand-proofs", `${uid}/${Date.now()}-${proof.name.replace(/[^\w.-]/g,"_")}`, proof);
+      const { data, error } = await sb.from("listings").insert({
+        title:d.title, category_id:d.categoryId, condition:d.condition, brand:d.brand||null, model:d.model||null,
+        length_cm:d.dims[0]||null, width_cm:d.dims[1]||null, height_cm:d.dims[2]||null, weight_kg:d.weight||null,
+        description:d.description, city:d.city, price_per_day_cents:d.price, deposit_cents:d.deposit,
+        handover_modes:d.modes, delivery_fee_cents:d.modes.includes("delivery") ? d.deliveryFee : null,
+        pickup_shop_id:d.modes.includes("shop") ? d.shopId : null,
+        buyout_enabled:d.buyout, buyout_price_cents:d.buyout ? d.buyoutPrice : null, brand_proof_path:proofPath,
+      }).select("id").single();
+      if (error) fail(error);
+      for (let i = 0; i < photos.length; i++) {
+        const p = await upload("listing-images", `${uid}/${data.id}/${Date.now()}-${i}.jpg`, photos[i]);
+        await sb.from("listing_images").insert({ listing_id:data.id, path:p, position:i });
+      }
+      return data;
+    },
+    async handover(kind, id, code, condition, files, sigBlob, notes){
+      const base = `${uid}/${id}/${kind}-${Date.now()}`;
+      const paths = [];
+      for (let i = 0; i < files.length; i++) paths.push(await upload("handover-photos", `${base}-${i}.jpg`, files[i]));
+      const sig = await upload("handover-photos", `${base}-signature.png`, sigBlob, "image/png");
+      const { data, error } = await sb.rpc("confirm_handover", { p_kind:kind, p_id:id, p_code:code, p_condition:condition, p_photos:paths, p_signature:sig, p_notes:notes||"" });
+      if (error) fail(error);
+      if (data !== "ok") throw new Error(data);
+    },
+    async points(){
+      const [{ data:p }, { data:l }] = await Promise.all([ sb.rpc("my_points"), sb.from("points_ledger").select("points,reason,created_at").order("created_at", { ascending:false }).limit(30) ]);
+      return { total:p || 0, ledger:l || [] };
     },
   };
 }
@@ -482,143 +766,197 @@ function supaApi(){
    DONNÉES — mode démo (même interface, dans le navigateur)
    ========================================================= */
 function demoApi(){
-  const cats = [["velo","Vélo"],["glisse-eau","Paddle & surf"],["kayak","Kayak"],["montagne","Ski & snow"],["camping","Camping"],["raquette","Raquettes"],["fitness","Fitness"],["escalade","Escalade"]].map(([slug,label])=>({slug,label}));
+  const cats = [["velo","Vélo"],["glisse-eau","Paddle & surf"],["kayak","Kayak"],["montagne","Ski & snow"],["camping","Camping"],["raquette","Raquettes"],["fitness","Fitness"],["escalade","Escalade"]].map(([slug,label],i)=>({id:i+1,slug,label}));
+  const shops = [ {id:"s1",name:"Glisse Urbaine",address:"14 rue Oberkampf",city:"Paris 11e"}, {id:"s2",name:"Atelier Vélo Canal",address:"52 quai de Valmy",city:"Paris 10e"} ];
   const label = s => cats.find(c=>c.slug===s)?.label || "";
-  const L = [
-    ["d1","Vélo gravel carbone taille M","velo",2500,40000,"Lyon","Julien","Groupe Shimano GRX, pneus 40 mm, casque fourni."],
-    ["d2","Paddle gonflable 10'6 + pagaie","glisse-eau",2200,20000,"Biarritz","Léa","Gilet, leash et sac de transport inclus."],
-    ["d3","Kayak biplace sit-on-top","kayak",3000,30000,"Annecy","Marc","Deux pagaies, bidon étanche. Galerie de toit possible."],
-    ["d4","Snowboard 156 + fixations","montagne",1800,25000,"Grenoble","Inès","Fart récent, idéal all-mountain."],
-    ["d5","Tente 3 places ultra-légère","camping",1200,15000,"Annecy","Tom","1,9 kg, montage en 5 minutes."],
-    ["d6","Raquettes de padel (x2) + balles","raquette",800,8000,"Paris","Sarah","Parfait pour tester le padel avant d'acheter."],
-    ["d7","VTT électrique tout suspendu","velo",4500,80000,"Chambéry","Hugo","Batterie 625 Wh, autonomie journée."],
-    ["d8","Kit d'escalade complet","escalade",1500,15000,"Fontainebleau","Nora","Baudrier, chaussons 41, crash pad."],
-    ["d9","Skis de rando + peaux","montagne",2800,35000,"Chamonix","Paul","Fixations Dynafit, peaux neuves."],
-    ["d10","Rameur à air","fitness",1000,20000,"Bordeaux","Emma","Pliable, livraison possible dans Bordeaux."],
-    ["d11","Planche de surf 7'2 mousse","glisse-eau",1500,12000,"Hossegor","Lucas","Idéale débutant, combinaison M en option."],
-    ["d12","Réchaud + popote 2 personnes","camping",500,4000,"Marseille","Chloé","Cartouche de gaz non fournie."],
-  ].map(([id,title,cat,price,deposit,city,owner,description]) => ({ id,title,cat,catLabel:label(cat),price,deposit,city,owner,ownerId:"o-"+id,description,img:null,
-      buyout: ["d2","d5","d7","d11"].includes(id), buyoutPrice: ({ d2:32000, d5:14000, d7:190000, d11:18000 })[id] || null }));
+  const base = [
+    ["d1","Vélo gravel carbone taille M","velo",2500,40000,"Paris 11e","Julien","Groupe Shimano GRX, pneus 40 mm, casque fourni.","tres_bon","Canyon","Grizl CF SL 7",[175,45,100],9.2,true,["hand","shop"],null,"s2",false,null],
+    ["d2","Paddle gonflable 10'6 + pagaie","glisse-eau",2000,30000,"Paris 15e","Léa","Gilet, leash et sac de transport inclus. Rentre dans un coffre.","tres_bon","Red Paddle Co","Ride 10'6",[320,86,15],10.5,true,["hand","delivery","shop"],800,"s1",true,32000],
+    ["d3","Kayak biplace sit-on-top","kayak",3000,30000,"Saint-Maur","Marc","Deux pagaies, bidon étanche.","bon","Rotomod","Ocean Duo",[380,86,35],27,false,["hand"],null,null,false,null],
+    ["d4","Skis de rando + peaux","montagne",2800,35000,"Paris 18e","Paul","Fixations Dynafit, peaux neuves.","tres_bon","Dynafit","Blacklight 88",[177,12,8],2.6,true,["hand"],null,null,false,null],
+    ["d5","Tente 2 places ultra-légère","camping",1200,15000,"Paris 20e","Tom","1,3 kg, montage en 5 minutes.","neuf","MSR","Hubba Hubba 2",[46,15,15],1.3,true,["hand","shop"],null,"s1",true,30000],
+    ["d6","Raquettes de padel (x2) + balles","raquette",800,8000,"Boulogne","Sarah","Parfait pour tester le padel avant d'acheter.","bon","Babolat",null,null,0.4,false,["hand"],null,null,false,null],
+    ["d7","Crash pad d'escalade","escalade",1000,15000,"Paris 13e","Nora","Idéal Fontainebleau, se porte en sac à dos.","bon","Black Diamond","Mondo",[132,107,13],7.5,false,["hand","delivery"],500,null,true,9000],
+    ["d8","Vélo de voyage + sacoches","velo",2200,40000,"Paris 12e","Hugo","Porte-bagages, 2 sacoches étanches, kit réparation.","bon","Riverside","Touring 520",[180,60,105],14,false,["hand"],null,null,true,45000],
+    ["d9","Réchaud + popote 2 personnes","camping",500,4000,"Montreuil","Chloé","Cartouche de gaz non fournie.","tres_bon","Jetboil","Flash",[18,11,11],0.4,false,["hand","shop"],null,"s1",false,null],
+    ["d10","Combinaison néoprène 4/3 M","glisse-eau",900,6000,"Paris 9e","Lucas","Propre et sèche, taille M.","bon","O'Neill","Hyperfreak",null,1.6,false,["hand"],null,null,true,8000],
+  ];
+  const L = base.map(([id,title,cat,price,deposit,city,owner,description,condition,brand,model,dims,weight,verified,modes,deliveryFee,shopId,buyout,buyoutPrice]) => ({
+    id,title,cat,catLabel:label(cat),price,deposit,city,owner,ownerId:"o-"+id,description,img:null,status:"active",
+    condition,brand,model,verified,dims:dims||[null,null,null],weight,modes,deliveryFee,shop:shops.find(s=>s.id===shopId)||null,buyout,buyoutPrice }));
   const t = today();
-  // Périodes déjà prises par d'autres (démo)
-  const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,1),addDays(t,2)],[addDays(t,9),addDays(t,11)]], d7:[[addDays(t,6),addDays(t,9)]], d3:[[addDays(t,0),addDays(t,4)]] };
-  let bookings = store.get("rebond_demo_bookings") || [];
-  const save = () => store.set("rebond_demo_bookings", bookings);
+  const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,9),addDays(t,11)]], d8:[[addDays(t,6),addDays(t,9)]] };
+  const S0 = () => ({ bookings:[], offers:[], ownerBookings:null, ownerOffers:null, myListings:null, ledger:[] });
+  let st = Object.assign(S0(), store.get("rebond_demo_v2") || {});
+  const save = () => store.set("rebond_demo_v2", st);
+  const code = () => String(Math.floor(Math.random()*10000)).padStart(4,"0");
+  const me = () => store.get("rebond_demo_user");
   let authCb = () => {};
   const blocking = s => ["accepted","paid","in_progress"].includes(s);
-  const busyOf = id => [
-    ...(others[id]||[]),
-    ...bookings.filter(b => b.listing_id===id && blocking(b.status)).map(b => [b.start_date,b.end_date]),
-  ].map(([start_date,end_date]) => ({ start_date, end_date }));
+  const busyOf = id => [...(others[id]||[]), ...st.bookings.filter(b => b.listing_id===id && blocking(b.status)).map(b => [b.start_date,b.end_date])].map(([start_date,end_date]) => ({ start_date, end_date }));
   const overlaps = (a1,a2,b1,b2) => a1 <= b2 && b1 <= a2;
-  const wait = (ms=280) => new Promise(r => setTimeout(r, ms));
-  const api = {
+  const wait = (ms=260) => new Promise(r => setTimeout(r, ms));
+  const award = (pts, reason) => { st.ledger.unshift({ points:pts, reason, created_at:new Date().toISOString() }); };
+  function seedOwner(){
+    if (st.myListings) return;
+    const mine = { id:"m1", title:"Paddle Itiwit X100 11'", cat:"glisse-eau", catLabel:label("glisse-eau"), price:1800, deposit:25000, city:"Paris 11e", owner:me()?.firstName||"Vous", ownerId:"me", description:"Avec pompe et pagaie.", img:null, status:"active",
+      condition:"bon", brand:"Itiwit", model:"X100 11'", verified:false, dims:[335,84,15], weight:11, modes:["hand","shop"], deliveryFee:null, shop:shops[0], buyout:true, buyoutPrice:22000 };
+    st.myListings = [mine];
+    const sub = mine.price*2;
+    st.ownerBookings = [{ id:"ob1", listing_id:"m1", other:"Camille", start_date:addDays(t,2), end_date:addDays(t,3), days:2, handover_mode:"shop", subtotal_cents:sub, fee_cents:0, total_cents:sub, deposit_cents:mine.deposit, status:"pending", codes:{ return:code() }, renterCode:code(), created_at:new Date().toISOString() }];
+    st.ownerOffers = [{ id:"oo1", listing_id:"m1", other:"Inès", amount_cents:20000, fee_cents:0, total_cents:20000, status:"pending", buyerCode:code(), created_at:new Date().toISOString() }];
+    award(50, "premiere_annonce"); save();
+  }
+  return {
     demo:true,
-    async session(){ return store.get("rebond_demo_user"); },
+    async session(){ const u = me(); if (u) seedOwner(); return u; },
     onAuth(cb){ authCb = cb; },
-    async signIn(email){ await wait(); const u = { id:"me", email:email||"demo@rebond.fr", firstName:(store.get("rebond_demo_user")||{}).firstName || (email||"").split("@")[0] || "Vous" }; store.set("rebond_demo_user", u); authCb(u); },
-    async signUp(email, pw, first){ await wait(); const u = { id:"me", email, firstName:first||"Vous" }; store.set("rebond_demo_user", u); authCb(u); return { needsConfirm:false }; },
-    async signOut(){ try{ localStorage.removeItem("rebond_demo_user"); }catch{} authCb(null); },
+    async signIn(email){ await wait(); const u = { id:"me", email:email||"demo@rebond.fr", firstName:(me()||{}).firstName || (email||"").split("@")[0] || "Vous", founder:true, refCode:"SAM7K2" }; store.set("rebond_demo_user", u); seedOwner(); authCb(u); },
+    async signUp(email, pw, first){ await wait(); const u = { id:"me", email, firstName:first||"Vous", founder:true, refCode:"SAM7K2" }; store.set("rebond_demo_user", u); seedOwner(); authCb(u); return { needsConfirm:false }; },
+    async signOut(){ store.del("rebond_demo_user"); store.del("rebond_demo_v2"); st = S0(); authCb(null); },
     async categories(){ return cats; },
+    async shops(){ return shops; },
     async settings(){ return null; },
     async search(f){
-      await wait(420);
+      await wait(380);
       const q = (f.q||"").toLowerCase();
       return L.filter(l => (!f.cat || l.cat===f.cat)
-        && (!q || (l.title+" "+l.city).toLowerCase().includes(q))
+        && (!q || [l.title,l.city,l.brand,l.model].join(" ").toLowerCase().includes(q))
         && (!(f.start && f.end) || !busyOf(l.id).some(r => overlaps(r.start_date, r.end_date, f.start, f.end))));
     },
-    async listing(id){ return L.find(l => l.id===id) || null; },
-    async busy(id){ await wait(150); return busyOf(id).filter(r => r.end_date >= today()); },
-    async book(id, start, end){
-      await wait(500);
+    async listing(id){ return L.find(l => l.id===id) || (st.myListings||[]).find(l => l.id===id) || null; },
+    async busy(id){ await wait(120); return busyOf(id).filter(r => r.end_date >= today()); },
+    async book(id, start, end, mode){
+      await wait(450);
       const l = L.find(x => x.id===id);
       if (busyOf(id).some(r => overlaps(r.start_date, r.end_date, start, end))) throw new Error("Ces dates viennent d'être prises. Choisissez-en d'autres.");
-      const sub = l.price * dayCount(start, end), fee = feeFor(sub);
-      const b = { id:"b"+Date.now(), listing_id:id, start_date:start, end_date:end, days:dayCount(start,end), subtotal_cents:sub, fee_cents:fee, total_cents:sub+fee, deposit_cents:l.deposit, status:"pending", created_at:new Date().toISOString() };
-      bookings.unshift(b); save();
-      // En démo, le propriétaire accepte tout seul au bout de quelques secondes
-      setTimeout(() => {
-        const x = bookings.find(y => y.id===b.id);
-        if (x && x.status==="pending" && !busyOf(id).some(r => overlaps(r.start_date,r.end_date,start,end))) {
-          x.status = "accepted"; save(); onDemoChange(`${l.owner} a accepté votre demande pour « ${l.title} »`);
-        }
-      }, 6000);
+      const rent = l.price * dayCount(start, end), del = mode==="delivery" ? (l.deliveryFee||0) : 0, fee = feeFor(rent);
+      const b = { id:"b"+Date.now(), listing_id:id, start_date:start, end_date:end, days:dayCount(start,end), handover_mode:mode, delivery_fee_cents:del, subtotal_cents:rent+del, fee_cents:fee, total_cents:rent+del+fee, deposit_cents:l.deposit, status:"pending", codes:{ pickup:code() }, ownerCode:code(), created_at:new Date().toISOString() };
+      st.bookings.unshift(b); save();
+      setTimeout(() => { const x = st.bookings.find(y => y.id===b.id); if (x && x.status==="pending") { x.status = "accepted"; save(); onDemoChange(`${l.owner} a accepté votre demande pour « ${l.title} »`); } }, 5000);
       return b;
     },
-    async myBookings(){ await wait(250); return bookings.map(b => ({ ...b, listing: L.find(l => l.id===b.listing_id) })); },
-    async cancel(id){ await wait(250); const b = bookings.find(x => x.id===id); if (b && ["pending","accepted"].includes(b.status)) { b.status = "cancelled"; save(); } },
+    async renterBookings(){ await wait(200); return st.bookings.map(b => ({ ...b, listing: L.find(l => l.id===b.listing_id) })); },
+    async ownerBookings(){ await wait(200); return (st.ownerBookings||[]).map(b => ({ ...b, listing:(st.myListings||[]).find(l => l.id===b.listing_id) })); },
+    async setBooking(id, status){
+      await wait(200);
+      const b = st.bookings.find(x => x.id===id) || (st.ownerBookings||[]).find(x => x.id===id);
+      if (b) { b.status = status; save(); }
+    },
     async offer(id, cents){
-      await wait(400);
+      await wait(350);
       const l = L.find(x => x.id===id);
       if (!l?.buyout) throw new Error("Le propriétaire n'a pas ouvert cet objet au rachat");
-      return { amount_cents:cents, fee_cents:feeFor(cents), total_cents:cents+feeFor(cents), status:"pending" };
+      const o = { id:"o"+Date.now(), listing_id:id, amount_cents:cents, fee_cents:saleFeeFor(cents), total_cents:cents+saleFeeFor(cents), status:"pending", codes:{ sale:code() }, created_at:new Date().toISOString() };
+      st.offers.unshift(o); save();
+      setTimeout(() => { const x = st.offers.find(y => y.id===o.id); if (x && x.status==="pending") { x.status="accepted"; save(); onDemoChange(`${l.owner} a accepté votre offre de ${eur(cents)}`); } }, 5000);
+      return o;
+    },
+    async myOffers(){ await wait(150); return st.offers.map(o => ({ ...o, listing: L.find(l => l.id===o.listing_id) })); },
+    async offersReceived(){ await wait(150); return (st.ownerOffers||[]).map(o => ({ ...o, listing:(st.myListings||[]).find(l => l.id===o.listing_id) })); },
+    async setOffer(id, status){ await wait(200); const o = st.offers.find(x => x.id===id) || (st.ownerOffers||[]).find(x => x.id===id); if (o) { o.status = status; save(); } },
+    async myListings(){ await wait(150); return st.myListings || []; },
+    async publish(d){
+      await wait(600);
+      const l = { id:"m"+Date.now(), title:d.title, cat:cats.find(c=>c.id===d.categoryId)?.slug, catLabel:cats.find(c=>c.id===d.categoryId)?.label, price:d.price, deposit:d.deposit, city:d.city, owner:me()?.firstName||"Vous", ownerId:"me", description:d.description, img:d.previewImg||null, status:"active",
+        condition:d.condition, brand:d.brand, model:d.model, verified:false, dims:d.dims, weight:d.weight, modes:d.modes, deliveryFee:d.deliveryFee, shop:shops.find(s=>s.id===d.shopId)||null, buyout:d.buyout, buyoutPrice:d.buyoutPrice };
+      st.myListings = [l, ...(st.myListings||[])]; save();
+      return l;
+    },
+    async handover(kind, id, typed){
+      await wait(600);
+      let target, expected;
+      if (kind==="pickup") { target = st.ownerBookings.find(b => b.id===id); expected = target.renterCode; }
+      else if (kind==="return") { target = st.bookings.find(b => b.id===id); expected = target.ownerCode; }
+      else { target = st.ownerOffers.find(o => o.id===id); expected = target.buyerCode; }
+      target.attempts = target.attempts || 0;
+      if (target.attempts >= 5) throw new Error("Trop d'essais : contactez le support");
+      if (typed !== expected) { target.attempts++; save(); throw new Error(`Code incorrect (${5-target.attempts} essai(s) restant(s))`); }
+      if (kind==="pickup") target.status = "in_progress";
+      else if (kind==="return") { target.status = "completed"; award(Math.floor(target.subtotal_cents/100), "location"); }
+      else { target.status = "completed"; const l = st.myListings.find(x => x.id===target.listing_id); if (l) l.status = "sold"; award(Math.floor(target.amount_cents/100), "vente"); }
+      save();
+    },
+    async points(){ await wait(120); return { total: st.ledger.reduce((a,b)=>a+b.points,0), ledger: st.ledger }; },
+    demoCodeFor(kind, id){
+      if (kind==="return") return st.bookings.find(b => b.id===id)?.ownerCode;
+      if (kind==="pickup") return st.ownerBookings.find(b => b.id===id)?.renterCode;
+      return st.ownerOffers.find(o => o.id===id)?.buyerCode;
     },
   };
-  return api;
 }
 
 /* =========================================================
-   ÉTAT & ROUTAGE
+   ÉTAT, FRAIS, ROUTAGE
    ========================================================= */
 const api = DEMO ? demoApi() : supaApi();
 const S = {
-  user:null, cats:[], settings:{ rate:CONFIG.COMMISSION_RATE, min:CONFIG.COMMISSION_MIN_CENTS },
-  f:{ cat:null, q:"", start:"", end:"" }, listings:[], bookings:[],
-  d:null, cal:{ month:null, start:null, end:null, busy:new Set() },
+  user:null, cats:[], shops:[],
+  settings:{ rate:0.06, min:100, saleRate:0.08, saleMin:200, founder:0.5 },
+  f:{ cat:null, q:"", start:"", end:"" }, listings:[], d:null, mode:"hand",
+  cal:{ month:null, start:null, end:null, busy:new Set() }, pts:0,
 };
+const disc = () => S.user?.founder ? S.settings.founder : 1;
+function feeFor(c){ return Math.round(Math.max(Math.round(c * S.settings.rate), S.settings.min) * disc()); }
+function saleFeeFor(c){ return Math.round(Math.max(Math.round(c * S.settings.saleRate), S.settings.saleMin) * disc()); }
 function route(){ const h = location.hash.replace(/^#\/?/, ""); const [name, id] = h.split("/"); return { name: name || "explorer", id }; }
 addEventListener("hashchange", render);
 
+const VIEWS = ["explorer","locations","materiel","publier","club"];
 async function render(){
   const signedIn = !!S.user;
   $("#auth").hidden = signedIn;
   $("#shell").hidden = !signedIn;
   if (!signedIn) { closeDetail(); return; }
   const r = route();
-  const name = ["explorer","locations","annonce"].includes(r.name) ? r.name : "explorer";
-  const view = name === "locations" ? "locations" : "explorer";
+  const view = r.name === "annonce" ? "explorer" : (VIEWS.includes(r.name) ? r.name : "explorer");
   $$("[data-route]").forEach(a => a.classList.toggle("on", a.dataset.route === view));
-  $("#v-explorer").hidden = view !== "explorer";
-  $("#v-locations").hidden = view !== "locations";
+  VIEWS.forEach(v => $("#v-"+v).hidden = v !== view);
   if (view === "explorer" && !S.listings.length) loadListings();
-  if (view === "locations") loadBookings();
-  if (name === "annonce" && r.id) openDetail(r.id); else closeDetail();
+  if (view === "locations") loadRenter();
+  if (view === "materiel") loadOwner();
+  if (view === "publier") initPublish();
+  if (view === "club") loadClub();
+  if (r.name === "annonce" && r.id) openDetail(r.id); else closeDetail();
+  scrollTo({ top:0 });
 }
 
 /* =========================================================
    CONNEXION
    ========================================================= */
+const REF = (new URLSearchParams(location.search).get("ref") || store.get("rebond_ref") || "").toUpperCase();
+if (REF) store.set("rebond_ref", REF);
 let mode = "in";
 function setMode(m){
   mode = m;
   $$(".seg button").forEach(b => { const on = b.dataset.mode === m; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
   $("#fFirst").hidden = m !== "up";
+  $("#refBox").hidden = !(m === "up" && REF);
   $("#authTitle").textContent = m === "up" ? "Créer un compte" : "Bon retour";
   $("#authBtn").textContent = m === "up" ? "Créer mon compte" : "Se connecter";
   $("#pw").autocomplete = m === "up" ? "new-password" : "current-password";
   $("#authErr").textContent = "";
 }
 $$(".seg button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+if (REF) setMode("up");
 $("#authForm").addEventListener("submit", async e => {
   e.preventDefault();
   const email = $("#email").value.trim(), pw = $("#pw").value, first = $("#first").value.trim();
-  const err = $("#authErr"); err.textContent = "";
+  const err = $("#authErr"); err.textContent = ""; err.style.color = "";
   if (!/^\S+@\S+\.\S+$/.test(email)) { err.textContent = "Adresse email invalide."; return; }
   if (pw.length < 6) { err.textContent = "Mot de passe trop court (6 caractères minimum)."; return; }
   if (mode === "up" && !first) { err.textContent = "Indiquez votre prénom."; return; }
   const btn = $("#authBtn"); btn.disabled = true; const label = btn.textContent; btn.textContent = "Un instant…";
   try {
     if (mode === "up") {
-      const r = await api.signUp(email, pw, first);
+      const r = await api.signUp(email, pw, first, REF);
       if (r.needsConfirm) { err.style.color = "var(--ink)"; err.textContent = "Compte créé. Cliquez sur le lien reçu par email pour l'activer."; }
     } else await api.signIn(email, pw);
-  } catch (ex) { err.style.color = ""; err.textContent = ex.message; }
+  } catch (ex) { err.textContent = ex.message; }
   finally { btn.disabled = false; btn.textContent = label; }
 });
 $("#demoBtn").addEventListener("click", () => api.signUp("demo@rebond.fr", "demo123", "Sam"));
 
-/* Menu compte */
 $("#avatarBtn").addEventListener("click", e => { e.stopPropagation(); const m = $("#menu"); const open = !m.classList.contains("open"); m.classList.toggle("open", open); $("#avatarBtn").setAttribute("aria-expanded", open); });
 addEventListener("click", e => { if (!e.target.closest("#menu")) { $("#menu").classList.remove("open"); $("#avatarBtn").setAttribute("aria-expanded","false"); } });
 $("#logoutBtn").addEventListener("click", async () => { await api.signOut(); toast("À bientôt !"); });
@@ -628,10 +966,11 @@ function onUser(u){
   S.user = u;
   if (u) {
     $("#avatarBtn").textContent = (u.firstName || u.email || "?")[0].toUpperCase();
-    $("#whoName").textContent = u.firstName || "Mon compte";
+    $("#avatarBtn").classList.toggle("founder", !!u.founder);
+    $("#whoName").textContent = (u.firstName || "Mon compte") + (u.founder ? " · fondateur" : "");
     $("#whoEmail").textContent = u.email || "";
     $("#helloTitle").textContent = u.firstName ? `${u.firstName}, qu'est-ce qu'on loue ?` : "Qu'est-ce qu'on loue ?";
-    if (was !== u.id) { S.listings = []; S.bookings = []; refreshCount(); }
+    if (was !== u.id) { S.listings = []; refreshCounts(); refreshPoints(); }
   }
   render();
 }
@@ -645,7 +984,7 @@ function renderChips(){
 }
 $("#chips").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; S.f.cat = b.dataset.cat || null; renderChips(); loadListings(); });
 $("#fStart").min = $("#fEnd").min = today();
-$("#fStart").addEventListener("change", () => { const v = $("#fStart").value; $("#fEnd").min = v || today(); if ($("#fEnd").value && $("#fEnd").value < v) $("#fEnd").value = v; });
+$("#fStart").addEventListener("change", () => { const v = $("#fStart").value; $("#fEnd").min = v || today(); $("#fEnd").max = v ? addDays(v, 29) : ""; if ($("#fEnd").value && $("#fEnd").value < v) $("#fEnd").value = v; });
 let qTimer;
 $("#q").addEventListener("input", () => { clearTimeout(qTimer); qTimer = setTimeout(() => { S.f.q = $("#q").value.trim(); loadListings(); }, 350); });
 $("#filters").addEventListener("submit", e => {
@@ -653,16 +992,23 @@ $("#filters").addEventListener("submit", e => {
   S.f.q = $("#q").value.trim();
   const s = $("#fStart").value, en = $("#fEnd").value;
   if ((s && !en) || (!s && en)) { toast("Choisissez une date de début et une date de fin."); return; }
+  if (s && en && dayCount(s, en) > 30) { toast("30 jours maximum par location."); return; }
   S.f.start = s; S.f.end = en;
   loadListings();
 });
 
+function thumbHTML(l, cls=""){
+  const lk = look(l.cat);
+  return `<div class="thumb ${cls}" style="background:${lk.color}">${l.img ? `<img src="${esc(l.img)}" alt="" loading="lazy">` : `<span class="em" aria-hidden="true">${lk.icon}</span>`}`;
+}
 function cardHTML(l, i){
-  const lk = look(l.cat), mine = S.user && l.ownerId === S.user.id;
+  const mine = S.user && (l.ownerId === S.user.id || l.ownerId === "me");
   return `<button class="card" data-id="${esc(l.id)}" style="animation-delay:${Math.min(i,12)*40}ms" aria-label="${esc(l.title)}, ${esc(l.city)}, ${esc(eur(l.price))} par jour">
-    <div class="thumb" style="background:${lk.color}">${l.img ? `<img src="${esc(l.img)}" alt="" loading="lazy">` : `<span class="em" aria-hidden="true">${lk.icon}</span>`}
-      <span class="tag">${esc(l.catLabel)}</span>${mine ? `<span class="mine">Votre annonce</span>` : ""}${l.buyout ? `<span class="buy">Rachetable</span>` : ""}</div>
+    ${thumbHTML(l)}
+      <span class="badge b-tl">${esc(l.catLabel)}</span>${mine ? `<span class="badge b-tr">${l.status==="sold"?"Vendu":"Votre annonce"}</span>` : ""}
+      ${l.buyout ? `<span class="badge b-bl">Rachetable</span>` : ""}${l.verified ? `<span class="badge b-br">✓ Marque vérifiée</span>` : ""}</div>
     <h3>${esc(l.title)}</h3>
+    <p class="cond">${esc(COND[l.condition] || "")}${l.brand ? " · " + esc(l.brand) : ""}</p>
     <div class="meta"><span>${esc(l.city)}</span><span><b>${eur(l.price)}</b> / jour</span></div>
   </button>`;
 }
@@ -679,74 +1025,92 @@ async function loadListings(){
     $("#resultLine").innerHTML = `<span><b>${list.length}</b> équipement${list.length>1?"s":""} disponible${list.length>1?"s":""}${dates}</span>` +
       (S.f.start || S.f.q || S.f.cat ? `<button class="link-btn" id="resetF">Effacer les filtres</button>` : "");
     $("#grid").innerHTML = list.length ? list.map(cardHTML).join("") :
-      `<div class="empty"><h3>Rien de disponible ici</h3><p>Essayez d'autres dates, une autre catégorie ou une ville voisine.</p><button class="btn btn-ghost" id="resetF2">Voir tout le catalogue</button></div>`;
+      `<div class="empty"><h3>Rien de disponible ici</h3><p>Essayez d'autres dates, une autre catégorie, ou soyez le premier à publier.</p><a class="btn btn-dark" href="#/publier">Publier une annonce</a></div>`;
   } catch (ex) {
     if (seq !== searchSeq) return;
     $("#grid").innerHTML = `<div class="empty"><h3>Impossible de charger le catalogue</h3><p>${esc(ex.message)}</p><button class="btn btn-ghost" onclick="loadListings()">Réessayer</button></div>`;
   }
 }
-function resetFilters(){ S.f = { cat:null, q:"", start:"", end:"" }; $("#q").value = $("#fStart").value = $("#fEnd").value = ""; renderChips(); loadListings(); }
-document.addEventListener("click", e => { if (e.target.closest("#resetF,#resetF2")) resetFilters(); });
-$("#grid").addEventListener("click", e => { const c = e.target.closest(".card"); if (c) location.hash = `#/annonce/${c.dataset.id}`; });
+document.addEventListener("click", e => { if (e.target.closest("#resetF")) { S.f = { cat:null, q:"", start:"", end:"" }; $("#q").value = $("#fStart").value = $("#fEnd").value = ""; renderChips(); loadListings(); } });
+document.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) location.hash = `#/annonce/${c.dataset.id}`; });
 
 /* =========================================================
-   FICHE + CALENDRIER + RÉSERVATION
+   FICHE + CALENDRIER + MODE DE REMISE + RÉSERVATION + OFFRE
    ========================================================= */
 async function openDetail(id){
   if (S.d?.id === id && $("#sheet").classList.contains("open")) return;
   const l = S.listings.find(x => x.id === id) || await api.listing(id).catch(() => null);
   if (!l) { toast("Cette annonce n'est plus disponible."); location.hash = "#/explorer"; return; }
-  S.d = l;
-  const start = S.f.start || null, end = S.f.end || null;
-  S.cal = { month: parse(start || today()), start, end, busy:new Set() };
+  S.d = l; S.mode = l.modes?.[0] || "hand";
+  S.cal = { month: parse(S.f.start || today()), start: S.f.start || null, end: S.f.end || null, busy:new Set() };
   S.cal.month.setDate(1);
   drawDetail();
   $("#sheet").classList.add("open"); $("#scrim").classList.add("open");
   $("#sheet").setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden";
-  setTimeout(() => $("#dClose").focus(), 50);
   try {
     const ranges = await api.busy(id);
     const set = new Set();
     ranges.forEach(r => { for (let d = r.start_date; d <= r.end_date; d = addDays(d,1)) set.add(d); });
     S.cal.busy = set;
-    if (S.cal.start && rangeHasBusy(S.cal.start, S.cal.end || S.cal.start)) { S.cal.start = S.cal.end = null; }
+    if (S.cal.start && rangeHasBusy(S.cal.start, S.cal.end || S.cal.start)) S.cal.start = S.cal.end = null;
     drawCal(); drawFoot();
-  } catch { /* le calendrier reste utilisable, la base vérifiera */ }
+  } catch {}
 }
 function closeDetail(){
-  const open = $("#sheet").classList.contains("open");
   $("#sheet").classList.remove("open"); $("#scrim").classList.remove("open");
-  $("#sheet").setAttribute("aria-hidden","true"); document.body.style.overflow = "";
+  $("#sheet").setAttribute("aria-hidden","true");
+  if (!$("#hoDlg").classList.contains("open")) document.body.style.overflow = "";
 }
-$("#dClose").addEventListener("click", () => { location.hash = "#/explorer"; });
+$("#dClose").addEventListener("click", () => history.length > 1 ? history.back() : (location.hash = "#/explorer"));
 $("#scrim").addEventListener("click", () => { location.hash = "#/explorer"; });
-addEventListener("keydown", e => { if (e.key === "Escape" && $("#sheet").classList.contains("open")) location.hash = "#/explorer"; });
+addEventListener("keydown", e => { if (e.key === "Escape") { if ($("#hoDlg").classList.contains("open")) closeHo(); else if ($("#sheet").classList.contains("open")) location.hash = "#/explorer"; } });
 
+function specsHTML(l){
+  const dims = (l.dims||[]).filter(Boolean);
+  const items = [
+    ["État", COND[l.condition]],
+    ["Marque", l.brand ? `${l.brand}${l.model ? " · " + l.model : ""}` : null],
+    ["Dimensions", dims.length ? dims.join(" × ") + " cm" : null],
+    ["Poids", l.weight ? `${String(l.weight).replace(".", ",")} kg` : null],
+  ].filter(x => x[1]);
+  return items.length ? `<div class="specs">${items.map(([k,v]) => `<div class="spec"><span>${k}</span><b>${esc(v)}</b></div>`).join("")}</div>` : "";
+}
+function modesHTML(l){
+  const opts = l.modes.map(m => {
+    const det = m === "hand" ? `Créneau à convenir avec ${esc(l.owner)}` :
+                m === "delivery" ? `Livré près de chez vous · ${eur(l.deliveryFee || 0)}` :
+                `${esc(l.shop?.name || "Boutique partenaire")}, ${esc(l.shop?.address || "")} ${esc(l.shop?.city || "")}`;
+    return `<label class="mode"><input type="radio" name="hoMode" value="${m}" ${S.mode===m?"checked":""}><span><b>${MODE[m]}</b><span>${det}</span></span></label>`;
+  }).join("");
+  return `<div><h3 style="font-size:20px;margin-bottom:10px">Comment récupérer l'objet</h3><div class="modes">${opts}</div></div>`;
+}
 function drawDetail(){
-  const l = S.d, lk = look(l.cat), mine = S.user && l.ownerId === S.user.id;
+  const l = S.d, mine = S.user && (l.ownerId === S.user.id || l.ownerId === "me");
   $("#dScroll").innerHTML = `
-    <div class="thumb" style="background:${lk.color}">${l.img ? `<img src="${esc(l.img)}" alt="">` : `<span aria-hidden="true">${lk.icon}</span>`}</div>
+    ${thumbHTML(l)}</div>
     <div class="sheet-body">
-      <div class="facts"><span class="fact">${esc(l.catLabel)}</span><span class="fact"><svg class="i" style="width:15px;height:15px"><use href="#i-pin"/></svg>${esc(l.city)}</span><span class="fact"><svg class="i" style="width:15px;height:15px"><use href="#i-lock"/></svg>Caution ${eur(l.deposit)}</span></div>
+      <div class="facts"><span class="fact">${esc(l.catLabel)}</span><span class="fact"><svg class="i" style="width:15px;height:15px"><use href="#i-pin"/></svg>${esc(l.city)}</span><span class="fact"><svg class="i" style="width:15px;height:15px"><use href="#i-lock"/></svg>Caution ${eur(l.deposit)}</span>${l.verified ? `<span class="fact ok">✓ Marque vérifiée</span>` : ""}</div>
       <h2 id="dTitle">${esc(l.title)}</h2>
       ${l.description ? `<p style="color:var(--muted)">${esc(l.description)}</p>` : ""}
+      ${specsHTML(l)}
       <div class="owner"><span class="av">${esc((l.owner||"?")[0])}</span><span>Proposé par <b style="color:var(--ink)">${esc(l.owner)}</b></span></div>
-      ${mine ? `<p class="demo-box" style="display:block">C'est votre annonce : vous ne pouvez pas la louer.</p>` : `
+      ${mine ? `<p class="demo-box" style="display:block">C'est votre annonce.</p>` : `
+      ${modesHTML(l)}
       <div><h3 style="font-size:20px;margin-bottom:10px">Choisissez vos dates</h3><div class="cal" id="cal"></div></div>
       <div class="quote" id="quote"></div>
-      <p class="note">De 1 à 30 jours. Vous ne payez rien maintenant : une fois la demande acceptée, vous payez en ligne, puis la caution est bloquée (pas débitée) la veille du retrait et libérée au retour.</p>
+      <p class="note">Vous ne payez rien maintenant. Une fois la demande acceptée, vous payez en ligne ; la caution est bloquée la veille du retrait, sans être débitée. Au retrait et au retour : photos, code à 4 chiffres et signature.</p>
       ${l.buyout ? `<div class="offer">
         <h3>Il vous plaît ? ${esc(l.owner)} accepte de le vendre</h3>
-        <p class="note">${l.buyoutPrice ? `Prix souhaité : <b style="color:var(--ink)">${eur(l.buyoutPrice)}</b>. ` : ""}Faites une offre, ${esc(l.owner)} l'accepte ou la refuse. Frais de ${Math.round(S.settings.rate*100)} % inclus au paiement.</p>
+        <p class="note">${l.buyoutPrice ? `Prix souhaité : <b style="color:var(--ink)">${eur(l.buyoutPrice)}</b>. ` : ""}Faites une offre : ${esc(l.owner)} l'accepte ou la refuse. Paiement en ligne, puis remise avec photos, code et signature.</p>
         <div class="offer-row"><label class="sr" for="offerAmt">Votre offre en euros</label><input class="input" id="offerAmt" type="number" min="1" step="5" value="${l.buyoutPrice ? Math.round(l.buyoutPrice/100) : ""}" placeholder="Votre offre (€)"><button class="btn btn-ghost" id="offerBtn">Envoyer l'offre</button></div>
         <p class="note" id="offerInfo"></p>
       </div>` : ""}`}
     </div>`;
   $("#dScroll").scrollTop = 0;
-  if (!mine) drawCal();
-  offerPreview();
+  if (!mine) { drawCal(); offerPreview(); }
   drawFoot();
 }
+document.addEventListener("change", e => { if (e.target.name === "hoMode") { S.mode = e.target.value; drawQuote(); drawFoot(); } });
 function rangeHasBusy(a, b){ for (let d = a; d <= b; d = addDays(d,1)) if (S.cal.busy.has(d)) return true; return false; }
 function drawCal(){
   const box = $("#cal"); if (!box) return;
@@ -757,8 +1121,7 @@ function drawCal(){
   let cells = "";
   for (let i = 0; i < startDow; i++) cells += `<span></span>`;
   for (let d = 1; d <= nDays; d++) {
-    const ds = iso(new Date(y, mo, d)), past = ds < t, isBusy = busy.has(ds);
-    const tooFar = start && !end && ds > addDays(start, 29);
+    const ds = iso(new Date(y, mo, d)), past = ds < t, isBusy = busy.has(ds), tooFar = start && !end && ds > addDays(start, 29);
     const sel = ds === start || ds === end, inR = start && end && ds > start && ds < end;
     cells += `<button class="day${isBusy?" busy":""}${sel?" sel":""}${inR?" in":""}${ds===t?" today":""}" data-d="${ds}" ${past||isBusy||tooFar?"disabled":""} aria-pressed="${sel}" aria-label="${parse(ds).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${isBusy?", indisponible":""}">${d}</button>`;
   }
@@ -787,24 +1150,26 @@ document.addEventListener("click", e => {
 });
 function quote(){
   const { start, end } = S.cal; if (!start) return null;
-  const days = dayCount(start, end || start), sub = S.d.price * days, fee = feeFor(sub);
-  return { start, end: end || start, days, sub, fee, total: sub + fee };
+  const days = dayCount(start, end || start), rent = S.d.price * days, del = S.mode === "delivery" ? (S.d.deliveryFee || 0) : 0, fee = feeFor(rent);
+  return { start, end: end || start, days, rent, del, fee, total: rent + del + fee };
 }
 function drawQuote(){
   const box = $("#quote"); if (!box) return;
   const q = quote();
   box.innerHTML = q ? `
-    <div><span>${eur(S.d.price)} × ${q.days} jour${q.days>1?"s":""}</span><span>${eur(q.sub)}</span></div>
-    <div><span>Frais de service (${Math.round(S.settings.rate*100)} %${q.fee===S.settings.min && q.sub*S.settings.rate < S.settings.min ? ", minimum" : ""})</span><span>${eur(q.fee)}</span></div>
+    <div><span>${eur(S.d.price)} × ${q.days} jour${q.days>1?"s":""}</span><span>${eur(q.rent)}</span></div>
+    ${q.del ? `<div><span>Livraison</span><span>${eur(q.del)}</span></div>` : ""}
+    <div><span>Frais de service${S.user?.founder ? " (membre fondateur)" : ""}</span><span>${eur(q.fee)}</span></div>
     <div class="tot"><span>Total</span><span>${eur(q.total)}</span></div>
-    <div style="color:var(--muted);font-size:13px"><span>Caution bloquée, non débitée</span><span>${eur(S.d.deposit)}</span></div>`
+    <div style="color:var(--muted);font-size:13px"><span>Caution bloquée, non débitée</span><span>${eur(S.d.deposit)}</span></div>
+    <div style="color:#3E5200;font-size:13px"><span>Points gagnés</span><span>+${Math.floor((q.rent+q.del)/100)} pts</span></div>`
     : `<div style="color:var(--muted)"><span>Touchez un jour pour le début, puis un autre pour la fin. Un seul jour, c'est possible aussi.</span></div>`;
 }
 function drawFoot(){
-  const l = S.d, mine = S.user && l.ownerId === S.user.id, q = quote();
+  const l = S.d, mine = S.user && (l.ownerId === S.user.id || l.ownerId === "me"), q = quote();
   $("#dFoot").innerHTML = mine
-    ? `<div class="sum"><b>${eur(l.price)}</b><span>par jour</span></div>`
-    : `<div class="sum">${q ? `<b>${eur(q.total)}</b><span>${fmtDay(q.start)}${q.days>1 ? " → "+fmtDay(q.end) : ""} · ${q.days} jour${q.days>1?"s":""}</span>` : `<b>${eur(l.price)}</b><span>par jour</span>`}</div>
+    ? `<div class="sum"><b>${eur(l.price)}</b><span>par jour</span></div><a class="btn btn-ghost" href="#/materiel">Gérer</a>`
+    : `<div class="sum">${q ? `<b>${eur(q.total)}</b><span>${fmtDay(q.start)}${q.days>1 ? " → "+fmtDay(q.end) : ""} · ${MODE[S.mode]}</span>` : `<b>${eur(l.price)}</b><span>par jour</span>`}</div>
        <button class="btn btn-dark" id="bookBtn" ${q ? "" : "disabled"}>Demander à réserver</button>`;
   const b = $("#bookBtn"); if (b) b.addEventListener("click", book);
 }
@@ -812,25 +1177,20 @@ async function book(){
   const q = quote(); if (!q) return;
   const btn = $("#bookBtn"); btn.disabled = true; btn.textContent = "Envoi…";
   try {
-    await api.book(S.d.id, q.start, q.end);
+    await api.book(S.d.id, q.start, q.end, S.mode);
     $("#dScroll").innerHTML = `<div class="done">
       <div class="ok"><svg class="i"><use href="#i-check"/></svg></div>
       <h2 style="font-size:30px">Demande envoyée !</h2>
-      <p style="color:var(--muted);max-width:340px">${esc(S.d.owner)} va recevoir votre demande pour <b style="color:var(--ink)">${esc(S.d.title)}</b>, du ${fmtDay(q.start)} au ${fmtDay(q.end)}. Vous serez prévenu dès qu'il répond.</p>
+      <p style="color:var(--muted);max-width:360px">${esc(S.d.owner)} va recevoir votre demande pour <b style="color:var(--ink)">${esc(S.d.title)}</b>, du ${fmtDay(q.start)} au ${fmtDay(q.end)} (${MODE[S.mode].toLowerCase()}). Votre code de retrait est dans « Mes locations ».</p>
       <p style="font-family:var(--display);font-weight:800;font-size:26px">${eur(q.total)}</p></div>`;
     $("#dFoot").innerHTML = `<a class="btn btn-ghost" href="#/explorer" style="flex:1">Continuer</a><a class="btn btn-dark" href="#/locations" style="flex:1">Mes locations</a>`;
-    S.bookings = []; refreshCount();
-    if (S.f.start) S.listings = [];
-  } catch (ex) {
-    toast(ex.message); btn.disabled = false; btn.textContent = "Demander à réserver";
-    try { const ranges = await api.busy(S.d.id); const set = new Set(); ranges.forEach(r => { for (let d=r.start_date; d<=r.end_date; d=addDays(d,1)) set.add(d); }); S.cal.busy = set; S.cal.start = S.cal.end = null; drawCal(); drawFoot(); } catch {}
-  }
+    refreshCounts(); if (S.f.start) S.listings = [];
+  } catch (ex) { toast(ex.message); btn.disabled = false; btn.textContent = "Demander à réserver"; }
 }
-
 function offerPreview(){
   const box = $("#offerInfo"); if (!box) return;
   const v = Math.round((+$("#offerAmt").value || 0) * 100);
-  box.textContent = v > 0 ? `Si l'offre est acceptée, vous paierez ${eur(v + feeFor(v))}, dont ${eur(feeFor(v))} de frais.` : "";
+  box.textContent = v > 0 ? `Si l'offre est acceptée, vous paierez ${eur(v + saleFeeFor(v))} frais de service compris, et gagnerez ${Math.floor(v/100)} points.` : "";
 }
 document.addEventListener("input", e => { if (e.target.id === "offerAmt") offerPreview(); });
 document.addEventListener("click", async e => {
@@ -843,57 +1203,225 @@ document.addEventListener("click", async e => {
 });
 
 /* =========================================================
-   MES LOCATIONS
+   LIGNES : locations et offres
    ========================================================= */
-async function loadBookings(){
-  const box = $("#bkList");
-  if (!S.bookings.length) box.innerHTML = Array.from({ length:3 }, () => `<div class="skel" style="aspect-ratio:auto;height:120px"></div>`).join("");
+function rowHTML({ l, title, sub, status, statusLabel, hint, total, totalNote, actions, i }){
+  const lk = look(l?.cat);
+  return `<article class="bk" style="animation-delay:${i*50}ms">
+    <div class="thumb" style="background:${lk.color}">${l?.img ? `<img src="${esc(l.img)}" alt="">` : `<span aria-hidden="true">${lk.icon}</span>`}</div>
+    <div><h3>${esc(title)}</h3><div class="sub">${sub}</div><div class="row"><span class="status st-${status}">${statusLabel}</span>${hint || ""}</div></div>
+    <div class="actions"><div class="total">${total}${totalNote ? `<div class="note" style="font-family:var(--body);font-weight:400">${totalNote}</div>` : ""}</div>${actions ? `<div class="btns">${actions}</div>` : ""}</div>
+  </article>`;
+}
+const codeHTML = (label, c) => c ? `<span class="code">${label} <b>${esc(c)}</b></span>` : "";
+const emptyHTML = (h, p, cta) => `<div class="empty"><h3>${h}</h3><p>${p}</p>${cta || ""}</div>`;
+const when = b => `${fmtDay(b.start_date)}${b.days>1 ? " → "+fmtDay(b.end_date) : ""} · ${b.days} jour${b.days>1?"s":""} · ${MODE[b.handover_mode || "hand"]}`;
+const ORDER = { in_progress:0, accepted:1, paid:1, pending:2, completed:3, declined:4, cancelled:5 };
+
+async function loadRenter(){
+  const box = $("#bkList"), ob = $("#myOffers");
+  box.innerHTML = `<div class="skel" style="aspect-ratio:auto;height:120px"></div>`;
   try {
-    S.bookings = await api.myBookings(S.user.id);
-    refreshCount(true);
-    if (!S.bookings.length) {
-      box.innerHTML = `<div class="empty"><h3>Aucune location pour l'instant</h3><p>Trouvez un équipement et envoyez votre première demande.</p><a class="btn btn-dark" href="#/explorer">Explorer le catalogue</a></div>`;
-      return;
-    }
-    const order = { accepted:0, pending:1, paid:2, in_progress:3, completed:4, declined:5, cancelled:6 };
-    const list = S.bookings.slice().sort((a,b) => (order[a.status]-order[b.status]) || (a.start_date < b.start_date ? -1 : 1));
-    box.innerHTML = list.map((b, i) => {
-      const l = b.listing || { title:"Annonce retirée", city:"", cat:null }, lk = look(l.cat);
-      const canCancel = ["pending","accepted"].includes(b.status);
-      const hint = b.status === "accepted" ? `<span class="note">Paiement en ligne bientôt disponible</span>` : b.status === "pending" ? `<span class="note">Réponse sous 24 h en général</span>` : "";
-      return `<article class="bk" style="animation-delay:${i*50}ms">
-        <div class="thumb" style="background:${lk.color}">${l.img ? `<img src="${esc(l.img)}" alt="">` : `<span aria-hidden="true">${lk.icon}</span>`}</div>
-        <div>
-          <h3>${esc(l.title)}</h3>
-          <div class="sub">${esc(l.city)}${l.city ? " · " : ""}${fmtDay(b.start_date)}${b.days>1 ? " → "+fmtDay(b.end_date) : ""} · ${b.days} jour${b.days>1?"s":""}</div>
-          <div class="row"><span class="status st-${b.status}">${STATUS[b.status] || b.status}</span>${hint}</div>
-        </div>
-        <div class="actions">
-          <div class="total">${eur(b.total_cents)}<div class="note" style="font-family:var(--body);font-weight:400">dont ${eur(b.fee_cents)} de frais</div></div>
-          ${canCancel ? `<button class="btn btn-ghost" data-cancel="${esc(b.id)}" style="min-height:44px">Annuler</button>` : ""}
-        </div>
-      </article>`;
-    }).join("");
-  } catch (ex) {
-    box.innerHTML = `<div class="empty"><h3>Impossible de charger vos locations</h3><p>${esc(ex.message)}</p><button class="btn btn-ghost" onclick="loadBookings()">Réessayer</button></div>`;
-  }
+    const [bks, offers] = await Promise.all([api.renterBookings(), api.myOffers()]);
+    const list = bks.slice().sort((a,b) => (ORDER[a.status]-ORDER[b.status]) || (a.start_date < b.start_date ? -1 : 1));
+    box.innerHTML = list.length ? list.map((b, i) => {
+      const l = b.listing || { title:"Annonce retirée", cat:null };
+      let hint = "", actions = "";
+      if (["accepted","paid"].includes(b.status)) hint = codeHTML("Code de retrait", b.codes?.pickup) + `<span class="note">À donner au propriétaire le jour J, après les photos.</span>`;
+      if (b.status === "pending") hint = `<span class="note">Réponse sous 24 h en général</span>`;
+      if (b.status === "in_progress") { hint = `<span class="note">Au retour, le propriétaire vous donne son code.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="return" data-id="${esc(b.id)}">Rendre le matériel</button>`; }
+      if (b.status === "completed") hint = `<span class="note" style="color:#3E5200">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
+      if (["pending","accepted"].includes(b.status)) actions += `<button class="btn btn-ghost btn-sm" data-cancel="${esc(b.id)}">Annuler</button>`;
+      return rowHTML({ l, title:l.title, sub:`${esc(l.city||"")} · ${when(b)}`, status:b.status, statusLabel:STATUS[b.status], hint, total:eur(b.total_cents), actions, i });
+    }).join("") : emptyHTML("Aucune location pour l'instant", "Trouvez un équipement et envoyez votre première demande.", `<a class="btn btn-dark" href="#/explorer">Explorer</a>`);
+    ob.innerHTML = offers.length ? offers.map((o, i) => {
+      const l = o.listing || { title:"Annonce retirée", cat:null };
+      let hint = "", actions = "";
+      if (["accepted","paid"].includes(o.status)) hint = codeHTML("Code de remise", o.codes?.sale) + `<span class="note">À donner au vendeur quand il vous remet l'objet.</span>`;
+      if (o.status === "pending") actions = `<button class="btn btn-ghost btn-sm" data-ocancel="${esc(o.id)}">Retirer</button>`;
+      return rowHTML({ l, title:l.title, sub:`Offre d'achat à ${esc(l.owner||"")}`, status:o.status === "completed" ? "completed" : o.status, statusLabel:OSTATUS[o.status], hint, total:eur(o.amount_cents), totalNote:`${eur(o.total_cents)} frais compris`, actions, i });
+    }).join("") : emptyHTML("Aucune offre d'achat", "Repérez le badge « Rachetable » sur les annonces.", "");
+  } catch (ex) { box.innerHTML = emptyHTML("Impossible de charger vos locations", esc(ex.message), `<button class="btn btn-ghost" onclick="loadRenter()">Réessayer</button>`); }
 }
-$("#bkList").addEventListener("click", async e => {
-  const b = e.target.closest("[data-cancel]"); if (!b) return;
-  if (!confirm("Annuler cette demande de location ?")) return;
-  b.disabled = true;
-  try { await api.cancel(b.dataset.cancel); toast("Location annulée."); S.listings = []; loadBookings(); }
-  catch (ex) { toast(ex.message); b.disabled = false; }
+
+async function loadOwner(){
+  const bx = $("#ownerBk"), ox = $("#ownerOffers"), lx = $("#myListings");
+  bx.innerHTML = `<div class="skel" style="aspect-ratio:auto;height:120px"></div>`;
+  try {
+    const [bks, offers, mine] = await Promise.all([api.ownerBookings(), api.offersReceived(), api.myListings()]);
+    const list = bks.slice().sort((a,b) => (ORDER[a.status]-ORDER[b.status]) || (a.start_date < b.start_date ? -1 : 1));
+    bx.innerHTML = list.length ? list.map((b, i) => {
+      const l = b.listing || { title:"Annonce", cat:null };
+      let hint = "", actions = "";
+      if (b.status === "pending") actions = `<button class="btn btn-dark btn-sm" data-bset="accepted" data-id="${esc(b.id)}">Accepter</button><button class="btn btn-ghost btn-sm" data-bset="declined" data-id="${esc(b.id)}">Refuser</button>`;
+      if (["accepted","paid"].includes(b.status)) { hint = `<span class="note">Le jour J : photos, code de ${esc(b.other)} et sa signature.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="pickup" data-id="${esc(b.id)}">Remettre le matériel</button>`; }
+      if (b.status === "in_progress") hint = codeHTML("Code de retour", b.codes?.return) + `<span class="note">À donner à ${esc(b.other)} quand il vous rend l'objet.</span>`;
+      if (b.status === "completed") hint = `<span class="note" style="color:#3E5200">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
+      return rowHTML({ l, title:l.title, sub:`${esc(b.other)} · ${when(b)}`, status:b.status, statusLabel:STATUS[b.status], hint, total:eur(b.subtotal_cents), totalNote:"pour vous", actions, i });
+    }).join("") : emptyHTML("Aucune demande pour l'instant", "Les demandes de location de votre matériel apparaîtront ici.", "");
+    ox.innerHTML = offers.length ? offers.map((o, i) => {
+      const l = o.listing || { title:"Annonce", cat:null };
+      let actions = "", hint = "";
+      if (o.status === "pending") actions = `<button class="btn btn-dark btn-sm" data-oset="accepted" data-id="${esc(o.id)}">Accepter</button><button class="btn btn-ghost btn-sm" data-oset="declined" data-id="${esc(o.id)}">Refuser</button>`;
+      if (["accepted","paid"].includes(o.status)) { hint = `<span class="note">À la remise : photos, code de ${esc(o.other)} et sa signature.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="sale" data-id="${esc(o.id)}">Remettre (vente)</button>`; }
+      return rowHTML({ l, title:l.title, sub:`Offre de ${esc(o.other)}${l.buyoutPrice ? ` · vous demandiez ${eur(l.buyoutPrice)}` : ""}`, status:o.status, statusLabel:OSTATUS[o.status], hint, total:eur(o.amount_cents), totalNote:"pour vous", actions, i });
+    }).join("") : emptyHTML("Aucune offre d'achat", "Activez l'option « J'accepte qu'on me le rachète » sur vos annonces.", "");
+    lx.innerHTML = mine.length ? mine.map(cardHTML).join("") : emptyHTML("Aucune annonce", "Publiez votre premier objet : +50 points.", `<a class="btn btn-dark" href="#/publier">Publier</a>`);
+  } catch (ex) { bx.innerHTML = emptyHTML("Impossible de charger", esc(ex.message), `<button class="btn btn-ghost" onclick="loadOwner()">Réessayer</button>`); }
+}
+
+document.addEventListener("click", async e => {
+  const c = e.target.closest("[data-cancel]"), oc = e.target.closest("[data-ocancel]"), bs = e.target.closest("[data-bset]"), os = e.target.closest("[data-oset]"), ho = e.target.closest("[data-ho]");
+  try {
+    if (c) { c.disabled = true; await api.setBooking(c.dataset.cancel, "cancelled"); toast("Location annulée."); S.listings = []; loadRenter(); }
+    if (oc) { oc.disabled = true; await api.setOffer(oc.dataset.ocancel, "cancelled"); toast("Offre retirée."); loadRenter(); }
+    if (bs) { bs.disabled = true; await api.setBooking(bs.dataset.id, bs.dataset.bset); toast(bs.dataset.bset === "accepted" ? "Demande acceptée." : "Demande refusée."); loadOwner(); }
+    if (os) { os.disabled = true; await api.setOffer(os.dataset.id, os.dataset.oset); toast(os.dataset.oset === "accepted" ? "Offre acceptée." : "Offre refusée."); loadOwner(); }
+    if (ho) openHo(ho.dataset.ho, ho.dataset.id);
+    if (c || oc || bs || os) refreshCounts();
+  } catch (ex) { toast(ex.message); [c,oc,bs,os].forEach(b => b && (b.disabled = false)); }
 });
-function refreshCount(fromData){
-  const n = fromData ? S.bookings.filter(b => ["pending","accepted"].includes(b.status)).length : null;
-  if (!fromData) { if (S.user) api.myBookings(S.user.id).then(list => { S.bookings = list; refreshCount(true); }).catch(() => {}); return; }
-  $$("[data-count]").forEach(c => { c.hidden = !n; c.textContent = n; });
+
+async function refreshCounts(){
+  try {
+    const [r, o, ro] = await Promise.all([api.renterBookings(), api.ownerBookings(), api.offersReceived()]);
+    const nr = r.filter(b => ["accepted","in_progress"].includes(b.status)).length;
+    const no = o.filter(b => ["pending","accepted"].includes(b.status)).length + ro.filter(x => ["pending","accepted"].includes(x.status)).length;
+    $$('[data-count="renter"]').forEach(c => { c.hidden = !nr; c.textContent = nr; });
+    $$('[data-count="owner"]').forEach(c => { c.hidden = !no; c.textContent = no; });
+  } catch {}
 }
-function onDemoChange(msg){
-  toast(msg); S.bookings = [];
-  if (route().name === "locations") loadBookings(); else refreshCount();
+function onDemoChange(msg){ toast(msg); const r = route().name; if (r === "locations") loadRenter(); if (r === "materiel") loadOwner(); refreshCounts(); }
+
+/* =========================================================
+   REMISE : PHOTOS + CODE + SIGNATURE
+   ========================================================= */
+const HO = { kind:null, id:null, files:[], drawn:false };
+const HO_TXT = {
+  pickup: { t:"Remettre le matériel", i:"Prenez au moins 2 photos de l'objet, saisissez le code que le locataire vous donne, puis faites-le signer.", c:"2. Code du locataire", s:"3. Signature du locataire" },
+  return: { t:"Rendre le matériel", i:"Prenez au moins 2 photos de l'objet rendu, saisissez le code que le propriétaire vous donne, puis faites-le signer.", c:"2. Code du propriétaire", s:"3. Signature du propriétaire" },
+  sale:   { t:"Remettre l'objet vendu", i:"Prenez au moins 2 photos, saisissez le code de l'acheteur, puis faites-le signer. La vente sera terminée et l'annonce passera en « vendu ».", c:"2. Code de l'acheteur", s:"3. Signature de l'acheteur" },
+};
+function openHo(kind, id){
+  Object.assign(HO, { kind, id, files:[], drawn:false });
+  const t = HO_TXT[kind];
+  $("#hoTitle").textContent = t.t; $("#hoIntro").textContent = t.i + (DEMO && api.demoCodeFor ? ` (Démo : le code est ${api.demoCodeFor(kind, id)}.)` : "");
+  $("#hoCodeLbl").textContent = t.c; $("#hoSigLbl").textContent = t.s;
+  $("#hoCode").value = ""; $("#hoNotes").value = ""; $("#hoErr").textContent = ""; $("#hoCond").value = "bon";
+  drawShots();
+  $("#hoDlg").classList.add("open"); $("#hoDlg").setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden";
+  setTimeout(() => { sizeSig(); clearSig(); }, 60);
 }
+function closeHo(){ $("#hoDlg").classList.remove("open"); $("#hoDlg").setAttribute("aria-hidden","true"); if (!$("#sheet").classList.contains("open")) document.body.style.overflow = ""; }
+$("#hoClose").addEventListener("click", closeHo);
+$("#hoDlg").addEventListener("click", e => { if (e.target.id === "hoDlg") closeHo(); });
+function drawShots(){
+  const box = $("#hoShots"), add = box.querySelector(".shot-add");
+  box.querySelectorAll("img").forEach(i => i.remove());
+  HO.files.forEach(f => { const img = document.createElement("img"); img.alt = "Photo de l'état"; img.src = URL.createObjectURL(f); box.insertBefore(img, add); });
+  add.hidden = HO.files.length >= 8;
+}
+$("#hoFiles").addEventListener("change", e => { HO.files = [...HO.files, ...e.target.files].slice(0, 8); e.target.value = ""; drawShots(); $("#hoErr").textContent = ""; });
+const sig = $("#hoSig"), sctx = sig.getContext("2d");
+function sizeSig(){ const r = sig.getBoundingClientRect(), dpr = devicePixelRatio || 1; sig.width = r.width * dpr; sig.height = r.height * dpr; sctx.setTransform(dpr,0,0,dpr,0,0); sctx.lineWidth = 2.4; sctx.lineCap = "round"; sctx.lineJoin = "round"; sctx.strokeStyle = "#0F1512"; }
+function clearSig(){ sctx.clearRect(0, 0, sig.width, sig.height); HO.drawn = false; $(".sig-wrap .hint").hidden = false; }
+let drawing = false;
+const pt = e => { const r = sig.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+sig.addEventListener("pointerdown", e => { drawing = true; sig.setPointerCapture(e.pointerId); const [x,y] = pt(e); sctx.beginPath(); sctx.moveTo(x, y); });
+sig.addEventListener("pointermove", e => { if (!drawing) return; const [x,y] = pt(e); sctx.lineTo(x, y); sctx.stroke(); HO.drawn = true; $(".sig-wrap .hint").hidden = true; });
+["pointerup","pointercancel","pointerleave"].forEach(ev => sig.addEventListener(ev, () => { drawing = false; }));
+$("#hoSigClear").addEventListener("click", clearSig);
+$("#hoCode").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); $("#hoErr").textContent = ""; });
+$("#hoForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const err = $("#hoErr"), code = $("#hoCode").value;
+  if (HO.files.length < 2) { err.textContent = "Ajoutez au moins 2 photos de l'état."; return; }
+  if (code.length !== 4) { err.textContent = "Le code fait 4 chiffres."; return; }
+  if (!HO.drawn) { err.textContent = "La signature est nécessaire."; return; }
+  const btn = $("#hoSubmit"); btn.disabled = true; btn.textContent = "Envoi des photos…";
+  try {
+    const blob = await new Promise(r => sig.toBlob(r, "image/png"));
+    await api.handover(HO.kind, HO.id, code, $("#hoCond").value, HO.files, blob, $("#hoNotes").value.trim());
+    closeHo();
+    toast(HO.kind === "pickup" ? "Matériel remis : la location commence." : HO.kind === "return" ? "Retour validé : la caution est libérée." : "Vente terminée : l'objet a changé de main.");
+    refreshCounts(); refreshPoints();
+    if (route().name === "locations") loadRenter(); else loadOwner();
+  } catch (ex) { err.textContent = ex.message; }
+  finally { btn.disabled = false; btn.textContent = "Valider la remise"; }
+});
+
+/* =========================================================
+   PUBLIER
+   ========================================================= */
+let pubInit = false, pubPhotos = [], pubProof = null;
+function initPublish(){
+  if (pubInit) { drawPubPreview(); return; }
+  pubInit = true;
+  $("#p-cat").innerHTML = S.cats.map(c => `<option value="${c.id}" data-slug="${esc(c.slug)}">${look(c.slug).icon} ${esc(c.label)}</option>`).join("");
+  $("#m-shop-id").innerHTML = S.shops.length ? S.shops.map(s => `<option value="${esc(s.id)}">${esc(s.name)} · ${esc(s.city)}</option>`).join("") : `<option value="">Aucune boutique pour l'instant</option>`;
+  $("#m-del").addEventListener("change", () => $("#m-del-box").hidden = !$("#m-del").checked);
+  $("#m-shop").addEventListener("change", () => $("#m-shop-box").hidden = !$("#m-shop").checked);
+  $("#p-buy").addEventListener("change", () => $("#p-buy-box").hidden = !$("#p-buy").checked);
+  $("#p-photos").addEventListener("change", e => { pubPhotos = [...e.target.files].slice(0, 8); $("#p-photos-l").textContent = pubPhotos.length ? `${pubPhotos.length} photo(s) ajoutée(s)` : "Ajouter des photos"; drawPubPreview(); });
+  $("#p-proof").addEventListener("change", e => { pubProof = e.target.files[0] || null; $("#p-proof-l").textContent = pubProof ? `Preuve ajoutée : ${pubProof.name}` : "Ajouter une preuve (photo ou PDF)"; });
+  $("#pubForm").addEventListener("input", drawPubPreview);
+  $("#pubForm").addEventListener("submit", publish);
+  drawPubPreview();
+}
+function pubData(){
+  const opt = $("#p-cat").selectedOptions[0];
+  const modes = [["hand","#m-hand"],["delivery","#m-del"],["shop","#m-shop"]].filter(([,s]) => $(s).checked).map(([m]) => m);
+  return {
+    title:$("#p-title").value.trim(), categoryId:+$("#p-cat").value, cat:opt?.dataset.slug, catLabel:opt?.textContent.replace(/^\S+\s/, ""),
+    condition:$("#p-cond").value, brand:$("#p-brand").value.trim(), model:$("#p-model").value.trim(),
+    dims:["#p-l","#p-w","#p-h"].map(s => +$(s).value || null), weight:+$("#p-kg").value || null,
+    description:$("#p-desc").value.trim(), city:$("#p-city").value.trim(),
+    price:Math.round((+$("#p-price").value || 0) * 100), deposit:Math.round((+$("#p-dep").value || 0) * 100),
+    modes, deliveryFee:Math.round((+$("#m-del-fee").value || 0) * 100), shopId:$("#m-shop-id").value || null,
+    buyout:$("#p-buy").checked, buyoutPrice:$("#p-buy").checked && +$("#p-buy-price").value ? Math.round(+$("#p-buy-price").value * 100) : null,
+    previewImg: pubPhotos[0] ? URL.createObjectURL(pubPhotos[0]) : null,
+  };
+}
+function drawPubPreview(){
+  const d = pubData();
+  $("#pubPreview").innerHTML = cardHTML({ id:"preview", title:d.title || "Votre équipement", cat:d.cat, catLabel:d.catLabel, city:d.city || "Votre ville", price:d.price || 0, condition:d.condition, brand:d.brand, buyout:d.buyout, verified:false, img:d.previewImg, ownerId:"x" }, 0).replace('<button class="card"', '<div class="card" style="pointer-events:none"').replace(/<\/button>$/, "</div>");
+}
+async function publish(e){
+  e.preventDefault();
+  const d = pubData(), err = $("#pubErr"); err.textContent = "";
+  if (d.title.length < 3) { err.textContent = "Donnez un titre d'au moins 3 caractères."; return; }
+  if (!d.city) { err.textContent = "Indiquez la ville."; return; }
+  if (d.price <= 0) { err.textContent = "Indiquez un prix par jour."; return; }
+  if (!d.modes.length) { err.textContent = "Choisissez au moins un mode de remise."; return; }
+  if (d.modes.includes("shop") && !d.shopId) { err.textContent = "Choisissez une boutique partenaire, ou décochez le dépôt en boutique."; return; }
+  const btn = $("#pubSubmit"); btn.disabled = true; btn.textContent = pubPhotos.length ? "Envoi des photos…" : "Publication…";
+  try {
+    await api.publish(d, pubPhotos, pubProof);
+    toast(pubProof ? "Annonce publiée. La marque sera vérifiée sous 48 h." : "Annonce publiée !");
+    $("#pubForm").reset(); pubPhotos = []; pubProof = null; $("#p-photos-l").textContent = "Ajouter des photos"; $("#p-proof-l").textContent = "Ajouter une preuve (photo ou PDF)";
+    ["#m-del-box","#m-shop-box","#p-buy-box"].forEach(s => $(s).hidden = true);
+    S.listings = []; refreshPoints(); location.hash = "#/materiel";
+  } catch (ex) { err.textContent = ex.message; }
+  finally { btn.disabled = false; btn.textContent = "Publier l'annonce"; }
+}
+
+/* =========================================================
+   CLUB : points, récompenses, parrainage
+   ========================================================= */
+const REASON = { location:"Location", location_proprietaire:"Location de votre matériel", achat:"Achat", vente:"Vente", premiere_annonce:"Première annonce", avis:"Avis laissé", parrainage:"Ami parrainé", filleul:"Bonus de parrainage" };
+async function refreshPoints(){ try { const p = await api.points(); S.pts = p.total; $("#ptsTop").textContent = p.total; return p; } catch { return { total:0, ledger:[] }; } }
+async function loadClub(){
+  const p = await refreshPoints();
+  $("#ptsBig").textContent = p.total;
+  $("#founderTag").hidden = !S.user?.founder;
+  $("#refCode").textContent = S.user?.refCode || "——";
+  $("#rewards").innerHTML = REWARDS.map(([pts, txt]) => `<div class="reward ${p.total >= pts ? "ok" : ""}"><span>${txt}</span><span class="p">${pts} pts</span></div>`).join("");
+  $("#ledger").innerHTML = p.ledger.length ? p.ledger.map(x => `<div class="reward"><span>${REASON[x.reason] || x.reason}<br><span class="note">${new Date(x.created_at).toLocaleDateString("fr-FR")}</span></span><span class="p" style="color:#3E5200">+${x.points}</span></div>`).join("") : `<p class="note">Vos points apparaîtront ici après votre première location ou annonce.</p>`;
+}
+$("#copyRef").addEventListener("click", async () => {
+  const link = `${location.origin}${location.pathname}?ref=${S.user?.refCode || ""}`;
+  try { await navigator.clipboard.writeText(link); toast("Lien de parrainage copié."); } catch { toast(link); }
+});
 
 /* =========================================================
    DÉMARRAGE
@@ -901,8 +1429,8 @@ function onDemoChange(msg){
 (async function init(){
   $("#demoBox").hidden = !DEMO; $("#demoPill").hidden = !DEMO;
   try {
-    const [cats, settings] = await Promise.all([api.categories(), api.settings().catch(() => null)]);
-    S.cats = cats; if (settings) S.settings = settings;
+    const [cats, settings, shops] = await Promise.all([api.categories(), api.settings().catch(() => null), api.shops().catch(() => [])]);
+    S.cats = cats; S.shops = shops; if (settings) S.settings = settings;
   } catch (ex) { toast(ex.message); }
   renderChips();
   api.onAuth(onUser);
