@@ -20,17 +20,21 @@
     "escalade": '<path d="M9.5 3.5h5a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z"/><path d="M12 3.5V11m-2-2 2 2 2-2"/>',
     "autre": '<circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/>',
   };
-  const TINTS = {
-    "velo": "#DCEEFF", "glisse-eau": "#E8F8C2", "kayak": "#D9F1E8", "montagne": "#E6E9FB",
-    "camping": "#F7EAD2", "raquette": "#FFF1C7", "fitness": "#FFE1D8", "escalade": "#ECE3FB", "autre": "#ECEAE3",
-  };
+  const TINTS = {};  // une seule teinte neutre pour toutes les catégories
   function catIcon(slug, size) {
     const p = ICONS[slug] || ICONS.autre;
     return `<svg viewBox="0 0 24 24" width="${size || 24}" height="${size || 24}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
   }
-  const catTint = slug => TINTS[slug] || TINTS.autre;
-  function logo(color, ball) {
-    return `<svg viewBox="0 0 64 64" width="34" height="34" aria-hidden="true"><path d="M54 32 A22 22 0 1 1 47.5 16.5" stroke="${color || "#0F1512"}" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M41 9 L50 15 L42 22" stroke="${color || "#0F1512"}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="sl-ball" cx="32" cy="32" r="10" fill="${ball || "#FF6B4A"}"/></svg>`;
+  const catTint = () => "#ECEBE5";
+  /* Logo : le mot « spoloc », le premier « o » devient un point vert (une balle) */
+  const ACCENT = "#2E5E4E";
+  function logo(color) {
+    return `<span class="sl-wm" style="color:${color || "#0F1512"}">sp<i class="sl-o"></i>loc</span>`;
+  }
+  /* Petite marque carrée pour l'icône d'onglet et l'avatar de l'assistant */
+  function mark(size) {
+    const s = size || 40;
+    return `<svg viewBox="0 0 64 64" width="${s}" height="${s}" aria-hidden="true"><rect width="64" height="64" rx="18" fill="#0F1512"/><circle cx="32" cy="32" r="11" fill="${ACCENT}"/><circle cx="32" cy="32" r="11" fill="none" stroke="#F3F1EA" stroke-width="3"/></svg>`;
   }
 
   /* ---------- Masquage des coordonnées (aperçu côté navigateur ; la base fait foi) ---------- */
@@ -101,12 +105,14 @@
   }
 
   const CSS = `
+  .sl-wm{display:inline-flex;align-items:baseline;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;letter-spacing:-.05em;line-height:1}
+  .sl-wm .sl-o{display:inline-block;width:.52em;height:.52em;border-radius:50%;background:#2E5E4E;margin:0 .035em;align-self:center;transform:translateY(.12em)}
   .sl-chat{display:flex;flex-direction:column;background:#fff;border:1px solid rgba(15,21,18,.12);border-radius:24px;overflow:hidden;font-family:"Instrument Sans",system-ui,sans-serif;color:#0F1512}
   .sl-chat-h{display:flex;align-items:center;gap:12px;padding:16px 18px;background:#0F1512;color:#F3F1EA}
   .sl-chat-h .av{width:40px;height:40px;border-radius:50%;background:#F3F1EA;display:grid;place-items:center;flex:none}
   .sl-chat-h b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:17px;letter-spacing:-.02em}
   .sl-chat-h span{font-size:12.5px;color:#B9C0BC;display:flex;align-items:center;gap:6px}
-  .sl-chat-h span::before{content:"";width:7px;height:7px;border-radius:50%;background:#C9F23B}
+  .sl-chat-h span::before{content:"";width:7px;height:7px;border-radius:50%;background:#8FB8A2}
   .sl-chat-h .x{margin-left:auto;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.1);color:#F3F1EA;font-size:18px;cursor:pointer}
   .sl-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#F7F6F1;overscroll-behavior:contain}
   .sl-b{max-width:86%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;animation:slIn .3s cubic-bezier(.2,.8,.2,1)}
@@ -122,7 +128,7 @@
   .sl-form{display:flex;gap:8px;padding:12px;border-top:1px solid rgba(15,21,18,.08);background:#fff}
   .sl-form input{flex:1;min-width:0;border:1.5px solid rgba(15,21,18,.14);border-radius:999px;padding:0 16px;min-height:48px;font:inherit;outline:none;color:#0F1512;background:#fff}
   .sl-form input:focus{border-color:#0F1512}
-  .sl-form button{width:48px;height:48px;border-radius:50%;border:0;background:#0F1512;color:#C9F23B;cursor:pointer;flex:none;display:grid;place-items:center}
+  .sl-form button{width:48px;height:48px;border-radius:50%;border:0;background:#0F1512;color:#F3F1EA;cursor:pointer;flex:none;display:grid;place-items:center}
   .sl-foot{font-size:11.5px;color:#5A615C;text-align:center;padding:0 12px 10px;background:#fff}
   .sl-fab{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:10px;border:0;border-radius:999px;background:#0F1512;color:#F3F1EA;padding:0 18px 0 8px;min-height:56px;font:600 15px "Instrument Sans",system-ui,sans-serif;cursor:pointer;box-shadow:0 18px 40px -16px rgba(15,21,18,.6);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
   .sl-fab:hover{transform:translateY(-3px)}
@@ -141,7 +147,7 @@
     injectCSS();
     const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
     container.innerHTML = `<div class="sl-chat" style="${opts.height ? `height:${opts.height}` : "height:100%"}">
-      <div class="sl-chat-h"><span class="av">${logo()}</span><div><b>Assistant Spoloc</b><span>Répond tout de suite, 24 h/24</span></div>${opts.closable ? '<button class="x" aria-label="Fermer l\'assistant">✕</button>' : ""}</div>
+      <div class="sl-chat-h"><span class="av">${mark(30)}</span><div><b>Assistant Spoloc</b><span>Répond tout de suite, 24 h/24</span></div>${opts.closable ? '<button class="x" aria-label="Fermer l\'assistant">✕</button>' : ""}</div>
       <div class="sl-msgs" aria-live="polite"></div>
       <form class="sl-form"><label class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="sl-in-${opts.id || "x"}">Votre question</label><input id="sl-in-${opts.id || "x"}" placeholder="Posez votre question…" autocomplete="off" maxlength="300"><button type="submit" aria-label="Envoyer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
       <div class="sl-foot">Réponses automatiques. Pour un cas particulier : ${esc(CONTACT_EMAIL)}</div>
@@ -179,7 +185,7 @@
     injectCSS();
     const fab = document.createElement("button");
     fab.className = "sl-fab"; fab.setAttribute("aria-label", "Ouvrir l'assistant"); fab.setAttribute("aria-expanded", "false");
-    fab.innerHTML = `<span class="av">${logo()}</span><span class="t">Une question ?</span>`;
+    fab.innerHTML = `<span class="av">${mark(30)}</span><span class="t">Une question ?</span>`;
     const pop = document.createElement("div"); pop.className = "sl-pop"; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Assistant Spoloc");
     document.body.append(pop, fab);
     let chat = null;
@@ -193,5 +199,5 @@
     return { fab, open: () => toggle(true), hide: h => { fab.style.display = h ? "none" : ""; if (h) toggle(false); } };
   }
 
-  window.Spoloc = { catIcon, catTint, logo, maskContacts, mountChat, mountFab, SUPABASE_URL, SUPABASE_KEY, CONTACT_EMAIL };
+  window.Spoloc = { catIcon, catTint, logo, mark, maskContacts, mountChat, mountFab, SUPABASE_URL, SUPABASE_KEY, CONTACT_EMAIL };
 })();

@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Spoloc — Location de matériel de sport entre particuliers</title>
 <meta name="description" content="Louez le matériel de sport de vos voisins, dès une demi-journée. Paiement, caution et remise protégés. Paris et petite couronne.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1512'/%3E%3Cpath d='M51 32 A19 19 0 1 1 45.4 18.6' stroke='%23F3F1EA' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23FF6B4A'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230F1512'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%232E5E4E' stroke='%23F3F1EA' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#0F1512; --ink-2:#1B2420; --paper:#F3F1EA; --card:#FFFFFF;
-  --lime:#C9F23B; --coral:#FF6B4A; --sky:#9DD4FF;
+  --soft:#D7E3DA; --accent:#2E5E4E; --neutral:#ECEBE5;
   --muted:#5A615C; --line:rgba(15,21,18,.12);
   --r:22px; --r-sm:14px;
   --display:"Bricolage Grotesque",system-ui,sans-serif;
@@ -31,7 +31,7 @@ h1,h2,h3{font-family:var(--display);letter-spacing:-.03em;line-height:1.04}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:999px;border:0;font-weight:600;font-size:15px;transition:transform .25s var(--ease),box-shadow .25s,background .2s;text-decoration:none;white-space:nowrap}
 .btn:active{transform:scale(.97)}
@@ -68,7 +68,7 @@ section{padding:80px 0}
 .hero{padding:56px 0 30px}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
 .hero h1{font-size:clamp(44px,6.4vw,88px);font-weight:800;margin:16px 0 18px}
-.hero h1 em{font-style:normal;color:var(--coral)}
+.hero h1 em{font-style:normal;color:var(--accent)}
 .sub{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:540px}
 .search{margin-top:28px;display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:8px;box-shadow:0 20px 50px -30px rgba(15,21,18,.35)}
 .s-box{display:flex;flex-direction:column;justify-content:center;padding:6px 14px;border-radius:15px;background:var(--paper);min-width:0}
@@ -76,25 +76,25 @@ section{padding:80px 0}
 .s-box input{border:0;background:none;outline:none;min-height:30px;width:100%;min-width:0}
 .trust{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px}
 .trust span{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:#3F4642}
-.trust svg{color:var(--coral)}
+.trust svg{color:var(--accent)}
 .mock{position:relative;height:500px}
 .m-card{position:absolute;background:var(--card);border-radius:24px;box-shadow:0 30px 60px -28px rgba(15,21,18,.45);border:1px solid var(--line)}
 .m-main{left:6%;top:8%;width:68%;padding:14px;animation:float 7s ease-in-out infinite}
-.m-main .ph{height:190px;border-radius:16px;background:#E8F8C2;display:grid;place-items:center;color:var(--ink)}
+.m-main .ph{height:190px;border-radius:16px;background:var(--neutral);display:grid;place-items:center;color:var(--ink)}
 .m-main h4{font-family:var(--display);font-size:19px;letter-spacing:-.02em;margin:12px 4px 2px}
 .m-main .meta{display:flex;justify-content:space-between;margin:0 4px;font-size:13px;color:var(--muted)}
 .m-main .meta b{color:var(--ink);font-family:var(--display);font-size:17px}
 .m-tags{display:flex;gap:6px;margin:10px 4px 8px;flex-wrap:wrap}
 .m-tags span{font-size:11.5px;font-weight:600;border-radius:999px;padding:4px 9px;background:var(--paper)}
-.m-tags .ok{background:#E6F7B0;color:#3E5200}
+.m-tags .ok{background:var(--soft);color:var(--accent)}
 .m-code{right:2%;top:46%;padding:16px 18px;background:var(--ink);color:var(--paper);animation:float 6s -2s ease-in-out infinite}
 .m-code small{display:block;font-size:12px;color:#B9C0BC}
-.m-code b{font-family:var(--display);font-size:34px;letter-spacing:.25em;color:var(--lime)}
+.m-code b{font-family:var(--display);font-size:34px;letter-spacing:.25em;color:var(--soft)}
 .m-dep{left:0;bottom:4%;padding:14px 16px;display:flex;gap:12px;align-items:center;animation:float 8s -4s ease-in-out infinite}
-.m-dep .ic{width:42px;height:42px;border-radius:12px;background:#FBEBCB;display:grid;place-items:center;color:#7A5200}
+.m-dep .ic{width:42px;height:42px;border-radius:12px;background:var(--neutral);display:grid;place-items:center;color:var(--accent)}
 .m-dep b{display:block;font-size:14px}.m-dep span{font-size:12.5px;color:var(--muted)}
 .m-half{right:6%;top:0;padding:10px 14px;font-size:13px;font-weight:600;display:flex;gap:8px;align-items:center;animation:float 6.5s -1s ease-in-out infinite}
-.m-half i{width:9px;height:9px;border-radius:50%;background:var(--coral)}
+.m-half i{width:9px;height:9px;border-radius:50%;background:var(--accent)}
 @keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
 
 .cats{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;margin-bottom:20px;scrollbar-width:none}
@@ -114,8 +114,8 @@ section{padding:80px 0}
 .card:hover .thumb .pic{transform:scale(1.08)}
 .badge{position:absolute;padding:5px 10px;border-radius:999px;font-size:11.5px;font-weight:600;line-height:1.2}
 .b-tl{left:12px;top:12px;background:rgba(255,255,255,.92)}
-.b-bl{left:12px;bottom:12px;background:var(--ink);color:var(--lime)}
-.b-br{right:12px;bottom:12px;background:#fff;color:#3E5200}
+.b-bl{left:12px;bottom:12px;background:var(--ink);color:var(--soft)}
+.b-br{right:12px;bottom:12px;background:#fff;color:var(--accent)}
 .card h3{font-size:17.5px;margin:12px 4px 2px;line-height:1.2}
 .card .cond{font-size:13px;color:var(--muted);margin:0 4px}
 .card .meta{display:flex;justify-content:space-between;align-items:baseline;margin:6px 4px 0;font-size:13.5px;color:var(--muted);gap:8px}
@@ -131,7 +131,7 @@ section{padding:80px 0}
 .step .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:18px}
 .step .ic svg{width:26px;height:26px}
 .step .n{position:absolute;right:20px;top:16px;font-family:var(--display);font-weight:800;font-size:44px;color:rgba(15,21,18,.07)}
-.step h3{font-size:21px;margin-bottom:8px}
+.step h3{font-size:21px;margin-bottom:8px;padding-right:44px}
 .step p{color:var(--muted);font-size:15px}
 
 .modal{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:16px;background:rgba(15,21,18,.5);opacity:0;pointer-events:none;transition:opacity .25s}
@@ -152,18 +152,18 @@ section{padding:80px 0}
 .price b{display:block;font-family:var(--display);font-size:24px}
 .facts{display:flex;gap:8px;flex-wrap:wrap}
 .fact{background:var(--paper);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
-.fact.ok{background:#E6F7B0;color:#3E5200}
+.fact.ok{background:var(--soft);color:var(--accent)}
 
 /* PUBLIER */
 .pub-hero{padding:56px 0 20px}
 .pub-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
 .pub-hero h1{font-size:clamp(42px,6vw,84px);font-weight:800;margin:16px 0 18px}
-.pub-hero h1 em{font-style:normal;color:var(--coral)}
+.pub-hero h1 em{font-style:normal;color:var(--accent)}
 .sim{background:var(--ink);color:var(--paper);border-radius:30px;padding:30px}
 .sim h3{font-size:24px}
 .sim .row{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:#B9C0BC;margin-top:16px}
-.sim input[type=range]{width:100%;accent-color:var(--lime);margin-top:8px}
-.sim .earn{font-family:var(--display);font-weight:800;font-size:68px;color:var(--lime);letter-spacing:-.04em;line-height:1;margin-top:22px}
+.sim input[type=range]{width:100%;accent-color:var(--soft);margin-top:8px}
+.sim .earn{font-family:var(--display);font-weight:800;font-size:68px;color:var(--soft);letter-spacing:-.04em;line-height:1;margin-top:22px}
 .sim .yr{color:#B9C0BC;font-size:14px;margin-top:6px}
 .ctrl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ctl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
@@ -172,10 +172,10 @@ section{padding:80px 0}
 .ctl p{font-size:14.5px;color:var(--muted)}
 .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
 .fs{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:24px}
-.fs .when{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--lime)}
+.fs .when{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
 .fs h3{font-size:20px;margin:10px 0 6px}
 .fs p{font-size:14.5px;color:#B9C0BC}
-.zero{margin-top:16px;background:var(--lime);border-radius:30px;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.zero{margin-top:16px;background:var(--soft);border-radius:30px;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .zero b{font-family:var(--display);font-size:clamp(56px,8vw,110px);letter-spacing:-.05em;line-height:.9}
 .zero h3{font-size:clamp(24px,3vw,36px);max-width:560px}
 
@@ -184,9 +184,9 @@ section{padding:80px 0}
 .founder{background:var(--ink);color:var(--paper);border-radius:30px;padding:34px}
 .founder .ph{width:96px;height:96px;border-radius:50%;background:var(--paper);display:grid;place-items:center;color:var(--ink);font-family:var(--display);font-weight:800;font-size:36px;margin-bottom:18px}
 .founder h3{font-size:30px}
-.founder .role{color:var(--lime);font-weight:600;margin:4px 0 14px}
+.founder .role{color:var(--soft);font-weight:600;margin:4px 0 14px}
 .founder p{color:#B9C0BC}
-.todo{display:inline-block;margin-top:14px;background:rgba(201,242,59,.14);color:var(--lime);border-radius:8px;padding:4px 8px;font-size:13px}
+.todo{display:inline-block;margin-top:14px;background:rgba(215,227,218,.14);color:var(--soft);border-radius:8px;padding:4px 8px;font-size:13px}
 .about-t h1{font-size:clamp(40px,5.4vw,72px);font-weight:800;margin:14px 0 20px}
 .about-t p{font-size:18px;color:#3F4642;margin-bottom:14px}
 .values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
@@ -206,18 +206,18 @@ section{padding:80px 0}
 .panel h3{font-size:21px;margin-bottom:10px}
 .line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:#D8DDD9}
 .line:last-child{border-bottom:0}
-.line b{font-family:var(--display);color:var(--lime);white-space:nowrap}
+.line b{font-family:var(--display);color:var(--soft);white-space:nowrap}
 .shop{border:2px solid var(--ink);border-radius:28px;padding:28px 32px;display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:center}
 .shop h3{font-size:clamp(24px,3vw,34px)}
 .shop ul{list-style:none;display:grid;gap:6px;margin-top:12px;color:#3F4642}
 .shop li{display:flex;gap:8px;align-items:center}
-.shop li svg{color:var(--coral)}
+.shop li svg{color:var(--accent)}
 .faq{max-width:860px;margin-inline:auto}
 .faq details{border-bottom:1px solid var(--line);padding:20px 0}
 .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:-.02em}
 .faq summary::-webkit-details-marker{display:none}
 .faq summary::after{content:"+";flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:20px;transition:transform .3s var(--ease)}
-.faq details[open] summary::after{transform:rotate(45deg);background:var(--coral)}
+.faq details[open] summary::after{transform:rotate(45deg);background:var(--accent)}
 .faq details p{color:var(--muted);margin-top:10px}
 
 /* AIDE */
@@ -238,7 +238,7 @@ footer .logo{color:var(--paper)}
 footer h5{color:var(--paper);font-size:14px;margin-bottom:12px}
 footer ul{list-style:none;display:grid;gap:8px;font-size:14px}
 footer a{text-decoration:none}
-footer a:hover{color:var(--lime)}
+footer a:hover{color:var(--soft)}
 .foot-b{margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
 
 .tabbar{display:none}
@@ -271,7 +271,7 @@ footer a:hover{color:var(--lime)}
   .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
   .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11.5px;font-weight:600;color:var(--muted);text-decoration:none;min-height:52px;justify-content:center}
   .tabbar a.on{color:var(--ink)}
-  .tabbar a.on svg{stroke:var(--coral)}
+  .tabbar a.on svg{stroke:var(--accent)}
   body{padding-bottom:70px}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}}
@@ -305,7 +305,7 @@ footer a:hover{color:var(--lime)}
 
 <header class="top">
   <div class="wrap top-in">
-    <a class="logo" href="#louer" aria-label="Spoloc, accueil"><span id="logoMark" style="display:grid"></span>spoloc</a>
+    <a class="logo" href="#louer" aria-label="Spoloc, accueil"><span id="logoMark"></span></a>
     <nav class="tabs" id="tabs" aria-label="Pages">
       <span class="pill" aria-hidden="true"></span>
       <a class="tab" href="#louer" data-v="louer">Louer</a>
@@ -351,7 +351,7 @@ footer a:hover{color:var(--lime)}
           <div class="meta"><span>Paris 15e · 10,5 kg</span><span><b>20 €</b> / jour</span></div>
         </div>
         <div class="m-card m-code"><small>Code de retrait</small><b>4821</b></div>
-        <div class="m-card m-dep"><span class="ic"><svg class="i"><use href="#i-lock"/></svg></span><div><b>Caution bloquée</b><span>300 €, jamais débitée</span></div></div>
+        <div class="m-card m-dep"><span class="ic"><svg class="i"><use href="#i-lock"/></svg></span><div><b>Caution = valeur de l'objet</b><span>450 € bloqués, jamais débités</span></div></div>
       </div>
     </div>
   </section>
@@ -368,10 +368,21 @@ footer a:hover{color:var(--lime)}
     <div class="wrap">
       <div class="sec-head rv"><div><span class="eyebrow">Comment ça marche</span><h2>Quatre étapes, zéro mauvaise surprise.</h2></div><p>Tout se passe sur Spoloc : la demande, le paiement, la caution, la messagerie et la remise.</p></div>
       <div class="steps">
-        <div class="step rv"><span class="n">1</span><div class="ic" style="background:#DCEEFF"><svg class="i"><use href="#i-search"/></svg></div><h3>Trouvez</h3><p>Par sport, dates et quartier. État, marque, dimensions et poids sur chaque fiche.</p></div>
-        <div class="step rv d1"><span class="n">2</span><div class="ic" style="background:#E8F8C2"><svg class="i"><use href="#i-cal"/></svg></div><h3>Demandez</h3><p>Une demi-journée, un week-end ou jusqu'à 30 jours. Le propriétaire accepte, vous payez en ligne.</p></div>
-        <div class="step rv d2"><span class="n">3</span><div class="ic" style="background:#FBEBCB"><svg class="i"><use href="#i-key"/></svg></div><h3>Récupérez</h3><p>En main propre, livré ou en boutique partenaire. Photos, code à 4 chiffres, signature.</p></div>
-        <div class="step rv d3"><span class="n">4</span><div class="ic" style="background:#FFE1D8"><svg class="i"><use href="#i-swap"/></svg></div><h3>Rendez ou gardez</h3><p>Retour signé, caution libérée. Coup de cœur ? Faites une offre de rachat.</p></div>
+        <div class="step rv"><span class="n">1</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-search"/></svg></div><h3>Trouvez</h3><p>Par sport, dates et quartier. État, marque, dimensions et poids sur chaque fiche.</p></div>
+        <div class="step rv d1"><span class="n">2</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-cal"/></svg></div><h3>Demandez</h3><p>Une demi-journée, un week-end ou jusqu'à 30 jours. Le propriétaire accepte, vous payez en ligne.</p></div>
+        <div class="step rv d2"><span class="n">3</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-key"/></svg></div><h3>Récupérez</h3><p>En main propre ou livré. Photos, code à 4 chiffres et signature des deux personnes.</p></div>
+        <div class="step rv d3"><span class="n">4</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-swap"/></svg></div><h3>Rendez ou gardez</h3><p>Retour signé, caution libérée. Coup de cœur&nbsp;? Faites une offre de rachat.</p></div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="eyebrow">Option rachat</span><h2>Essayez, puis gardez-le.</h2></div><p>Sur les annonces « Rachetable », vous pouvez faire une offre pendant ou après votre location. Personne ne vend ni n'achète par erreur.</p></div>
+      <div class="steps">
+        <div class="step rv"><span class="n">1</span><h3>Offre</h3><p>Pendant ou après la location, depuis la fiche de l'objet.</p></div>
+        <div class="step rv d1"><span class="n">2</span><h3>Double accord du vendeur</h3><p>Il accepte, puis confirme une seconde fois que la vente est définitive.</p></div>
+        <div class="step rv d2"><span class="n">3</span><h3>Votre confirmation</h3><p>Vous confirmez l'achat. Jusqu'à la remise, chacun peut encore annuler.</p></div>
+        <div class="step rv d3"><span class="n">4</span><h3>Remise signée</h3><p>Photos, code, deux signatures. Puis 48 h pour signaler un problème.</p></div>
       </div>
     </div>
   </section>
@@ -405,12 +416,12 @@ footer a:hover{color:var(--lime)}
     <div class="wrap">
       <div class="sec-head rv"><div><span class="eyebrow">Vous gardez la main</span><h2>Vos règles, votre matériel.</h2></div></div>
       <div class="ctrl">
-        <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-euro"/></svg></div><h3>Vos prix</h3><p>À la journée et à la demi-journée, plus la caution que vous jugez juste.</p></div>
+        <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-euro"/></svg></div><h3>Vos prix</h3><p>À la journée et à la demi-journée. La caution, elle, est toujours égale à la valeur de l'objet.</p></div>
         <div class="ctl rv d1"><div class="ic"><svg class="i"><use href="#i-check"/></svg></div><h3>Vous acceptez</h3><p>Chaque demande vous est soumise : vous acceptez ou refusez, sans justification.</p></div>
-        <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-camera"/></svg></div><h3>Une fiche précise</h3><p>État, marque, modèle, dimensions, poids. Ajoutez une preuve pour le badge « Marque vérifiée ».</p></div>
+        <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-camera"/></svg></div><h3>Une fiche précise</h3><p>Au moins 2 photos, l'état, la marque, les dimensions et le poids. Une preuve d'achat donne le badge « Marque vérifiée ».</p></div>
         <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-hand"/></svg></div><h3>Main propre</h3><p>Vous proposez vos créneaux et un lieu simple.</p></div>
         <div class="ctl rv d1"><div class="ic"><svg class="i"><use href="#i-truck"/></svg></div><h3>Livraison</h3><p>Si vous le souhaitez, contre des frais que vous fixez.</p></div>
-        <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-store"/></svg></div><h3>Boutique partenaire</h3><p>Déposez l'objet, il est retiré sans que vous ayez à vous déplacer.</p></div>
+        <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-store"/></svg></div><h3>Boutique partenaire <small style="font:600 12px var(--body);color:var(--accent);vertical-align:middle">bientôt</small></h3><p>Dépôt la veille, retrait au plus tard 3 jours après la location : rien ne traîne en boutique.</p></div>
       </div>
     </div>
   </section>
@@ -419,9 +430,9 @@ footer a:hover{color:var(--lime)}
       <div class="sec-head rv"><div><span class="eyebrow">Protégé à chaque étape</span><h2>Jamais de « je ne l'ai pas reçu ».</h2></div><p>La messagerie masque automatiquement les numéros et emails : tout reste sur Spoloc, donc tout reste protégé.</p></div>
       <div class="flow">
         <div class="fs rv"><span class="when">Demande acceptée</span><h3>Paiement en ligne</h3><p>L'argent est conservé jusqu'à la remise.</p></div>
-        <div class="fs rv d1"><span class="when">Veille du retrait</span><h3>Caution bloquée</h3><p>Une empreinte bancaire, jamais débitée sauf casse ou vol.</p></div>
-        <div class="fs rv d2"><span class="when">Jour J</span><h3>Photos, code, signature</h3><p>Vous êtes payé le lendemain.</p></div>
-        <div class="fs rv d3"><span class="when">Retour</span><h3>État comparé</h3><p>Photos de retour, code, signature, caution libérée.</p></div>
+        <div class="fs rv d1"><span class="when">Veille du retrait</span><h3>Caution bloquée</h3><p>Du montant de la valeur de l'objet, sur la carte du locataire. Jamais débitée sauf casse ou vol.</p></div>
+        <div class="fs rv d2"><span class="when">Jour J</span><h3>Photos, code, 2 signatures</h3><p>3 essais pour le code, puis il se bloque. Vous êtes payé le lendemain.</p></div>
+        <div class="fs rv d3"><span class="when">Retour</span><h3>État comparé</h3><p>Photos de retour, code, signatures, caution libérée.</p></div>
       </div>
       <div class="zero rv"><b>0 €</b><h3>Pour les propriétaires, à vie. Publier, louer et être payé ne vous coûte rien.</h3></div>
     </div>
@@ -446,7 +457,7 @@ footer a:hover{color:var(--lime)}
         <p><strong>Spoloc met ce matériel en circulation</strong>, entre voisins, pour une demi-journée ou un mois. Le propriétaire gagne de l'argent avec ce qui dormait, le locataire part en week-end sans tout acheter.</p>
         <div class="values">
           <div class="value"><b>Local</b><span>Du matériel à quelques stations de chez vous.</span></div>
-          <div class="value"><b>Protégé</b><span>Paiement, caution, photos et signature à chaque remise.</span></div>
+          <div class="value"><b>Protégé</b><span>Paiement, caution, photos et double signature à chaque remise.</span></div>
           <div class="value"><b>Honnête</b><span>Le prix affiché est le prix payé.</span></div>
         </div>
       </div>
@@ -456,8 +467,8 @@ footer a:hover{color:var(--lime)}
     <div class="wrap">
       <div class="sec-head rv"><div><span class="eyebrow">Le Club Spoloc</span><h2>Ici, chaque location vous rapporte.</h2></div><p>Des avantages qui restent, des points à chaque location, et des amis qui vous font gagner.</p></div>
       <div class="promise">
-        <div class="prom rv" style="background:var(--lime)"><span class="k">0 €</span><h3>Pour les propriétaires, à vie</h3><p>Vous touchez toujours 100 % du prix que vous fixez.</p></div>
-        <div class="prom rv d1" style="background:var(--coral)"><span class="k">÷ 2</span><h3>Membres fondateurs, à vie</h3><p>Les 500 premiers inscrits paient deux fois moins de frais de service. Pour toujours.</p></div>
+        <div class="prom rv" style="background:var(--soft)"><span class="k">0 €</span><h3>Pour les propriétaires, à vie</h3><p>Vous touchez toujours 100 % du prix que vous fixez.</p></div>
+        <div class="prom rv d1" style="background:var(--ink);color:var(--paper)"><span class="k">÷ 2</span><h3>Membres fondateurs, à vie</h3><p>Les 500 premiers inscrits paient deux fois moins de frais de service. Pour toujours.</p></div>
       </div>
       <div class="earn">
         <div class="panel rv"><h3>Gagnez des points</h3>
@@ -478,8 +489,8 @@ footer a:hover{color:var(--lime)}
   <section>
     <div class="wrap">
       <div class="shop rv">
-        <div><h3>Vous avez une boutique de sport&nbsp;?</h3>
-          <ul><li><svg class="i"><use href="#i-check"/></svg>Devenez point de dépôt et de retrait</li><li><svg class="i"><use href="#i-check"/></svg>Des clients du quartier passent chez vous chaque semaine</li><li><svg class="i"><use href="#i-check"/></svg>Une rémunération à chaque objet géré</li></ul>
+        <div><h3>Vous avez une boutique de sport&nbsp;? <small style="font:600 13px var(--body);color:var(--accent)">Bientôt</small></h3>
+          <ul><li><svg class="i"><use href="#i-check"/></svg>Devenez point de dépôt et de retrait</li><li><svg class="i"><use href="#i-check"/></svg>Des clients du quartier passent chez vous chaque semaine</li><li><svg class="i"><use href="#i-check"/></svg>Une rémunération à chaque objet géré</li><li><svg class="i"><use href="#i-check"/></svg>Rien ne traîne : dépôt la veille, retrait sous 3 jours</li></ul>
         </div>
         <a class="btn btn-dark" href="mailto:[ton-email]?subject=Boutique%20partenaire%20Spoloc" style="justify-self:end">Devenir partenaire</a>
       </div>
@@ -492,7 +503,9 @@ footer a:hover{color:var(--lime)}
         <details><summary>Combien de temps peut-on louer ?</summary><p>D'une demi-journée (matin 8 h–13 h ou après-midi 13 h–20 h) jusqu'à 30 jours.</p></details>
         <details><summary>Comment se passe le paiement ?</summary><p>En ligne par carte, sur Spoloc, une fois la demande acceptée. L'argent n'est versé au propriétaire que le lendemain de la remise.</p></details>
         <details><summary>Pourquoi ne pas échanger nos numéros ?</summary><p>Parce qu'en dehors de Spoloc, vous perdez la caution, les photos, la signature et notre aide en cas de litige. La messagerie masque automatiquement numéros, emails et liens.</p></details>
-        <details><summary>Peut-on acheter l'objet loué ?</summary><p>Oui, si le propriétaire a activé l'option rachat. Faites une offre depuis la fiche ; la vente suit le même circuit protégé.</p></details>
+        <details><summary>Peut-on acheter l'objet loué ?</summary><p>Oui, pendant ou après votre location, si le propriétaire a activé l'option rachat. Le vendeur confirme deux fois, vous confirmez votre achat, puis l'objet est remis avec photos, code et deux signatures.</p></details>
+        <details><summary>Un achat est-il définitif ?</summary><p>Oui, une fois l'objet remis. Avant la remise, chacun peut annuler. Après, l'acheteur comme le vendeur ont 48 h pour signaler un problème : nous étudions la demande et pouvons annuler la vente.</p></details>
+        <details><summary>Combien vaut la caution ?</summary><p>La valeur de l'objet, indiquée par le propriétaire. Elle n'est pas négociable : c'est une empreinte bloquée sur votre carte, libérée au retour.</p></details>
         <details><summary>Combien ça coûte ?</summary><p>Publier est gratuit pour toujours. Le total exact est affiché avant de payer, sans surprise.</p></details>
       </div>
     </div>
@@ -557,7 +570,7 @@ const COND = { neuf:"Neuf", tres_bon:"Très bon état", bon:"Bon état", correct
 const MODE = { hand:"Main propre", delivery:"Livraison", shop:"Boutique partenaire" };
 
 $("#logoMark").innerHTML = SL.logo();
-$("#logoFoot").innerHTML = SL.logo("#F3F1EA") + "spoloc";
+$("#logoFoot").innerHTML = SL.logo("#F3F1EA");
 $("#mockPic").innerHTML = SL.catIcon("glisse-eau", 96);
 $("#yr").textContent = new Date().getFullYear();
 
@@ -588,14 +601,14 @@ function observe(){ $$(".view:not([hidden]) .rv:not(.in)").forEach(el => io.obse
 /* Catalogue : vraies annonces Supabase, sinon exemples */
 const CATS = [["velo","Vélo"],["glisse-eau","Paddle & surf"],["kayak","Kayak"],["montagne","Ski & rando"],["camping","Bivouac"],["escalade","Escalade"],["raquette","Raquettes"],["fitness","Fitness"]];
 const EXAMPLES = [
-  ["d2","Paddle gonflable 10'6 + pagaie","glisse-eau",2000,1200,30000,"Paris 15e","tres_bon","Red Paddle Co","Ride 10'6",[320,86,15],10.5,true,true,["hand","delivery","shop"]],
-  ["d5","Tente 2 places ultra-légère","camping",1200,700,15000,"Paris 20e","neuf","MSR","Hubba Hubba 2",[46,15,15],1.3,true,true,["hand","shop"]],
+  ["d2","Paddle gonflable 10'6 + pagaie","glisse-eau",2000,1200,30000,"Paris 15e","tres_bon","Red Paddle Co","Ride 10'6",[320,86,15],10.5,true,true,["hand","delivery"]],
+  ["d5","Tente 2 places ultra-légère","camping",1200,700,15000,"Paris 20e","neuf","MSR","Hubba Hubba 2",[46,15,15],1.3,true,true,["hand"]],
   ["d7","Crash pad d'escalade","escalade",1000,600,15000,"Paris 13e","bon","Black Diamond","Mondo",[132,107,13],7.5,false,true,["hand","delivery"]],
-  ["d1","Vélo gravel carbone taille M","velo",2500,1500,40000,"Paris 11e","tres_bon","Canyon","Grizl CF SL 7",[175,45,100],9.2,true,false,["hand","shop"]],
+  ["d1","Vélo gravel carbone taille M","velo",2500,1500,40000,"Paris 11e","tres_bon","Canyon","Grizl CF SL 7",[175,45,100],9.2,true,false,["hand"]],
   ["d4","Skis de rando + peaux","montagne",2800,null,35000,"Paris 18e","tres_bon","Dynafit","Blacklight 88",[177,12,8],2.6,true,false,["hand"]],
   ["d3","Kayak biplace gonflable","kayak",3000,1800,30000,"Saint-Maur","bon","Gumotex","Solar",[410,85,25],17,false,false,["hand"]],
   ["d8","Vélo de voyage + sacoches","velo",2200,null,40000,"Paris 12e","bon","Riverside","Touring 520",[180,60,105],14,false,true,["hand"]],
-  ["d9","Réchaud + popote 2 personnes","camping",500,300,4000,"Montreuil","tres_bon","Jetboil","Flash",[18,11,11],0.4,false,false,["hand","shop"]],
+  ["d9","Réchaud + popote 2 personnes","camping",500,300,4000,"Montreuil","tres_bon","Jetboil","Flash",[18,11,11],0.4,false,false,["hand"]],
 ].map(([id,title,cat,price,half,deposit,city,condition,brand,model,dims,weight,verified,buyout,modes]) => ({ id,title,cat,catLabel:(CATS.find(c => c[0]===cat)||["",""])[1],price,half,deposit,city,condition,brand,model,dims,weight,verified,buyout,modes,img:null,example:true }));
 const F = { cat:null, q:"", d1:"", d2:"" };
 let LIST = [], seq = 0;
@@ -663,7 +676,7 @@ function openItem(id){
     <h2 id="mTitle">${esc(l.title)}</h2>
     <div class="prices"><div class="price"><span>Demi-journée</span><b>${eur(half)}</b></div><div class="price"><span>Journée</span><b>${eur(l.price)}</b></div></div>
     ${specs.length ? `<div class="specs">${specs.map(([k,v]) => `<div class="spec"><span>${k}</span><b>${esc(v)}</b></div>`).join("")}</div>` : ""}
-    <p style="font-size:14px;color:var(--muted)">Remise : ${l.modes.map(m => MODE[m]).join(", ")}. Caution ${eur(l.deposit)}, bloquée et jamais débitée sauf casse ou vol.</p>
+    <p style="font-size:14px;color:var(--muted)">Remise : ${l.modes.map(m => MODE[m]).join(", ")}. Caution ${eur(l.deposit)} (valeur de l'objet), bloquée et jamais débitée sauf casse ou vol.</p>
     <a class="btn btn-dark" href="${l.example ? "app/?demo#/annonce/" + esc(l.id) : "app/#/annonce/" + esc(l.id)}">Choisir mes dates</a>
     ${l.example ? `<p style="font-size:13px;color:var(--muted)">Annonce d'exemple : l'app s'ouvre en mode démo.</p>` : ""}`;
   $("#modal").classList.add("open"); $("#modal").setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden"; document.body.classList.add("over");

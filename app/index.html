@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Spoloc — Mon espace</title>
 <meta name="description" content="Louez, prêtez et rachetez du matériel de sport près de chez vous.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F1512'/%3E%3Cpath d='M51 32 A19 19 0 1 1 45.4 18.6' stroke='%23F3F1EA' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='9' fill='%23FF6B4A'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230F1512'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%232E5E4E' stroke='%23F3F1EA' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <style>
 :root{
   --ink:#0F1512; --ink-2:#1B2420; --paper:#F3F1EA; --card:#FFFFFF;
-  --lime:#C9F23B; --coral:#FF6B4A; --sky:#9DD4FF; --sand:#F2D9A8;
+  --soft:#D7E3DA; --accent:#2E5E4E; --neutral:#ECEBE5;
   --muted:#5A615C; --line:rgba(15,21,18,.12);
   --r:22px; --r-sm:14px;
   --display:"Bricolage Grotesque",system-ui,sans-serif;
@@ -46,7 +46,7 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke
 .btn:active{transform:scale(.97)}
 .btn-dark{background:var(--ink);color:var(--paper)}
 .btn-dark:hover{box-shadow:0 10px 24px -10px rgba(15,21,18,.6)}
-.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-lime{background:var(--soft);color:var(--ink)}
 .btn-ghost{background:transparent;border:1.5px solid var(--line)}
 .btn-ghost:hover{border-color:var(--ink)}
 .btn-sm{min-height:44px;padding:0 16px;font-size:14px}
@@ -65,7 +65,7 @@ textarea.input{padding:12px 14px;min-height:96px;resize:vertical}
 .auth-brand{background:var(--ink);color:var(--paper);padding:40px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
 .auth-brand .logo{color:var(--paper)}
 .auth-brand h1{font-size:clamp(44px,5.4vw,80px);font-weight:800;max-width:520px}
-.auth-brand h1 span{color:var(--coral)}
+.auth-brand h1 span{color:var(--accent)}
 .auth-brand p{color:#B9C0BC;max-width:420px;margin-top:18px;font-size:18px}
 .bounce-art{position:absolute;right:40px;top:110px;width:min(300px,40%);opacity:.9}
 .bounce-art path{stroke-dasharray:160;stroke-dashoffset:160;animation:draw 2s .3s var(--ease) forwards}
@@ -76,24 +76,24 @@ textarea.input{padding:12px 14px;min-height:96px;resize:vertical}
 .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px}
 .seg button{border:0;background:none;min-height:42px;border-radius:999px;font-weight:600;color:var(--muted);transition:background .25s,color .25s}
 .seg button.on{background:var(--ink);color:var(--paper)}
-.demo-box{background:var(--lime);border-radius:var(--r-sm);padding:14px 16px;font-size:14px;display:flex;flex-direction:column;gap:10px}
+.demo-box{background:var(--soft);border-radius:var(--r-sm);padding:14px 16px;font-size:14px;display:flex;flex-direction:column;gap:10px}
 .ref-box{background:var(--card);border:1.5px dashed var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:14px}
 
 /* Coquille */
 .top{position:sticky;top:0;z-index:30;background:rgba(243,241,234,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top-in{display:flex;align-items:center;gap:14px;height:68px}
-.app-tag{font-family:var(--body);font-size:12px;font-weight:600;background:var(--ink);color:var(--lime);border-radius:999px;padding:2px 8px;letter-spacing:0}
+.app-tag{font-family:var(--body);font-size:12px;font-weight:600;background:var(--ink);color:var(--soft);border-radius:999px;padding:2px 8px;letter-spacing:0}
 .tabs{display:flex;gap:0;margin-left:8px}
 .top-in .logo .app-tag{display:none}
 .tab{display:inline-flex;align-items:center;gap:7px;border:0;background:none;padding:10px 11px;border-radius:999px;font-weight:600;color:var(--muted);text-decoration:none;min-height:44px;white-space:nowrap}
 .tab:hover{color:var(--ink)}
 .tab.on{background:var(--card);color:var(--ink);box-shadow:0 1px 0 var(--line)}
-.count{background:var(--coral);color:#fff;font-size:12px;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 6px}
+.count{background:var(--accent);color:#fff;font-size:12px;border-radius:999px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 6px}
 .top-right{margin-left:auto;position:relative;display:flex;align-items:center;gap:10px}
 .pts-pill{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:0 12px;min-height:44px;font-weight:600;font-size:14px;text-decoration:none}
 .pts-pill b{font-family:var(--display);font-size:17px}
 .avatar{width:44px;height:44px;border-radius:50%;border:0;background:var(--sand);font-family:var(--display);font-weight:800;font-size:18px;position:relative}
-.avatar.founder::after{content:"★";position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--lime);font-size:11px;display:grid;place-items:center}
+.avatar.founder::after{content:"★";position:absolute;right:-2px;bottom:-2px;width:18px;height:18px;border-radius:50%;background:var(--ink);color:var(--soft);font-size:11px;display:grid;place-items:center}
 .menu{position:absolute;right:0;top:54px;width:250px;background:var(--card);border-radius:var(--r-sm);box-shadow:0 20px 50px -20px rgba(15,21,18,.4);border:1px solid var(--line);padding:8px;display:flex;flex-direction:column;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s}
 .menu.open{opacity:1;transform:none;pointer-events:auto}
 .menu .who{padding:10px 12px;border-bottom:1px solid var(--line);margin-bottom:6px}
@@ -101,7 +101,7 @@ textarea.input{padding:12px 14px;min-height:96px;resize:vertical}
 .menu .who span{font-size:13px;color:var(--muted);word-break:break-all}
 .menu a,.menu button{display:flex;align-items:center;gap:10px;text-align:left;border:0;background:none;padding:12px;border-radius:10px;text-decoration:none;font-weight:500;min-height:44px}
 .menu a:hover,.menu button:hover{background:var(--paper)}
-.demo-pill{font-size:12px;font-weight:600;background:var(--lime);border-radius:999px;padding:4px 10px}
+.demo-pill{font-size:12px;font-weight:600;background:var(--soft);border-radius:999px;padding:4px 10px}
 
 main{padding:28px 0 120px}
 .view{animation:fadeUp .45s var(--ease)}
@@ -135,9 +135,9 @@ main{padding:28px 0 120px}
 .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .badge{position:absolute;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;line-height:1.2}
 .b-tl{left:12px;top:12px;background:rgba(255,255,255,.92)}
-.b-tr{right:12px;top:12px;background:var(--ink);color:var(--lime)}
-.b-bl{left:12px;bottom:12px;background:var(--ink);color:var(--lime)}
-.b-br{right:12px;bottom:12px;background:#E6F7B0;color:#3E5200}
+.b-tr{right:12px;top:12px;background:var(--ink);color:var(--soft)}
+.b-bl{left:12px;bottom:12px;background:var(--ink);color:var(--soft)}
+.b-br{right:12px;bottom:12px;background:#E6F7B0;color:var(--accent)}
 .card .em{transition:transform .5s var(--ease)}
 .card:hover .em{transform:scale(1.12) rotate(-6deg)}
 .card h3{font-size:18px;margin:12px 4px 4px;line-height:1.2}
@@ -162,13 +162,13 @@ main{padding:28px 0 120px}
 .bk .actions .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px}
 .status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.st-pending{background:#FBEBCB;color:#7A5200}
-.st-accepted{background:#E6F7B0;color:#3E5200}
-.st-paid,.st-in_progress{background:#DCEEFF;color:#0B4F8A}
+.st-pending,.st-withdrawal_requested{background:#F1E9DA;color:#6B5426}
+.st-accepted,.st-confirmed{background:var(--soft);color:var(--accent)}
+.st-paid,.st-in_progress{background:var(--accent);color:#F3F1EA}
 .st-completed{background:#E7E5DE;color:#3F4642}
 .st-declined,.st-cancelled{background:#EEECE6;color:#6B716C}
 .code{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);border-radius:12px;padding:8px 12px;font-size:13px}
-.code b{font-family:var(--display);font-size:22px;letter-spacing:.2em;color:var(--lime)}
+.code b{font-family:var(--display);font-size:22px;letter-spacing:.2em;color:var(--soft)}
 
 /* Fiche */
 .scrim{position:fixed;inset:0;z-index:60;background:rgba(15,21,18,.5);opacity:0;pointer-events:none;transition:opacity .3s}
@@ -185,7 +185,7 @@ main{padding:28px 0 120px}
 .owner .av{width:36px;height:36px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;color:var(--ink)}
 .facts{display:flex;gap:8px;flex-wrap:wrap}
 .fact{background:var(--paper);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
-.fact.ok{background:#E6F7B0;color:#3E5200}
+.fact.ok{background:#E6F7B0;color:var(--accent)}
 .specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .spec{background:var(--paper);border-radius:12px;padding:10px 12px}
 .spec span{display:block;font-size:12px;color:var(--muted)}
@@ -219,8 +219,8 @@ main{padding:28px 0 120px}
 .day.busy{color:#B5B9B4;text-decoration:line-through}
 .day.half{background:linear-gradient(135deg,#ECEAE3 50%,transparent 50%)}
 .day.in{background:#EEF9C7;border-radius:0}
-.day.sel,.day.sel:hover:not([disabled]){background:var(--ink);color:var(--lime);border-radius:12px}
-.day.today::after{content:"";position:absolute;left:50%;bottom:5px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--coral)}
+.day.sel,.day.sel:hover:not([disabled]){background:var(--ink);color:var(--soft);border-radius:12px}
+.day.today::after{content:"";position:absolute;left:50%;bottom:5px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent)}
 .cal-legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
 .cal-legend span{display:inline-flex;align-items:center;gap:6px}
 .cal-legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
@@ -252,7 +252,7 @@ main{padding:28px 0 120px}
 .conv-list{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px;display:flex;flex-direction:column;gap:4px;max-height:640px;overflow:auto}
 .conv{display:flex;gap:12px;align-items:center;border:0;background:none;text-align:left;padding:10px;border-radius:14px;width:100%;text-decoration:none}
 .conv:hover{background:var(--paper)}
-.conv.on{background:var(--paper);box-shadow:inset 3px 0 0 var(--coral)}
+.conv.on{background:var(--paper);box-shadow:inset 3px 0 0 var(--accent)}
 .conv .th{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none}
 .conv b{display:block;font-size:15px}
 .conv span{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -268,11 +268,11 @@ main{padding:28px 0 120px}
 .mb.in{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px}
 .mb.out{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:6px}
 .mb small{display:block;font-size:11px;opacity:.6;margin-top:4px}
-.mb .msk{display:block;font-size:11.5px;margin-top:4px;color:var(--coral)}
+.mb .msk{display:block;font-size:11.5px;margin-top:4px;color:var(--accent)}
 .th-form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);align-items:flex-end}
 .th-form textarea{flex:1;min-height:48px;max-height:140px;resize:none;border:1.5px solid var(--line);border-radius:18px;padding:12px 14px;outline:none}
 .th-form textarea:focus{border-color:var(--ink)}
-.th-form button{width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:var(--lime);display:grid;place-items:center;flex:none}
+.th-form button{width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:var(--soft);display:grid;place-items:center;flex:none}
 .warn{font-size:12.5px;color:#7A5200;background:#FBEBCB;border-radius:10px;padding:8px 12px;margin:0 12px 8px}
 
 /* Publier */
@@ -289,9 +289,9 @@ main{padding:28px 0 120px}
 
 /* Club */
 .club-hero{background:var(--ink);color:var(--paper);border-radius:28px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
-.club-hero .big{font-family:var(--display);font-weight:800;font-size:64px;color:var(--lime);line-height:1;letter-spacing:-.04em}
+.club-hero .big{font-family:var(--display);font-weight:800;font-size:64px;color:var(--soft);line-height:1;letter-spacing:-.04em}
 .club-hero p{color:#B9C0BC}
-.founder{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;margin-top:12px}
+.founder{display:inline-flex;align-items:center;gap:8px;background:var(--soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;margin-top:12px}
 .club-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
 .ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px;align-content:start}
 .ccard h3{font-size:20px}
@@ -301,7 +301,7 @@ main{padding:28px 0 120px}
 .reward{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
 .reward:last-child{border-bottom:0}
 .reward .p{font-family:var(--display);font-weight:800;white-space:nowrap}
-.reward.ok .p{color:#3E5200}
+.reward.ok .p{color:var(--accent)}
 .ref-code{display:flex;gap:8px;align-items:center}
 .ref-code b{font-family:var(--display);font-size:26px;letter-spacing:.12em;background:var(--paper);border-radius:12px;padding:6px 12px}
 
@@ -310,7 +310,7 @@ main{padding:28px 0 120px}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:90;transform:translate(-50%,160%);opacity:0;visibility:hidden;transition:transform .45s var(--ease),opacity .3s,visibility .3s;background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:999px;font-weight:500;max-width:calc(100% - 32px);text-align:center}
 .toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
 .done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:30px 20px}
-.done .ok{width:84px;height:84px;border-radius:50%;background:var(--lime);display:grid;place-items:center;animation:popIn .5s var(--ease)}
+.done .ok{width:84px;height:84px;border-radius:50%;background:var(--soft);display:grid;place-items:center;animation:popIn .5s var(--ease)}
 .done .ok svg{width:40px;height:40px;stroke:var(--ink);stroke-width:3}
 @keyframes popIn{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.1)}100%{transform:none;opacity:1}}
 
@@ -354,8 +354,8 @@ main{padding:28px 0 120px}
   .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
   .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 2px;min-height:52px;justify-content:center;position:relative}
   .tabbar a.on{color:var(--ink)}
-  .tabbar a.on svg{stroke:var(--coral)}
-  .tabbar a.plus svg{background:var(--ink);stroke:var(--lime);border-radius:50%;width:34px;height:34px;padding:7px}
+  .tabbar a.on svg{stroke:var(--accent)}
+  .tabbar a.plus svg{background:var(--ink);stroke:var(--soft);border-radius:50%;width:34px;height:34px;padding:7px}
   .tabbar .count{position:absolute;top:2px;left:calc(50% + 6px);font-size:11px;min-width:18px;height:18px}
   .toast{bottom:calc(84px + env(safe-area-inset-bottom))}
 }
@@ -388,12 +388,12 @@ main{padding:28px 0 120px}
 <!-- ================= CONNEXION ================= -->
 <section class="auth" id="auth" hidden>
   <div class="auth-brand">
-    <a class="logo" href="../" aria-label="Spoloc, retour au site"><span data-logo="light" style="display:grid"></span>spoloc</a>
+    <a class="logo" href="../" aria-label="Spoloc, retour au site"><span data-logo="light"></span></a>
     <div>
       <h1>Le matos des autres,<br><span>vos aventures.</span></h1>
       <p>Louez près de chez vous, mettez en location ce qui dort au garage, gagnez des points à chaque location.</p>
     </div>
-    <svg class="bounce-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M54 32 A22 22 0 1 1 47.5 16.5" stroke="#C9F23B" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M41 9 L50 15 L42 22" stroke="#C9F23B" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="10" fill="#FF6B4A"/></svg>
+    <svg class="bounce-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M54 32 A22 22 0 1 1 47.5 16.5" stroke="#8FB8A2" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M41 9 L50 15 L42 22" stroke="#8FB8A2" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="10" fill="#FF6B4A"/></svg>
   </div>
   <div class="auth-side">
     <form class="auth-card" id="authForm" novalidate>
@@ -421,7 +421,7 @@ main{padding:28px 0 120px}
 <div id="shell" hidden>
   <header class="top">
     <div class="wrap top-in">
-      <a class="logo" href="#/explorer" aria-label="Spoloc, explorer"><span data-logo="dark" style="display:grid"></span>spoloc <span class="app-tag">app</span></a>
+      <a class="logo" href="#/explorer" aria-label="Spoloc, explorer"><span data-logo="dark"></span> <span class="app-tag">app</span></a>
       <nav class="tabs" aria-label="Sections">
         <a class="tab" href="#/explorer" data-route="explorer"><svg class="i"><use href="#i-grid"/></svg><span class="t">Explorer</span></a>
         <a class="tab" href="#/locations" data-route="locations"><svg class="i"><use href="#i-cal"/></svg><span class="t">Mes locations</span> <span class="count" data-count="renter" hidden></span></a>
@@ -502,7 +502,7 @@ main{padding:28px 0 120px}
             </div>
           </div>
           <div class="field full"><label for="p-desc">Description</label><textarea class="input" id="p-desc" placeholder="Accessoires fournis, taille, défauts éventuels…"></textarea></div>
-          <div class="field full"><span class="lbl">Photos de l'objet</span><label class="shot-add" style="aspect-ratio:auto;min-height:64px"><input type="file" id="p-photos" accept="image/*" multiple hidden><span id="p-photos-l">Ajouter des photos</span></label></div>
+          <div class="field full"><span class="lbl">Photos de l'objet (2 minimum, obligatoires)</span><label class="shot-add" style="aspect-ratio:auto;min-height:64px"><input type="file" id="p-photos" accept="image/*" multiple hidden><span id="p-photos-l">Ajouter des photos</span></label></div>
           <div class="box full">
             <label class="check"><svg class="i"><use href="#i-shield"/></svg><span>Faire vérifier la marque<small>Ajoutez une photo de l'étiquette, du numéro de série ou de la facture. Après contrôle, votre annonce reçoit le badge « Marque vérifiée ».</small></span></label>
             <label class="shot-add" style="aspect-ratio:auto;min-height:56px"><input type="file" id="p-proof" accept="image/*,application/pdf" hidden><span id="p-proof-l">Ajouter une preuve (photo ou PDF)</span></label>
@@ -511,7 +511,7 @@ main{padding:28px 0 120px}
           <h3>Prix</h3>
           <div class="field"><label for="p-price">Prix par jour (€)</label><input class="input" id="p-price" type="number" min="1" value="15" required></div>
           <div class="field"><label for="p-half">Prix demi-journée (€)</label><input class="input" id="p-half" type="number" min="1" placeholder="Par défaut 60 % du prix jour"></div>
-          <div class="field"><label for="p-dep">Caution (€)</label><input class="input" id="p-dep" type="number" min="0" step="10" value="150"></div>
+          <div class="field"><label for="p-value">Valeur actuelle de l'objet (€)</label><input class="input" id="p-value" type="number" min="1" step="5" placeholder="Ex. 300" required><small class="note">C'est la caution : bloquée sur la carte du locataire, jamais débitée sauf casse ou vol.</small></div>
           <div class="field"><label for="p-city">Ville</label><input class="input" id="p-city" placeholder="Ex. Paris 11e" required></div>
 
           <h3>Remise du matériel</h3>
@@ -519,7 +519,7 @@ main{padding:28px 0 120px}
             <label class="check"><input type="checkbox" id="m-hand" checked><span>En main propre<small>Vous convenez d'un créneau avec le locataire.</small></span></label>
             <label class="check"><input type="checkbox" id="m-del"><span>Je peux livrer<small>Vous apportez le matériel, contre des frais que vous fixez.</small></span></label>
             <div class="field" id="m-del-box" hidden><label for="m-del-fee">Frais de livraison (€)</label><input class="input" id="m-del-fee" type="number" min="0" value="5"></div>
-            <label class="check"><input type="checkbox" id="m-shop"><span>Dépôt en boutique partenaire<small>Vous déposez l'objet, le locataire le récupère quand il veut.</small></span></label>
+            <label class="check" id="m-shop-row"><input type="checkbox" id="m-shop"><span>Dépôt en boutique partenaire<small>Vous déposez l'objet, le locataire le récupère quand il veut.</small></span></label>
             <div class="field" id="m-shop-box" hidden><label for="m-shop-id">Boutique</label><select class="input" id="m-shop-id"></select></div>
           </div>
 
@@ -552,7 +552,7 @@ main{padding:28px 0 120px}
     <section class="view" id="v-club" hidden>
       <div class="club-hero">
         <div>
-          <p style="font-weight:600;color:var(--lime)">Mes points</p>
+          <p style="font-weight:600;color:var(--soft)">Mes points</p>
           <div class="big" id="ptsBig">0</div>
           <p>1 point par euro loué ou prêté, des bonus pour les avis et le parrainage.</p>
           <span class="founder" id="founderTag" hidden><svg class="i" style="width:16px;height:16px"><use href="#i-star"/></svg>Membre fondateur : frais de service divisés par deux, à vie</span>
@@ -615,13 +615,30 @@ main{padding:28px 0 120px}
     </div>
     <div class="field"><label for="hoCond">État constaté</label><select class="input" id="hoCond">
       <option value="neuf">Neuf</option><option value="tres_bon">Très bon état</option><option value="bon" selected>Bon état</option><option value="correct">État correct</option></select></div>
-    <div class="field"><label for="hoCode" id="hoCodeLbl">2. Code</label><input class="input code-in" id="hoCode" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="••••"></div>
+    <div class="field"><label for="hoCode" id="hoCodeLbl">2. Code</label><small class="note">3 essais maximum, ensuite le code se bloque.</small><input class="input code-in" id="hoCode" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="••••"></div>
     <div class="field"><span class="lbl" id="hoSigLbl">3. Signature</span>
-      <div class="sig-wrap"><canvas id="hoSig" aria-label="Zone de signature"></canvas><span class="hint">Signez avec le doigt</span><button type="button" class="clear" id="hoSigClear">Effacer</button></div>
+      <div class="sig-wrap"><canvas id="hoSig" aria-label="Première signature"></canvas><span class="hint">Signez avec le doigt</span><button type="button" class="clear" data-clear="0">Effacer</button></div>
+    </div>
+    <div class="field"><span class="lbl">4. Votre signature</span>
+      <div class="sig-wrap"><canvas id="hoSig2" aria-label="Votre signature"></canvas><span class="hint">Signez avec le doigt</span><button type="button" class="clear" data-clear="1">Effacer</button></div>
     </div>
     <div class="field"><label for="hoNotes">Remarque (facultatif)</label><input class="input" id="hoNotes" maxlength="300" placeholder="Ex. petite rayure côté gauche"></div>
     <p class="err" id="hoErr" role="alert"></p>
     <button class="btn btn-dark btn-block" type="submit" id="hoSubmit">Valider la remise</button>
+  </form>
+</div>
+
+<!-- CONFIRMATION -->
+<div class="dlg" id="askDlg" role="dialog" aria-modal="true" aria-labelledby="askTitle" aria-hidden="true">
+  <form class="dlg-card" id="askForm" novalidate style="width:min(480px,100%)">
+    <h2 id="askTitle"></h2>
+    <p class="note" id="askText" style="font-size:15px"></p>
+    <label class="check" id="askCheckRow"><input type="checkbox" id="askCheck"><span id="askCheckTxt"></span></label>
+    <div class="field" id="askReasonRow"><label for="askReason">Le problème</label><textarea class="input" id="askReason" maxlength="1000" placeholder="Ex. fissure non visible sur les photos"></textarea></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-dark" type="submit" id="askOk"></button>
+      <button class="btn btn-ghost" type="button" id="askNo">Revenir</button>
+    </div>
   </form>
 </div>
 
@@ -660,7 +677,9 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("sh
 const look = slug => ({ icon: Spoloc.catIcon(slug, 64), small: Spoloc.catIcon(slug, 18), color: Spoloc.catTint(slug) });
 const COND = { neuf:"Neuf", tres_bon:"Très bon état", bon:"Bon état", correct:"État correct" };
 const STATUS = { pending:"En attente", accepted:"Acceptée", declined:"Refusée", cancelled:"Annulée", paid:"Payée", in_progress:"En cours", completed:"Terminée" };
-const OSTATUS = { pending:"En attente", accepted:"Acceptée", declined:"Refusée", cancelled:"Retirée", paid:"Payée", completed:"Vendu, remis" };
+const OSTATUS = { pending:"En attente", accepted:"Acceptée, à confirmer", confirmed:"Vente confirmée", declined:"Refusée", cancelled:"Annulée", paid:"Payée", completed:"Vendu, remis", withdrawal_requested:"Problème signalé" };
+const WITHDRAW_H = 48;
+const inWithdrawal = o => o.status === "completed" && o.completed_at && (Date.now() - new Date(o.completed_at)) < WITHDRAW_H * 3600e3;
 const MODE = { hand:"En main propre", delivery:"Livraison", shop:"Boutique partenaire" };
 const REWARDS = [
   [300, "Frais de service offerts sur une location"],
@@ -775,6 +794,13 @@ function supaApi(){
       return data.map(o => ({ ...o, listing: o.listings ? vm(o.listings) : null, other: o.buyer?.first_name || "Un membre" }));
     },
     async setOffer(id, status){ const { error } = await sb.from("purchase_offers").update({ status }).eq("id", id); if (error) fail(error); },
+    async confirmPurchase(id){ const { error } = await sb.from("purchase_offers").update({ buyer_confirmed_at:new Date().toISOString() }).eq("id", id); if (error) fail(error); },
+    async withdraw(id, reason){ const { data, error } = await sb.rpc("request_sale_withdrawal", { p_offer:id, p_reason:reason }); if (error) fail(error); if (data !== "ok") throw new Error(data); },
+    async canOffer(listingId){
+      if (!uid) return false;
+      const { count } = await sb.from("bookings").select("id", { count:"exact", head:true }).eq("listing_id", listingId).eq("renter_id", uid).in("status", ["in_progress","completed"]);
+      return (count || 0) > 0;
+    },
     async myListings(){ const { data, error } = await sb.from("listings").select(SEL).eq("owner_id", uid).order("created_at", { ascending:false }); if (error) fail(error); return data.map(vm); },
     async publish(d, photos, proof){
       let proofPath = null;
@@ -782,7 +808,7 @@ function supaApi(){
       const { data, error } = await sb.from("listings").insert({
         title:d.title, category_id:d.categoryId, condition:d.condition, brand:d.brand||null, model:d.model||null,
         length_cm:d.dims[0]||null, width_cm:d.dims[1]||null, height_cm:d.dims[2]||null, weight_kg:d.weight||null,
-        description:d.description, city:d.city, price_per_day_cents:d.price, price_half_day_cents:d.half || null, deposit_cents:d.deposit,
+        description:d.description, city:d.city, price_per_day_cents:d.price, price_half_day_cents:d.half || null, item_value_cents:d.value,
         handover_modes:d.modes, delivery_fee_cents:d.modes.includes("delivery") ? d.deliveryFee : null,
         pickup_shop_id:d.modes.includes("shop") ? d.shopId : null,
         buyout_enabled:d.buyout, buyout_price_cents:d.buyout ? d.buyoutPrice : null, brand_proof_path:proofPath,
@@ -794,12 +820,13 @@ function supaApi(){
       }
       return data;
     },
-    async handover(kind, id, code, condition, files, sigBlob, notes){
+    async handover(kind, id, code, condition, files, sigBlob, sig2Blob, notes){
       const base = `${uid}/${id}/${kind}-${Date.now()}`;
       const paths = [];
       for (let i = 0; i < files.length; i++) paths.push(await upload("handover-photos", `${base}-${i}.jpg`, files[i]));
       const sig = await upload("handover-photos", `${base}-signature.png`, sigBlob, "image/png");
-      const { data, error } = await sb.rpc("confirm_handover", { p_kind:kind, p_id:id, p_code:code, p_condition:condition, p_photos:paths, p_signature:sig, p_notes:notes||"" });
+      const sig2 = await upload("handover-photos", `${base}-signature-2.png`, sig2Blob, "image/png");
+      const { data, error } = await sb.rpc("confirm_handover", { p_kind:kind, p_id:id, p_code:code, p_condition:condition, p_photos:paths, p_signature:sig, p_confirmer_signature:sig2, p_notes:notes||"" });
       if (error) fail(error);
       if (data !== "ok") throw new Error(data);
     },
@@ -836,7 +863,7 @@ function supaApi(){
    ========================================================= */
 function demoApi(){
   const cats = [["velo","Vélo"],["glisse-eau","Paddle & surf"],["kayak","Kayak"],["montagne","Ski & snow"],["camping","Camping"],["raquette","Raquettes"],["fitness","Fitness"],["escalade","Escalade"]].map(([slug,label],i)=>({id:i+1,slug,label}));
-  const shops = [ {id:"s1",name:"Glisse Urbaine",address:"14 rue Oberkampf",city:"Paris 11e"}, {id:"s2",name:"Atelier Vélo Canal",address:"52 quai de Valmy",city:"Paris 10e"} ];
+  const shops = [];  // boutiques partenaires : bientôt
   const label = s => cats.find(c=>c.slug===s)?.label || "";
   const base = [
     ["d1","Vélo gravel carbone taille M","velo",2500,40000,"Paris 11e","Julien","Groupe Shimano GRX, pneus 40 mm, casque fourni.","tres_bon","Canyon","Grizl CF SL 7",[175,45,100],9.2,true,["hand","shop"],null,"s2",false,null],
@@ -853,7 +880,7 @@ function demoApi(){
   const HALF = { d2:1200, d5:700, d7:600 };
   const L = base.map(([id,title,cat,price,deposit,city,owner,description,condition,brand,model,dims,weight,verified,modes,deliveryFee,shopId,buyout,buyoutPrice]) => ({
     id,title,cat,catLabel:label(cat),price,deposit,city,owner,ownerId:"o-"+id,description,img:null,status:"active",
-    condition,brand,model,verified,dims:dims||[null,null,null],weight,modes,deliveryFee,shop:shops.find(s=>s.id===shopId)||null,buyout,buyoutPrice,half:HALF[id]||null }));
+    condition,brand,model,verified,dims:dims||[null,null,null],weight,modes:modes.filter(m => m !== "shop"),deliveryFee,shop:null,buyout,buyoutPrice,half:HALF[id]||null }));
   const t = today();
   const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,9),addDays(t,11)],[addDays(t,2),addDays(t,2),"am"]], d8:[[addDays(t,6),addDays(t,9)]] };
   const S0 = () => ({ bookings:[], offers:[], ownerBookings:null, ownerOffers:null, myListings:null, ledger:[], msgs:null });
@@ -870,11 +897,14 @@ function demoApi(){
   const award = (pts, reason) => { st.ledger.unshift({ points:pts, reason, created_at:new Date().toISOString() }); };
   function seedOwner(){
     if (st.myListings) return;
-    const mine = { id:"m1", title:"Paddle Itiwit X100 11'", cat:"glisse-eau", catLabel:label("glisse-eau"), price:1800, deposit:25000, city:"Paris 11e", owner:me()?.firstName||"Vous", ownerId:"me", description:"Avec pompe et pagaie.", img:null, status:"active",
-      condition:"bon", brand:"Itiwit", model:"X100 11'", verified:false, dims:[335,84,15], weight:11, modes:["hand","shop"], deliveryFee:null, shop:shops[0], buyout:true, buyoutPrice:22000 };
+    const mine = { id:"m1", title:"Paddle Itiwit X100 11'", cat:"glisse-eau", catLabel:label("glisse-eau"), price:1800, deposit:32000, city:"Paris 11e", owner:me()?.firstName||"Vous", ownerId:"me", description:"Avec pompe et pagaie.", img:null, status:"active",
+      condition:"bon", brand:"Itiwit", model:"X100 11'", verified:false, dims:[335,84,15], weight:11, modes:["hand"], deliveryFee:null, shop:null, buyout:true, buyoutPrice:22000 };
     st.myListings = [mine];
+    // une location déjà rendue, sur un objet rachetable : l'offre d'achat y est ouverte
+    const past = L.find(l => l.buyout);
+    if (past) st.bookings.push({ id:"bpast", listing_id:past.id, start_date:addDays(t,-6), end_date:addDays(t,-5), days:2, slot:"full", handover_mode:"hand", delivery_fee_cents:0, subtotal_cents:past.price*2, fee_cents:feeFor(past.price*2), total_cents:past.price*2+feeFor(past.price*2), deposit_cents:past.deposit, status:"completed", codes:{}, ownerCode:code(), created_at:new Date(Date.now()-6*864e5).toISOString() });
     const sub = mine.price*2;
-    st.ownerBookings = [{ id:"ob1", listing_id:"m1", other:"Camille", start_date:addDays(t,2), end_date:addDays(t,3), days:2, handover_mode:"shop", subtotal_cents:sub, fee_cents:0, total_cents:sub, deposit_cents:mine.deposit, status:"pending", codes:{ return:code() }, renterCode:code(), created_at:new Date().toISOString() }];
+    st.ownerBookings = [{ id:"ob1", listing_id:"m1", other:"Camille", start_date:addDays(t,2), end_date:addDays(t,3), days:2, handover_mode:"hand", subtotal_cents:sub, fee_cents:0, total_cents:sub, deposit_cents:mine.deposit, status:"pending", codes:{ return:code() }, renterCode:code(), created_at:new Date().toISOString() }];
     st.ownerOffers = [{ id:"oo1", listing_id:"m1", other:"Inès", amount_cents:20000, fee_cents:0, total_cents:20000, status:"pending", buyerCode:code(), created_at:new Date().toISOString() }];
     award(50, "premiere_annonce");
     const ago = m => new Date(Date.now() - m*60000).toISOString();
@@ -926,18 +956,29 @@ function demoApi(){
       await wait(350);
       const l = L.find(x => x.id===id);
       if (!l?.buyout) throw new Error("Le propriétaire n'a pas ouvert cet objet au rachat");
+      if (!st.bookings.some(b => b.listing_id === id && ["in_progress","completed"].includes(b.status))) throw new Error("L'offre d'achat s'ouvre pendant ou après votre location de cet objet");
       const o = { id:"o"+Date.now(), listing_id:id, amount_cents:cents, fee_cents:saleFeeFor(cents), total_cents:cents+saleFeeFor(cents), status:"pending", codes:{ sale:code() }, created_at:new Date().toISOString() };
       st.offers.unshift(o); save();
-      setTimeout(() => { const x = st.offers.find(y => y.id===o.id); if (x && x.status==="pending") { x.status="accepted"; save(); onDemoChange(`${l.owner} a accepté votre offre de ${eur(cents)}`); } }, 5000);
+      setTimeout(() => { const x = st.offers.find(y => y.id===o.id); if (x && x.status==="pending") { x.status="accepted"; save(); onDemoChange(`${l.owner} a accepté votre offre de ${eur(cents)}. Il doit encore confirmer.`); } }, 5000);
+      setTimeout(() => { const x = st.offers.find(y => y.id===o.id); if (x && x.status==="accepted") { x.status="confirmed"; save(); onDemoChange(`${l.owner} a confirmé la vente. À vous de confirmer l'achat.`); } }, 9000);
       return o;
     },
     async myOffers(){ await wait(150); return st.offers.map(o => ({ ...o, listing: L.find(l => l.id===o.listing_id) })); },
     async offersReceived(){ await wait(150); return (st.ownerOffers||[]).map(o => ({ ...o, listing:(st.myListings||[]).find(l => l.id===o.listing_id) })); },
-    async setOffer(id, status){ await wait(200); const o = st.offers.find(x => x.id===id) || (st.ownerOffers||[]).find(x => x.id===id); if (o) { o.status = status; save(); } },
+    async setOffer(id, status){
+      await wait(200);
+      const o = st.offers.find(x => x.id===id) || (st.ownerOffers||[]).find(x => x.id===id); if (!o) return;
+      o.status = status; save();
+      // démo : quand le vendeur (vous) confirme, l'acheteur confirme son achat 3 s plus tard
+      if (status === "confirmed" && (st.ownerOffers||[]).includes(o)) setTimeout(() => { if (o.status === "confirmed") { o.buyer_confirmed_at = new Date().toISOString(); save(); onDemoChange(`${o.other} a confirmé son achat. Vous pouvez remettre l'objet.`); } }, 3000);
+    },
+    async confirmPurchase(id){ await wait(200); const o = st.offers.find(x => x.id===id); if (o) { o.buyer_confirmed_at = new Date().toISOString(); save(); } },
+    async withdraw(id, reason){ await wait(250); const o = st.offers.find(x => x.id===id) || (st.ownerOffers||[]).find(x => x.id===id); if (!o || !inWithdrawal(o)) throw new Error("Le délai de 48 h est dépassé : écrivez-nous si besoin"); o.status = "withdrawal_requested"; o.withdrawal_reason = reason; save(); },
+    async canOffer(listingId){ return st.bookings.some(b => b.listing_id === listingId && ["in_progress","completed"].includes(b.status)); },
     async myListings(){ await wait(150); return st.myListings || []; },
     async publish(d){
       await wait(600);
-      const l = { id:"m"+Date.now(), title:d.title, cat:cats.find(c=>c.id===d.categoryId)?.slug, catLabel:cats.find(c=>c.id===d.categoryId)?.label, price:d.price, deposit:d.deposit, city:d.city, owner:me()?.firstName||"Vous", ownerId:"me", description:d.description, img:d.previewImg||null, status:"active",
+      const l = { id:"m"+Date.now(), title:d.title, cat:cats.find(c=>c.id===d.categoryId)?.slug, catLabel:cats.find(c=>c.id===d.categoryId)?.label, price:d.price, deposit:d.value, city:d.city, owner:me()?.firstName||"Vous", ownerId:"me", description:d.description, img:d.previewImg||null, status:"active",
         condition:d.condition, brand:d.brand, model:d.model, verified:false, dims:d.dims, weight:d.weight, modes:d.modes, deliveryFee:d.deliveryFee, shop:shops.find(s=>s.id===d.shopId)||null, buyout:d.buyout, buyoutPrice:d.buyoutPrice };
       st.myListings = [l, ...(st.myListings||[])]; save();
       return l;
@@ -949,11 +990,11 @@ function demoApi(){
       else if (kind==="return") { target = st.bookings.find(b => b.id===id); expected = target.ownerCode; }
       else { target = st.ownerOffers.find(o => o.id===id); expected = target.buyerCode; }
       target.attempts = target.attempts || 0;
-      if (target.attempts >= 5) throw new Error("Trop d'essais : contactez le support");
-      if (typed !== expected) { target.attempts++; save(); throw new Error(`Code incorrect (${5-target.attempts} essai(s) restant(s))`); }
+      if (target.attempts >= 3) throw new Error("Code bloqué après 3 essais : contactez le support");
+      if (typed !== expected) { target.attempts++; save(); throw new Error(target.attempts >= 3 ? "Code incorrect : code bloqué, contactez le support" : `Code incorrect (${3-target.attempts} essai(s) restant(s))`); }
       if (kind==="pickup") target.status = "in_progress";
       else if (kind==="return") { target.status = "completed"; award(Math.floor(target.subtotal_cents/100), "location"); }
-      else { target.status = "completed"; const l = st.myListings.find(x => x.id===target.listing_id); if (l) l.status = "sold"; award(Math.floor(target.amount_cents/100), "vente"); }
+      else { target.status = "completed"; target.completed_at = new Date().toISOString(); const l = st.myListings.find(x => x.id===target.listing_id); if (l) l.status = "sold"; award(Math.floor(target.amount_cents/100), "vente"); }
       save();
     },
     async points(){ await wait(120); return { total: st.ledger.reduce((a,b)=>a+b.points,0), ledger: st.ledger }; },
@@ -1200,16 +1241,17 @@ function drawDetail(){
       <div><h3 style="font-size:20px;margin-bottom:10px">Choisissez vos dates</h3><div class="cal" id="cal"></div></div>
       <div class="quote" id="quote"></div>
       <button class="btn btn-ghost" id="askOwner" style="align-self:flex-start"><svg class="i"><use href="#i-chat"/></svg>Poser une question à ${esc(l.owner)}</button>
-      <p class="note">Vous ne payez rien maintenant. Une fois la demande acceptée, vous payez en ligne ; la caution est bloquée la veille du retrait, sans être débitée. Au retrait et au retour : photos, code à 4 chiffres et signature.</p>
+      <p class="note">Vous ne payez rien maintenant. Une fois la demande acceptée, vous payez en ligne ; la caution est bloquée la veille du retrait, sans être débitée. Au retrait et au retour : photos, code à 4 chiffres et signatures des deux personnes.</p>
       ${l.buyout ? `<div class="offer">
         <h3>Il vous plaît ? ${esc(l.owner)} accepte de le vendre</h3>
-        <p class="note">${l.buyoutPrice ? `Prix souhaité : <b style="color:var(--ink)">${eur(l.buyoutPrice)}</b>. ` : ""}Faites une offre : ${esc(l.owner)} l'accepte ou la refuse. Paiement en ligne, puis remise avec photos, code et signature.</p>
-        <div class="offer-row"><label class="sr" for="offerAmt">Votre offre en euros</label><input class="input" id="offerAmt" type="number" min="1" step="5" value="${l.buyoutPrice ? Math.round(l.buyoutPrice/100) : ""}" placeholder="Votre offre (€)"><button class="btn btn-ghost" id="offerBtn">Envoyer l'offre</button></div>
+        <p class="note">${l.buyoutPrice ? `Prix souhaité : <b style="color:var(--ink)">${eur(l.buyoutPrice)}</b>. ` : ""}Vous pouvez faire une offre pendant ou après votre location. ${esc(l.owner)} l'accepte puis la confirme une seconde fois ; vous confirmez à votre tour. Remise avec photos, code et deux signatures.</p>
+        <div id="offerGate"></div>
+        <div class="offer-row" id="offerRow" hidden><label class="sr" for="offerAmt">Votre offre en euros</label><input class="input" id="offerAmt" type="number" min="1" step="5" value="${l.buyoutPrice ? Math.round(l.buyoutPrice/100) : ""}" placeholder="Votre offre (€)"><button class="btn btn-ghost" id="offerBtn">Envoyer l'offre</button></div>
         <p class="note" id="offerInfo"></p>
       </div>` : ""}`}
     </div>`;
   $("#dScroll").scrollTop = 0;
-  if (!mine) { drawCal(); offerPreview(); }
+  if (!mine) { drawCal(); offerPreview(); if (l.buyout) gateOffer(l); }
   drawFoot();
 }
 document.addEventListener("change", e => { if (e.target.name === "hoMode") { S.mode = e.target.value; drawQuote(); drawFoot(); } });
@@ -1284,8 +1326,8 @@ function drawQuote(){
     ${q.del ? `<div><span>Livraison</span><span>${eur(q.del)}</span></div>` : ""}
     <div><span>Frais de service${S.user?.founder ? " (membre fondateur)" : ""}</span><span>${eur(q.fee)}</span></div>
     <div class="tot"><span>Total</span><span>${eur(q.total)}</span></div>
-    <div style="color:var(--muted);font-size:13px"><span>Caution bloquée, non débitée</span><span>${eur(S.d.deposit)}</span></div>
-    <div style="color:#3E5200;font-size:13px"><span>Points gagnés</span><span>+${Math.floor((q.rent+q.del)/100)} pts</span></div>`
+    <div style="color:var(--muted);font-size:13px"><span>Caution = valeur de l'objet, bloquée, non débitée</span><span>${eur(S.d.deposit)}</span></div>
+    <div style="color:var(--accent);font-size:13px"><span>Points gagnés</span><span>+${Math.floor((q.rent+q.del)/100)} pts</span></div>`
     : `<div style="color:var(--muted)"><span>Touchez un jour pour le début, puis un autre pour la fin. Pour un seul jour, choisissez la journée, le matin ou l'après-midi.</span></div>`;
 }
 function drawFoot(){
@@ -1309,6 +1351,12 @@ async function book(){
     $("#dFoot").innerHTML = `<a class="btn btn-ghost" href="#/explorer" style="flex:1">Continuer</a><a class="btn btn-dark" href="#/locations" style="flex:1">Mes locations</a>`;
     refreshCounts(); if (S.f.start) S.listings = [];
   } catch (ex) { toast(ex.message); btn.disabled = false; btn.textContent = "Demander à réserver"; }
+}
+async function gateOffer(l){
+  const ok = await api.canOffer(l.id).catch(() => false);
+  if (S.d?.id !== l.id) return;
+  $("#offerRow").hidden = !ok;
+  $("#offerGate").innerHTML = ok ? "" : `<p class="note" style="color:var(--accent);font-weight:600">L'offre s'ouvre dès que votre location de cet objet a commencé.</p>`;
 }
 function offerPreview(){
   const box = $("#offerInfo"); if (!box) return;
@@ -1339,7 +1387,7 @@ function rowHTML({ l, title, sub, status, statusLabel, hint, total, totalNote, a
 const codeHTML = (label, c) => c ? `<span class="code">${label} <b>${esc(c)}</b></span>` : "";
 const emptyHTML = (h, p, cta) => `<div class="empty"><h3>${h}</h3><p>${p}</p>${cta || ""}</div>`;
 const when = b => `${fmtDay(b.start_date)}${b.days>1 ? " → "+fmtDay(b.end_date) + ` · ${b.days} jours` : b.slot === "am" ? " · matin" : b.slot === "pm" ? " · après-midi" : " · journée"} · ${MODE[b.handover_mode || "hand"]}`;
-const ORDER = { in_progress:0, accepted:1, paid:1, pending:2, completed:3, declined:4, cancelled:5 };
+const ORDER = { in_progress:0, confirmed:1, accepted:1, paid:1, pending:2, withdrawal_requested:2, completed:3, declined:4, cancelled:5 };
 
 async function loadRenter(){
   const box = $("#bkList"), ob = $("#myOffers");
@@ -1353,15 +1401,21 @@ async function loadRenter(){
       if (["accepted","paid"].includes(b.status)) hint = codeHTML("Code de retrait", b.codes?.pickup) + `<span class="note">À donner au propriétaire le jour J, après les photos.</span>`;
       if (b.status === "pending") hint = `<span class="note">Réponse sous 24 h en général</span>`;
       if (b.status === "in_progress") { hint = `<span class="note">Au retour, le propriétaire vous donne son code.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="return" data-id="${esc(b.id)}">Rendre le matériel</button>`; }
-      if (b.status === "completed") hint = `<span class="note" style="color:#3E5200">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
+      if (b.status === "completed") hint = `<span class="note" style="color:var(--accent)">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
       if (["pending","accepted"].includes(b.status)) actions += `<button class="btn btn-ghost btn-sm" data-cancel="${esc(b.id)}">Annuler</button>`;
+      if (["in_progress","completed"].includes(b.status) && l.buyout && l.status !== "sold") actions += `<a class="btn btn-ghost btn-sm" href="#/annonce/${esc(l.id)}">Faire une offre d'achat</a>`;
       return rowHTML({ l, title:l.title, sub:`${esc(l.city||"")} · ${when(b)}`, status:b.status, statusLabel:STATUS[b.status], hint, total:eur(b.total_cents), actions, i });
     }).join("") : emptyHTML("Aucune location pour l'instant", "Trouvez un équipement et envoyez votre première demande.", `<a class="btn btn-dark" href="#/explorer">Explorer</a>`);
     ob.innerHTML = offers.length ? offers.map((o, i) => {
       const l = o.listing || { title:"Annonce retirée", cat:null };
       let hint = "", actions = "";
-      if (["accepted","paid"].includes(o.status)) hint = codeHTML("Code de remise", o.codes?.sale) + `<span class="note">À donner au vendeur quand il vous remet l'objet.</span>`;
-      if (o.status === "pending") actions = `<button class="btn btn-ghost btn-sm" data-ocancel="${esc(o.id)}">Retirer</button>`;
+      if (o.status === "pending") hint = `<span class="note">Le vendeur doit accepter, puis confirmer une seconde fois.</span>`;
+      if (o.status === "accepted") hint = `<span class="note">Accepté. Le vendeur doit encore confirmer la vente.</span>`;
+      if (["confirmed","paid"].includes(o.status) && !o.buyer_confirmed_at) { hint = `<span class="note">Le vendeur a confirmé. À vous de confirmer l'achat.</span>`; actions = `<button class="btn btn-dark btn-sm" data-obuy="${esc(o.id)}" data-amt="${o.total_cents}">Confirmer l'achat</button>`; }
+      if (["confirmed","paid"].includes(o.status) && o.buyer_confirmed_at) hint = codeHTML("Code de remise", o.codes?.sale) + `<span class="note">À donner au vendeur quand il vous remet l'objet.</span>`;
+      if (["pending","accepted","confirmed"].includes(o.status)) actions += `<button class="btn btn-ghost btn-sm" data-ocancel="${esc(o.id)}">Annuler</button>`;
+      if (inWithdrawal(o)) { hint = `<span class="note">Vente définitive. Un problème ? Vous avez 48 h pour le signaler.</span>`; actions = `<button class="btn btn-ghost btn-sm" data-owd="${esc(o.id)}">Signaler un problème</button>`; }
+      if (o.status === "withdrawal_requested") hint = `<span class="note">Demande reçue : Spoloc vous répond sous 48 h.</span>`;
       return rowHTML({ l, title:l.title, sub:`Offre d'achat à ${esc(l.owner||"")}`, status:o.status === "completed" ? "completed" : o.status, statusLabel:OSTATUS[o.status], hint, total:eur(o.amount_cents), totalNote:`${eur(o.total_cents)} frais compris`, actions, i });
     }).join("") : emptyHTML("Aucune offre d'achat", "Repérez le badge « Rachetable » sur les annonces.", "");
   } catch (ex) { box.innerHTML = emptyHTML("Impossible de charger vos locations", esc(ex.message), `<button class="btn btn-ghost" onclick="loadRenter()">Réessayer</button>`); }
@@ -1379,14 +1433,18 @@ async function loadOwner(){
       if (b.status === "pending") actions = `<button class="btn btn-dark btn-sm" data-bset="accepted" data-id="${esc(b.id)}">Accepter</button><button class="btn btn-ghost btn-sm" data-bset="declined" data-id="${esc(b.id)}">Refuser</button>`;
       if (["accepted","paid"].includes(b.status)) { hint = `<span class="note">Le jour J : photos, code de ${esc(b.other)} et sa signature.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="pickup" data-id="${esc(b.id)}">Remettre le matériel</button>`; }
       if (b.status === "in_progress") hint = codeHTML("Code de retour", b.codes?.return) + `<span class="note">À donner à ${esc(b.other)} quand il vous rend l'objet.</span>`;
-      if (b.status === "completed") hint = `<span class="note" style="color:#3E5200">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
+      if (b.status === "completed") hint = `<span class="note" style="color:var(--accent)">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
       return rowHTML({ l, title:l.title, sub:`${esc(b.other)} · ${when(b)}`, status:b.status, statusLabel:STATUS[b.status], hint, total:eur(b.subtotal_cents), totalNote:"pour vous", actions, i });
     }).join("") : emptyHTML("Aucune demande pour l'instant", "Les demandes de location de votre matériel apparaîtront ici.", "");
     ox.innerHTML = offers.length ? offers.map((o, i) => {
       const l = o.listing || { title:"Annonce", cat:null };
       let actions = "", hint = "";
       if (o.status === "pending") actions = `<button class="btn btn-dark btn-sm" data-oset="accepted" data-id="${esc(o.id)}">Accepter</button><button class="btn btn-ghost btn-sm" data-oset="declined" data-id="${esc(o.id)}">Refuser</button>`;
-      if (["accepted","paid"].includes(o.status)) { hint = `<span class="note">À la remise : photos, code de ${esc(o.other)} et sa signature.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="sale" data-id="${esc(o.id)}">Remettre (vente)</button>`; }
+      if (o.status === "accepted") { hint = `<span class="note">Étape 2 sur 2 : confirmez que vous vendez bien cet objet.</span>`; actions = `<button class="btn btn-dark btn-sm" data-oconfirm="${esc(o.id)}" data-amt="${o.amount_cents}" data-title="${esc(l.title)}">Confirmer la vente</button><button class="btn btn-ghost btn-sm" data-ocancel="${esc(o.id)}">Annuler</button>`; }
+      if (["confirmed","paid"].includes(o.status) && !o.buyer_confirmed_at) { hint = `<span class="note">Vente confirmée. En attente de la confirmation de ${esc(o.other)}.</span>`; actions = `<button class="btn btn-ghost btn-sm" data-ocancel="${esc(o.id)}">Annuler</button>`; }
+      if (["confirmed","paid"].includes(o.status) && o.buyer_confirmed_at) { hint = `<span class="note">À la remise : photos, code de ${esc(o.other)}, deux signatures.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="sale" data-id="${esc(o.id)}">Remettre (vente)</button><button class="btn btn-ghost btn-sm" data-ocancel="${esc(o.id)}">Annuler</button>`; }
+      if (inWithdrawal(o)) { hint = `<span class="note">Vente définitive. Un problème ? Vous avez 48 h pour le signaler.</span>`; actions = `<button class="btn btn-ghost btn-sm" data-owd="${esc(o.id)}">Signaler un problème</button>`; }
+      if (o.status === "withdrawal_requested") hint = `<span class="note">Problème signalé : Spoloc étudie la demande.</span>`;
       return rowHTML({ l, title:l.title, sub:`Offre de ${esc(o.other)}${l.buyoutPrice ? ` · vous demandiez ${eur(l.buyoutPrice)}` : ""}`, status:o.status, statusLabel:OSTATUS[o.status], hint, total:eur(o.amount_cents), totalNote:"pour vous", actions, i });
     }).join("") : emptyHTML("Aucune offre d'achat", "Activez l'option « J'accepte qu'on me le rachète » sur vos annonces.", "");
     lx.innerHTML = mine.length ? mine.map(cardHTML).join("") : emptyHTML("Aucune annonce", "Publiez votre premier objet : +50 points.", `<a class="btn btn-dark" href="#/publier">Publier</a>`);
@@ -1395,35 +1453,72 @@ async function loadOwner(){
 
 document.addEventListener("click", async e => {
   const c = e.target.closest("[data-cancel]"), oc = e.target.closest("[data-ocancel]"), bs = e.target.closest("[data-bset]"), os = e.target.closest("[data-oset]"), ho = e.target.closest("[data-ho]");
+  const ocf = e.target.closest("[data-oconfirm]"), ob = e.target.closest("[data-obuy]"), owd = e.target.closest("[data-owd]");
   try {
     if (c) { c.disabled = true; await api.setBooking(c.dataset.cancel, "cancelled"); toast("Location annulée."); S.listings = []; loadRenter(); }
-    if (oc) { oc.disabled = true; await api.setOffer(oc.dataset.ocancel, "cancelled"); toast("Offre retirée."); loadRenter(); }
+    if (oc) {
+      const r = await ask({ title:"Annuler la vente ?", text:"Tant que l'objet n'est pas remis, chacun peut annuler. L'autre personne sera prévenue.", ok:"Oui, annuler" });
+      if (!r) return;
+      oc.disabled = true; await api.setOffer(oc.dataset.ocancel, "cancelled"); toast("Vente annulée."); route().name === "materiel" ? loadOwner() : loadRenter();
+    }
     if (bs) { bs.disabled = true; await api.setBooking(bs.dataset.id, bs.dataset.bset); toast(bs.dataset.bset === "accepted" ? "Demande acceptée." : "Demande refusée."); loadOwner(); }
-    if (os) { os.disabled = true; await api.setOffer(os.dataset.id, os.dataset.oset); toast(os.dataset.oset === "accepted" ? "Offre acceptée." : "Offre refusée."); loadOwner(); }
+    if (os) { os.disabled = true; await api.setOffer(os.dataset.id, os.dataset.oset); toast(os.dataset.oset === "accepted" ? "Offre acceptée. Confirmez maintenant la vente." : "Offre refusée."); loadOwner(); }
+    if (ocf) {
+      const r = await ask({ title:"Confirmer la vente", text:`Vous vendez « ${ocf.dataset.title} » pour ${eur(+ocf.dataset.amt)}. Une fois l'objet remis, la vente est définitive. Vous gardez 48 h pour signaler un problème.`, check:"Je confirme vendre cet objet. Je comprends que la vente est définitive après la remise.", ok:"Confirmer la vente" });
+      if (!r) return;
+      ocf.disabled = true; await api.setOffer(ocf.dataset.oconfirm, "confirmed"); toast("Vente confirmée. L'acheteur doit maintenant confirmer."); loadOwner();
+    }
+    if (ob) {
+      const r = await ask({ title:"Confirmer l'achat", text:`Vous achetez cet objet pour ${eur(+ob.dataset.amt)} frais compris. Une fois l'objet remis, l'achat est définitif. Vous gardez 48 h pour signaler un problème.`, check:"Je confirme acheter cet objet. Je comprends que l'achat est définitif après la remise.", ok:"Confirmer l'achat" });
+      if (!r) return;
+      ob.disabled = true; await api.confirmPurchase(ob.dataset.obuy); toast("Achat confirmé. Votre code de remise est affiché."); loadRenter();
+    }
+    if (owd) {
+      const r = await ask({ title:"Signaler un problème", text:"Décrivez le problème. Spoloc étudie chaque demande et peut annuler la vente.", reason:true, ok:"Envoyer" });
+      if (!r) return;
+      owd.disabled = true; await api.withdraw(owd.dataset.owd, r.reason); toast("Demande envoyée. Nous revenons vers vous sous 48 h."); route().name === "materiel" ? loadOwner() : loadRenter();
+    }
     if (ho) openHo(ho.dataset.ho, ho.dataset.id);
-    if (c || oc || bs || os) refreshCounts();
-  } catch (ex) { toast(ex.message); [c,oc,bs,os].forEach(b => b && (b.disabled = false)); }
+    if (c || oc || bs || os || ocf || ob || owd) refreshCounts();
+  } catch (ex) { toast(ex.message); [c,oc,bs,os,ocf,ob,owd].forEach(b => b && (b.disabled = false)); }
 });
 
 async function refreshCounts(){
   try {
     const [r, o, ro] = await Promise.all([api.renterBookings(), api.ownerBookings(), api.offersReceived()]);
     const nr = r.filter(b => ["accepted","in_progress"].includes(b.status)).length;
-    const no = o.filter(b => ["pending","accepted"].includes(b.status)).length + ro.filter(x => ["pending","accepted"].includes(x.status)).length;
+    const no = o.filter(b => ["pending","accepted"].includes(b.status)).length + ro.filter(x => ["pending","accepted"].includes(x.status) || (x.status === "confirmed" && x.buyer_confirmed_at)).length;
     $$('[data-count="renter"]').forEach(c => { c.hidden = !nr; c.textContent = nr; });
     $$('[data-count="owner"]').forEach(c => { c.hidden = !no; c.textContent = no; });
   } catch {}
 }
 function onDemoChange(msg){ toast(msg); const r = route().name; if (r === "locations") loadRenter(); if (r === "materiel") loadOwner(); if (r === "messages") drawThread(true); refreshCounts(); }
 
+/* Confirmation maison : case à cocher obligatoire ou motif à saisir */
+function ask({ title, text, check, reason, ok }){
+  return new Promise(res => {
+    const d = $("#askDlg"), okb = $("#askOk"), cb = $("#askCheck"), ta = $("#askReason");
+    $("#askTitle").textContent = title; $("#askText").textContent = text; okb.textContent = ok || "Confirmer";
+    $("#askCheckRow").hidden = !check; $("#askCheckTxt").textContent = check || ""; cb.checked = false;
+    $("#askReasonRow").hidden = !reason; ta.value = "";
+    const sync = () => { okb.disabled = (check && !cb.checked) || (reason && ta.value.trim().length < 5); };
+    cb.onchange = sync; ta.oninput = sync; sync();
+    const done = v => { d.classList.remove("open"); d.setAttribute("aria-hidden","true"); document.body.classList.remove("over"); res(v); };
+    $("#askNo").onclick = () => done(null);
+    $("#askForm").onsubmit = e => { e.preventDefault(); if (!okb.disabled) done({ reason: ta.value.trim() }); };
+    d.classList.add("open"); d.setAttribute("aria-hidden","false"); document.body.classList.add("over");
+    setTimeout(() => (reason ? ta : check ? cb : okb).focus(), 60);
+  });
+}
+
 /* =========================================================
    REMISE : PHOTOS + CODE + SIGNATURE
    ========================================================= */
 const HO = { kind:null, id:null, files:[], drawn:false };
 const HO_TXT = {
-  pickup: { t:"Remettre le matériel", i:"Prenez au moins 2 photos de l'objet, saisissez le code que le locataire vous donne, puis faites-le signer.", c:"2. Code du locataire", s:"3. Signature du locataire" },
-  return: { t:"Rendre le matériel", i:"Prenez au moins 2 photos de l'objet rendu, saisissez le code que le propriétaire vous donne, puis faites-le signer.", c:"2. Code du propriétaire", s:"3. Signature du propriétaire" },
-  sale:   { t:"Remettre l'objet vendu", i:"Prenez au moins 2 photos, saisissez le code de l'acheteur, puis faites-le signer. La vente sera terminée et l'annonce passera en « vendu ».", c:"2. Code de l'acheteur", s:"3. Signature de l'acheteur" },
+  pickup: { t:"Remettre le matériel", i:"Prenez au moins 2 photos de l'objet, saisissez le code que le locataire vous donne, puis signez tous les deux.", c:"2. Code du locataire", s:"3. Signature du locataire" },
+  return: { t:"Rendre le matériel", i:"Prenez au moins 2 photos de l'objet rendu, saisissez le code que le propriétaire vous donne, puis signez tous les deux.", c:"2. Code du propriétaire", s:"3. Signature du propriétaire" },
+  sale:   { t:"Remettre l'objet vendu", i:"Prenez au moins 2 photos, saisissez le code de l'acheteur, puis signez tous les deux. La vente devient définitive ; chacun garde 48 h pour signaler un problème.", c:"2. Code de l'acheteur", s:"3. Signature de l'acheteur" },
 };
 function openHo(kind, id){
   Object.assign(HO, { kind, id, files:[], drawn:false });
@@ -1445,26 +1540,34 @@ function drawShots(){
   add.hidden = HO.files.length >= 8;
 }
 $("#hoFiles").addEventListener("change", e => { HO.files = [...HO.files, ...e.target.files].slice(0, 8); e.target.value = ""; drawShots(); $("#hoErr").textContent = ""; });
-const sig = $("#hoSig"), sctx = sig.getContext("2d");
-function sizeSig(){ const r = sig.getBoundingClientRect(), dpr = devicePixelRatio || 1; sig.width = r.width * dpr; sig.height = r.height * dpr; sctx.setTransform(dpr,0,0,dpr,0,0); sctx.lineWidth = 2.4; sctx.lineCap = "round"; sctx.lineJoin = "round"; sctx.strokeStyle = "#0F1512"; }
-function clearSig(){ sctx.clearRect(0, 0, sig.width, sig.height); HO.drawn = false; $(".sig-wrap .hint").hidden = false; }
-let drawing = false;
-const pt = e => { const r = sig.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-sig.addEventListener("pointerdown", e => { drawing = true; sig.setPointerCapture(e.pointerId); const [x,y] = pt(e); sctx.beginPath(); sctx.moveTo(x, y); });
-sig.addEventListener("pointermove", e => { if (!drawing) return; const [x,y] = pt(e); sctx.lineTo(x, y); sctx.stroke(); HO.drawn = true; $(".sig-wrap .hint").hidden = true; });
-["pointerup","pointercancel","pointerleave"].forEach(ev => sig.addEventListener(ev, () => { drawing = false; }));
-$("#hoSigClear").addEventListener("click", clearSig);
+/* Deux zones de signature : la personne qui donne son code, puis vous */
+const PADS = ["#hoSig", "#hoSig2"].map(sel => {
+  const cv = $(sel), ctx = cv.getContext("2d"), hint = cv.parentElement.querySelector(".hint");
+  const pad = { cv, drawn:false,
+    size(){ const r = cv.getBoundingClientRect(), dpr = devicePixelRatio || 1; cv.width = r.width * dpr; cv.height = r.height * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#0F1512"; },
+    clear(){ ctx.clearRect(0, 0, cv.width, cv.height); pad.drawn = false; hint.hidden = false; },
+    blob(){ return new Promise(r => cv.toBlob(r, "image/png")); } };
+  let on = false;
+  const pt = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  cv.addEventListener("pointerdown", e => { on = true; cv.setPointerCapture(e.pointerId); const [x,y] = pt(e); ctx.beginPath(); ctx.moveTo(x, y); });
+  cv.addEventListener("pointermove", e => { if (!on) return; const [x,y] = pt(e); ctx.lineTo(x, y); ctx.stroke(); pad.drawn = true; hint.hidden = true; $("#hoErr").textContent = ""; });
+  ["pointerup","pointercancel","pointerleave"].forEach(ev => cv.addEventListener(ev, () => { on = false; }));
+  return pad;
+});
+const sizeSig = () => PADS.forEach(p => p.size());
+const clearSig = () => PADS.forEach(p => p.clear());
+$$("#hoDlg [data-clear]").forEach(b => b.addEventListener("click", () => PADS[+b.dataset.clear].clear()));
 $("#hoCode").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 4); $("#hoErr").textContent = ""; });
 $("#hoForm").addEventListener("submit", async e => {
   e.preventDefault();
   const err = $("#hoErr"), code = $("#hoCode").value;
   if (HO.files.length < 2) { err.textContent = "Ajoutez au moins 2 photos de l'état."; return; }
   if (code.length !== 4) { err.textContent = "Le code fait 4 chiffres."; return; }
-  if (!HO.drawn) { err.textContent = "La signature est nécessaire."; return; }
+  if (!PADS[0].drawn || !PADS[1].drawn) { err.textContent = "Les deux signatures sont nécessaires."; return; }
   const btn = $("#hoSubmit"); btn.disabled = true; btn.textContent = "Envoi des photos…";
   try {
-    const blob = await new Promise(r => sig.toBlob(r, "image/png"));
-    await api.handover(HO.kind, HO.id, code, $("#hoCond").value, HO.files, blob, $("#hoNotes").value.trim());
+    const [b1, b2] = await Promise.all(PADS.map(p => p.blob()));
+    await api.handover(HO.kind, HO.id, code, $("#hoCond").value, HO.files, b1, b2, $("#hoNotes").value.trim());
     closeHo();
     toast(HO.kind === "pickup" ? "Matériel remis : la location commence." : HO.kind === "return" ? "Retour validé : la caution est libérée." : "Vente terminée : l'objet a changé de main.");
     refreshCounts(); refreshPoints();
@@ -1482,6 +1585,7 @@ function initPublish(){
   pubInit = true;
   $("#p-cat").innerHTML = S.cats.map(c => `<option value="${c.id}" data-slug="${esc(c.slug)}">${esc(c.label)}</option>`).join("");
   $("#m-shop-id").innerHTML = S.shops.length ? S.shops.map(s => `<option value="${esc(s.id)}">${esc(s.name)} · ${esc(s.city)}</option>`).join("") : `<option value="">Aucune boutique pour l'instant</option>`;
+  $("#m-shop-row").hidden = !S.shops.length;
   $("#m-del").addEventListener("change", () => $("#m-del-box").hidden = !$("#m-del").checked);
   $("#m-shop").addEventListener("change", () => $("#m-shop-box").hidden = !$("#m-shop").checked);
   $("#p-buy").addEventListener("change", () => $("#p-buy-box").hidden = !$("#p-buy").checked);
@@ -1499,7 +1603,7 @@ function pubData(){
     condition:$("#p-cond").value, brand:$("#p-brand").value.trim(), model:$("#p-model").value.trim(),
     dims:["#p-l","#p-w","#p-h"].map(s => +$(s).value || null), weight:+$("#p-kg").value || null,
     description:$("#p-desc").value.trim(), city:$("#p-city").value.trim(),
-    price:Math.round((+$("#p-price").value || 0) * 100), half:+$("#p-half").value ? Math.round(+$("#p-half").value * 100) : null, deposit:Math.round((+$("#p-dep").value || 0) * 100),
+    price:Math.round((+$("#p-price").value || 0) * 100), half:+$("#p-half").value ? Math.round(+$("#p-half").value * 100) : null, value:Math.round((+$("#p-value").value || 0) * 100),
     modes, deliveryFee:Math.round((+$("#m-del-fee").value || 0) * 100), shopId:$("#m-shop-id").value || null,
     buyout:$("#p-buy").checked, buyoutPrice:$("#p-buy").checked && +$("#p-buy-price").value ? Math.round(+$("#p-buy-price").value * 100) : null,
     previewImg: pubPhotos[0] ? URL.createObjectURL(pubPhotos[0]) : null,
@@ -1515,9 +1619,11 @@ async function publish(e){
   if (d.title.length < 3) { err.textContent = "Donnez un titre d'au moins 3 caractères."; return; }
   if (!d.city) { err.textContent = "Indiquez la ville."; return; }
   if (d.price <= 0) { err.textContent = "Indiquez un prix par jour."; return; }
+  if (d.value <= 0) { err.textContent = "Indiquez la valeur de l'objet : elle sert de caution."; return; }
+  if (pubPhotos.length < 2) { err.textContent = "Ajoutez au moins 2 photos de l'objet."; return; }
   if (!d.modes.length) { err.textContent = "Choisissez au moins un mode de remise."; return; }
   if (d.modes.includes("shop") && !d.shopId) { err.textContent = "Choisissez une boutique partenaire, ou décochez le dépôt en boutique."; return; }
-  const btn = $("#pubSubmit"); btn.disabled = true; btn.textContent = pubPhotos.length ? "Envoi des photos…" : "Publication…";
+  const btn = $("#pubSubmit"); btn.disabled = true; btn.textContent = "Envoi des photos…";
   try {
     await api.publish(d, pubPhotos, pubProof);
     toast(pubProof ? "Annonce publiée. La marque sera vérifiée sous 48 h." : "Annonce publiée !");
@@ -1607,7 +1713,7 @@ async function loadClub(){
   $("#founderTag").hidden = !S.user?.founder;
   $("#refCode").textContent = S.user?.refCode || "——";
   $("#rewards").innerHTML = REWARDS.map(([pts, txt]) => `<div class="reward ${p.total >= pts ? "ok" : ""}"><span>${txt}</span><span class="p">${pts} pts</span></div>`).join("");
-  $("#ledger").innerHTML = p.ledger.length ? p.ledger.map(x => `<div class="reward"><span>${REASON[x.reason] || x.reason}<br><span class="note">${new Date(x.created_at).toLocaleDateString("fr-FR")}</span></span><span class="p" style="color:#3E5200">+${x.points}</span></div>`).join("") : `<p class="note">Vos points apparaîtront ici après votre première location ou annonce.</p>`;
+  $("#ledger").innerHTML = p.ledger.length ? p.ledger.map(x => `<div class="reward"><span>${REASON[x.reason] || x.reason}<br><span class="note">${new Date(x.created_at).toLocaleDateString("fr-FR")}</span></span><span class="p" style="color:var(--accent)">+${x.points}</span></div>`).join("") : `<p class="note">Vos points apparaîtront ici après votre première location ou annonce.</p>`;
 }
 $("#copyRef").addEventListener("click", async () => {
   const link = `${location.origin}${location.pathname}?ref=${S.user?.refCode || ""}`;

@@ -19,7 +19,7 @@ Réglée dans le bloc `CONFIG` en haut du script de `index.html` :
 
 ## Prochaines étapes
 
-- Base de données : Supabase, projet `qdnytvevomychpuuxbym` (région eu-west-1). Migrations dans `supabase/`, à appliquer dans l'ordre : `schema.sql`, `02_app.sql`, `03_hardening.sql`. Déjà appliquées sur le projet.
+- Base de données : Supabase, projet `qdnytvevomychpuuxbym` (région eu-west-1). Migrations dans `supabase/`, à appliquer dans l'ordre : `schema.sql`, `02_app.sql`, `03_hardening.sql`, `04_rachat_30j.sql`, `05a_offre_terminee.sql`, `05b_club_remises.sql`, `06_demi_journee_messages_assistant.sql`, `07a_etats_vente.sql`, `07b_vente_caution_photos.sql` (les fichiers « a » seuls, avant les « b »). Toutes déjà appliquées sur le projet.
 - Paiements et reversement aux propriétaires : Stripe
 - Mise en ligne : Vercel, branché sur ce dépôt
 
