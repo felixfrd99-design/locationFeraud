@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Spoloc — Location de matériel de sport entre particuliers</title>
 <meta name="description" content="Louez le matériel de sport de vos voisins, dès une demi-journée. Paiement, caution et remise protégés. Paris et petite couronne.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230F1512'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%232E5E4E' stroke='%23F3F1EA' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230F1512'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23D35F2A' stroke='%23F3F1EA' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0F1512; --ink-2:#1B2420; --paper:#F3F1EA; --card:#FFFFFF;
-  --soft:#D7E3DA; --accent:#2E5E4E; --neutral:#ECEBE5;
+  --ink:#0F1512; --ink-2:#1B2420; --paper:#F5F0E6; --card:#FFFDF9;
+  --soft:#F7DFCF; --accent:#D35F2A; --neutral:#EFE7DA;
   --muted:#5A615C; --line:rgba(15,21,18,.12);
   --r:22px; --r-sm:14px;
   --display:"Bricolage Grotesque",system-ui,sans-serif;
@@ -41,7 +41,7 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stro
 .btn-ghost:hover{border-color:var(--ink)}
 .btn-sm{min-height:44px;padding:0 18px;font-size:14px}
 
-.top{position:sticky;top:0;z-index:50;background:rgba(243,241,234,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top{position:sticky;top:0;z-index:50;background:rgba(245,240,230,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top-in{display:flex;align-items:center;gap:20px;height:72px}
 .logo{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-weight:800;font-size:25px;letter-spacing:-.05em;text-decoration:none}
 .logo .sl-ball{transform-box:fill-box;transform-origin:center;animation:ball 2.4s var(--ease) infinite}
@@ -186,9 +186,12 @@ section{padding:80px 0}
 .founder h3{font-size:30px}
 .founder .role{color:var(--soft);font-weight:600;margin:4px 0 14px}
 .founder p{color:#B9C0BC}
-.todo{display:inline-block;margin-top:14px;background:rgba(215,227,218,.14);color:var(--soft);border-radius:8px;padding:4px 8px;font-size:13px}
+.sports{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.sports span{border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;color:var(--soft)}
+.founder .ph{background:var(--accent)!important;color:#fff!important}
 .about-t h1{font-size:clamp(40px,5.4vw,72px);font-weight:800;margin:14px 0 20px}
 .about-t p{font-size:18px;color:#3F4642;margin-bottom:14px}
+.about-t a{color:var(--accent);font-weight:600}
 .values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
 .value{background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px}
 .value b{display:block;font-family:var(--display);font-size:18px;margin-bottom:4px}
@@ -444,21 +447,22 @@ footer a:hover{color:var(--soft)}
   <section style="padding-top:0">
     <div class="wrap about">
       <div class="founder rv">
-        <div class="ph" aria-hidden="true">T</div>
-        <h3>Tim</h3>
+        <div class="ph" aria-hidden="true">F</div>
+        <h3>Félix</h3>
         <div class="role">Fondateur de Spoloc</div>
-        <p>[Deux phrases sur toi : ton sport, l'objet qui dormait chez toi et qui t'a donné l'idée.]</p>
-        <span class="todo">À compléter, avec ta photo</span>
+        <p>Le petit dernier de quatre frères, venu de la côte ouest. Alternant dans une startup parisienne depuis 2025, je construis Spoloc à côté.</p>
+        <div class="sports"><span>Raquettes</span><span>Marathon</span><span>Ski</span><span>Triathlon</span></div>
       </div>
       <div class="about-t rv d1">
         <span class="eyebrow">Qui sommes-nous</span>
-        <h1>On achète trop de matos qu'on n'utilise pas.</h1>
-        <p>Un paddle sert deux semaines par an. Une tente, trois week-ends. Le reste du temps, ils prennent la place qu'on n'a pas, dans des appartements où chaque mètre compte.</p>
-        <p><strong>Spoloc met ce matériel en circulation</strong>, entre voisins, pour une demi-journée ou un mois. Le propriétaire gagne de l'argent avec ce qui dormait, le locataire part en week-end sans tout acheter.</p>
+        <h1>Tout est parti d'un vélo que je n'avais pas.</h1>
+        <p>Avec mes trois grands frères, on s'est inscrits au T24, un triathlon. Petit souci : je n'avais pas de vélo. En acheter un pour une seule course n'avait aucun sens, alors j'ai cherché à en louer un près de chez moi. Rien de simple, rien de rassurant.</p>
+        <p>Pourtant, à Paris, des vélos, des paddles, des raquettes et des skis dorment dans les caves et les placards. <strong>Spoloc les remet en circulation</strong>, entre voisins, pour une demi-journée ou un mois. Le propriétaire gagne un peu d'argent, le sportif part s'entraîner sans tout acheter.</p>
+        <p>Je m'en occupe comme d'une course : bien préparé, et jusqu'au bout. Une question, une idée ? <a href="mailto:spoloc@outlook.com">spoloc@outlook.com</a></p>
         <div class="values">
-          <div class="value"><b>Local</b><span>Du matériel à quelques stations de chez vous.</span></div>
-          <div class="value"><b>Protégé</b><span>Paiement, caution, photos et double signature à chaque remise.</span></div>
-          <div class="value"><b>Honnête</b><span>Le prix affiché est le prix payé.</span></div>
+          <div class="value"><b>Passionné</b><span>Le sport, c'est ce qui me fait lever le matin.</span></div>
+          <div class="value"><b>Pro</b><span>Paiement, caution, photos et double signature à chaque remise.</span></div>
+          <div class="value"><b>Cool</b><span>Pas de prise de tête : on loue, on rend, on se dit merci.</span></div>
         </div>
       </div>
     </div>
@@ -492,7 +496,7 @@ footer a:hover{color:var(--soft)}
         <div><h3>Vous avez une boutique de sport&nbsp;? <small style="font:600 13px var(--body);color:var(--accent)">Bientôt</small></h3>
           <ul><li><svg class="i"><use href="#i-check"/></svg>Devenez point de dépôt et de retrait</li><li><svg class="i"><use href="#i-check"/></svg>Des clients du quartier passent chez vous chaque semaine</li><li><svg class="i"><use href="#i-check"/></svg>Une rémunération à chaque objet géré</li><li><svg class="i"><use href="#i-check"/></svg>Rien ne traîne : dépôt la veille, retrait sous 3 jours</li></ul>
         </div>
-        <a class="btn btn-dark" href="mailto:[ton-email]?subject=Boutique%20partenaire%20Spoloc" style="justify-self:end">Devenir partenaire</a>
+        <a class="btn btn-dark" href="mailto:spoloc@outlook.com?subject=Boutique%20partenaire%20Spoloc" style="justify-self:end">Devenir partenaire</a>
       </div>
     </div>
   </section>
@@ -539,7 +543,7 @@ footer a:hover{color:var(--soft)}
     <div class="foot">
       <div><a href="#louer" class="logo" id="logoFoot"></a><p style="margin-top:14px;max-width:320px;font-size:14px">La location de matériel de sport entre particuliers, à Paris et en petite couronne.</p></div>
       <div><h5>Spoloc</h5><ul><li><a href="#louer">Louer</a></li><li><a href="#publier">Publier</a></li><li><a href="#qui">Qui sommes-nous</a></li><li><a href="#aide">Aide</a></li></ul></div>
-      <div><h5>Infos</h5><ul><li><a href="app/">Mon compte</a></li><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="mailto:[ton-email]">Contact</a></li></ul></div>
+      <div><h5>Infos</h5><ul><li><a href="app/">Mon compte</a></li><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="mailto:spoloc@outlook.com">Contact</a></li></ul></div>
     </div>
     <div class="foot-b"><span>© <span id="yr"></span> Spoloc</span><span>Le sport, en location.</span></div>
   </div>
