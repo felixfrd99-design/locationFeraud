@@ -1,0 +1,1111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Location Ferro — Libérez vos équipements</title>
+<meta name="description" content="Location Ferro, la marketplace de location d'équipements sportifs entre particuliers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Supabase (à activer quand le projet est créé)
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+-->
+<style>
+:root{
+  --ink:#0F1512; --ink-2:#1B2420; --paper:#F3F1EA; --card:#FFFFFF;
+  --lime:#C9F23B; --coral:#FF6B4A; --sky:#9DD4FF; --sand:#F2D9A8;
+  --muted:#626A65; --line:rgba(15,21,18,.12);
+  --r:22px; --r-sm:14px;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);line-height:1;letter-spacing:-.03em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral)}
+
+/* ---------- Boutons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;border:0;cursor:pointer;font-weight:600;font-size:15px;transition:transform .3s var(--ease),background .3s,box-shadow .3s;will-change:transform}
+.btn-dark{background:var(--ink);color:var(--paper)}
+.btn-dark:hover{box-shadow:0 12px 30px -10px rgba(15,21,18,.6)}
+.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-lime:hover{box-shadow:0 12px 30px -10px rgba(140,180,20,.8)}
+.btn-ghost{background:transparent;border:1.5px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn .arr{transition:transform .3s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+
+/* ---------- Navigation ---------- */
+.nav{position:fixed;inset:12px 0 auto;z-index:50;transition:transform .4s var(--ease)}
+.nav.hide{transform:translateY(-120%)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 20px;border-radius:999px;background:rgba(243,241,234,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.03em}
+.logo-mark{width:32px;height:32px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
+.logo-mark span{width:14px;height:14px;border-radius:50%;border:3px solid var(--lime);border-right-color:transparent;animation:spin 3s linear infinite}
+.nav-links{display:flex;gap:28px;font-weight:500;font-size:15px}
+.nav-links a{position:relative}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--coral);transition:width .3s var(--ease)}
+.nav-links a:hover::after{width:100%}
+.nav .btn{padding:11px 18px}
+.burger{display:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);cursor:pointer;position:relative}
+.burger span{position:absolute;left:13px;right:13px;height:2px;background:var(--paper);transition:transform .3s,opacity .3s}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:26px}
+.burger.open span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:45;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:center;gap:18px;padding:32px;clip-path:circle(0% at calc(100% - 40px) 40px);transition:clip-path .6s var(--ease)}
+.mobile-menu.open{clip-path:circle(150% at calc(100% - 40px) 40px)}
+.mobile-menu a{font-family:var(--display);font-size:42px;font-weight:700;letter-spacing:-.03em}
+
+/* ---------- Hero ---------- */
+.hero{padding:140px 0 60px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(48px,8.4vw,116px);font-weight:800;margin:18px 0 22px}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line > span{display:inline-block;transform:translateY(105%);animation:rise 1s var(--ease) forwards}
+.hero h1 .line:nth-child(2) > span{animation-delay:.12s}
+.hero h1 .line:nth-child(3) > span{animation-delay:.24s}
+.hl{position:relative;white-space:nowrap}
+.hl::before{content:"";position:absolute;left:-2%;right:-2%;bottom:.08em;height:.32em;background:var(--lime);z-index:-1;border-radius:6px;transform:scaleX(0);transform-origin:left;animation:grow .8s .9s var(--ease) forwards}
+.rotator{display:inline-grid;vertical-align:bottom;height:1.25em;overflow:hidden;color:var(--coral)}
+.rotator span{grid-area:1/1;transform:translateY(110%);transition:transform .6s var(--ease)}
+.rotator span.on{transform:translateY(0)}
+.rotator span.out{transform:translateY(-110%)}
+.hero-sub{font-size:clamp(17px,1.6vw,20px);max-width:520px;color:var(--muted);opacity:0;animation:fade .8s .5s forwards}
+.hero-sub strong{color:var(--ink)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;opacity:0;animation:fade .8s .7s forwards}
+.hero-proof{display:flex;flex-wrap:wrap;gap:22px;margin-top:38px;font-size:14px;color:var(--muted);opacity:0;animation:fade .8s .9s forwards}
+.hero-proof b{display:block;font-family:var(--display);font-size:26px;color:var(--ink);letter-spacing:-.02em}
+
+.hero-visual{position:relative;height:540px}
+.blob{position:absolute;inset:8% 4% 6% 10%;border-radius:42% 58% 55% 45%/50% 40% 60% 50%;background:var(--ink);animation:morph 12s ease-in-out infinite}
+.float-card{position:absolute;width:220px;background:var(--card);border-radius:var(--r);padding:12px;box-shadow:0 30px 60px -25px rgba(15,21,18,.45);animation:float 6s ease-in-out infinite}
+.float-card .thumb{height:140px;border-radius:14px;display:grid;place-items:center;font-size:64px}
+.float-card h4{font-family:var(--display);font-size:17px;margin:10px 4px 2px;letter-spacing:-.02em}
+.float-card p{font-size:13px;color:var(--muted);margin:0 4px;display:flex;justify-content:space-between}
+.float-card p b{color:var(--ink)}
+.fc1{top:4%;left:2%;transform:rotate(-7deg);animation-delay:0s}
+.fc2{top:30%;right:0;transform:rotate(6deg);animation-delay:-2s}
+.fc3{bottom:2%;left:16%;transform:rotate(-2deg);animation-delay:-4s}
+.badge-circle{position:absolute;right:8%;top:2%;width:120px;height:120px;animation:spin 16s linear infinite}
+.badge-circle text{font-family:var(--display);font-weight:700;font-size:11.5px;letter-spacing:2.4px;fill:var(--ink)}
+.badge-core{position:absolute;right:calc(8% + 38px);top:calc(2% + 38px);width:44px;height:44px;border-radius:50%;background:var(--coral);display:grid;place-items:center;color:#fff;font-size:20px}
+.live-pill{position:absolute;bottom:22%;right:2%;background:var(--lime);border-radius:999px;padding:10px 16px;font-weight:600;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 14px 30px -14px rgba(0,0,0,.4);animation:float 5s -1s ease-in-out infinite}
+.live-pill i{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:pulse 1.4s infinite}
+
+/* ---------- Marquee ---------- */
+.marquee{background:var(--ink);color:var(--paper);padding:22px 0;overflow:hidden;transform:rotate(-1.5deg);margin:20px -20px 0;position:relative;z-index:2}
+.marquee-track{display:flex;gap:48px;width:max-content;animation:scroll 32s linear infinite}
+.marquee span{font-family:var(--display);font-size:clamp(26px,4vw,44px);font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:48px;white-space:nowrap}
+.marquee span::after{content:"✦";color:var(--lime);font-size:.6em}
+
+/* ---------- Sections ---------- */
+section{padding:110px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:50px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(38px,5.6vw,72px);font-weight:800;max-width:760px;margin-top:14px}
+.sec-head p{max-width:380px;color:var(--muted)}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}
+
+/* ---------- Story (scroll) ---------- */
+.story{background:var(--ink);color:var(--paper);border-radius:40px;margin:0 12px}
+.story .eyebrow{color:#9aa39e}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.story-sticky{position:sticky;top:110px;height:min(520px,70vh);border-radius:30px;background:var(--ink-2);overflow:hidden;display:grid;place-items:center}
+.stage{position:absolute;inset:0;display:grid;place-items:center;text-align:center;opacity:0;transform:scale(.92);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.stage.on{opacity:1;transform:none}
+.stage .big{font-size:120px;line-height:1;filter:drop-shadow(0 20px 30px rgba(0,0,0,.4))}
+.stage small{display:block;margin-top:18px;font-family:var(--display);font-size:22px;font-weight:700}
+.stage-0{background:radial-gradient(circle at 50% 60%,#2a332e,transparent 70%)}
+.stage-0 .big{filter:grayscale(1) brightness(.7)}
+.stage-0 .zz{position:absolute;top:30%;right:32%;font-family:var(--display);font-weight:800;font-size:30px;color:#6b746f;animation:zz 2.4s infinite}
+.stage-1{background:radial-gradient(circle at 50% 60%,rgba(201,242,59,.25),transparent 70%)}
+.stage-2{background:radial-gradient(circle at 50% 60%,rgba(255,107,74,.35),transparent 70%)}
+.stage-2 .big{animation:ride 2s ease-in-out infinite}
+.steps-col{padding:20vh 0}
+.step{min-height:60vh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .5s}
+.step.on{opacity:1}
+.step .num{font-family:var(--display);color:var(--lime);font-weight:700;font-size:18px}
+.step h3{font-size:clamp(32px,4vw,52px);margin:12px 0 16px}
+.step p{color:#b9c0bc;max-width:440px;font-size:18px}
+
+/* ---------- Le film ---------- */
+.film-sec{padding:100px 0 70px}
+.film{position:relative;aspect-ratio:16/9;border-radius:32px;overflow:hidden;background:var(--ink);container-type:inline-size;cursor:pointer;box-shadow:0 40px 80px -40px rgba(15,21,18,.55);font-size:1cqw;user-select:none}
+.film-btn{position:absolute;right:16px;top:16px;z-index:10;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);cursor:pointer;font-size:14px;color:var(--ink)}
+.film.paused .scene *,.film.paused .scene *::after{animation-play-state:paused!important}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;font-family:var(--display);overflow:hidden}
+.scene.on{opacity:1}
+/* briques d'animation (ne jouent que sur la scène active) */
+.pop,.up,.stamp{opacity:0}
+.scene.on .pop{animation:popIn .5s var(--ease) both;animation-delay:var(--d,0s)}
+.scene.on .up{animation:upIn .7s var(--ease) both;animation-delay:var(--d,0s)}
+.grow{transform:scaleX(0);transform-origin:left}
+.scene.on .grow{animation:growX .5s var(--ease) both;animation-delay:var(--d,0s)}
+.scene.on .stamp{animation:slam .45s var(--ease) both;animation-delay:var(--d,0s)}
+@keyframes popIn{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
+@keyframes upIn{from{opacity:0;transform:translateY(6em)}to{opacity:1;transform:none}}
+@keyframes growX{to{transform:scaleX(1)}}
+@keyframes slam{0%{opacity:0;transform:scale(2.6) rotate(-10deg)}100%{opacity:1;transform:scale(1) rotate(-10deg)}}
+/* personnages */
+.char{position:absolute;bottom:0;width:15em;display:flex;flex-direction:column;align-items:center}
+.char svg,.char-in svg{width:100%;display:block}
+.flip svg{transform:scaleX(-1)}
+.ntag{font-family:var(--body);font-size:1.5em;font-weight:600;background:#fff;color:var(--ink);border-radius:99px;padding:.3em .9em;margin-bottom:.5em;white-space:nowrap;box-shadow:0 .4em 1em -.5em rgba(0,0,0,.4)}
+.wave{transform-box:view-box;transform-origin:76px 118px}
+.scene.on .wave{animation:wave .45s ease-in-out 6 alternate}
+@keyframes wave{to{transform:rotate(-28deg)}}
+.say{position:absolute;z-index:3;max-width:22em;white-space:normal!important;font-family:var(--body);font-size:1.7em;font-weight:600;background:#fff;color:var(--ink);padding:.6em 1em;border-radius:1em 1em 1em .2em;white-space:nowrap}
+.chip-f{position:absolute;font-family:var(--body);font-size:1.6em;font-weight:600;background:var(--lime);color:var(--ink);padding:.5em 1em;border-radius:99px;white-space:nowrap}
+/* 1 */
+.s1{background:radial-gradient(circle at 50% 40%,#25302a,var(--ink) 70%)}
+.phone{position:absolute;left:50%;translate:-50% 0;top:4em;width:23em;height:48em;background:#fff;border:.8em solid #1e2622;border-radius:3.2em;padding:1.6em;display:flex;flex-direction:column;gap:1em;color:var(--ink);overflow:hidden}
+.ph-top{font-size:1.5em;font-weight:800;letter-spacing:-.02em}
+.ph-photo{height:15em;border-radius:1.4em;background:var(--sky);display:grid;place-items:center}
+.ph-photo span{font-size:8em;line-height:1}
+.ph-line{height:1.3em;border-radius:1em;background:#E6E4DC}
+.ph-price{font-size:2.4em;font-weight:800}
+.ph-btn{margin-top:auto;background:var(--ink);color:var(--lime);border-radius:99px;text-align:center;padding:.7em;font-size:1.8em;font-weight:700}
+.scene.on .ph-btn{animation:press .45s 2s both}
+@keyframes press{50%{transform:scale(.86);background:var(--coral);color:#fff}}
+.ph-ok{position:absolute;inset:0;background:var(--lime);display:grid;place-items:center;border-radius:2.2em}
+.ph-ok span{font-size:2.8em;font-weight:800}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.scene.on .flash{animation:flash .5s .7s both}
+@keyframes flash{30%{opacity:.9}100%{opacity:0}}
+/* 2 */
+.s2{background:var(--paper);color:var(--ink)}
+.mcard{position:absolute;left:12%;top:10%;width:28em;background:#fff;border-radius:2.4em;padding:1.4em;box-shadow:0 2em 4em -2em rgba(15,21,18,.3)}
+.m-thumb{height:18em;border-radius:1.6em;background:var(--sky);display:grid;place-items:center}
+.m-thumb span{font-size:10em;line-height:1}
+.m-title{font-size:2.2em;font-weight:800;margin:.5em .2em .1em;letter-spacing:-.02em}
+.m-meta{font-family:var(--body);font-size:1.5em;color:var(--muted);margin:0 .3em}
+.cal{position:absolute;left:50%;top:10%;width:36em;background:#fff;border-radius:2.4em;padding:2em;box-shadow:0 2em 4em -2em rgba(15,21,18,.3)}
+.cal-h{font-size:2em;font-weight:800;margin-bottom:.6em}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:.8em}
+.cal-g span{aspect-ratio:1;border-radius:.8em;background:#EEECE4;display:grid;place-items:center;font-family:var(--body);font-size:1.4em;font-weight:600}
+.scene.on .cal-g .bk{animation:fillDay .35s both;animation-delay:var(--d)}
+@keyframes fillDay{to{background:var(--lime);transform:scale(1.08)}}
+.cal-f{font-family:var(--body);font-size:1.6em;margin-top:1em}
+.stamp{position:absolute;font-size:4.4em;font-weight:800;color:var(--coral);border:.12em solid var(--coral);padding:.1em .45em;border-radius:.25em;letter-spacing:.04em;background:rgba(255,255,255,.7)}
+.notif{position:absolute;left:12%;bottom:8%;font-family:var(--body);font-size:1.8em;font-weight:600;background:var(--ink);color:var(--paper);padding:.7em 1.2em;border-radius:99px}
+/* 3 */
+.s3{background:linear-gradient(#FBE8C2,#F3F1EA)}
+.ground{position:absolute;left:0;right:0;bottom:0;height:6em;background:#E5C98F}
+.s3 .char{bottom:4em}
+.bike-t{position:absolute;bottom:.42em;left:27%;font-size:12em;line-height:1}
+.scene.on .bike-t{animation:travel 1.6s .5s var(--ease) both}
+@keyframes travel{from{left:27%}to{left:56%}}
+.shake{position:absolute;left:50%;top:14%;translate:-50% 0;font-size:8em;line-height:1}
+/* 4 */
+.s4{background:radial-gradient(circle at 70% 30%,#25302a,var(--ink) 70%);color:var(--paper)}
+.pay{position:absolute;left:50%;top:16%;width:36em;background:#fff;color:var(--ink);border-radius:2.4em;padding:2.2em;box-shadow:0 2em 5em -2em rgba(0,0,0,.6)}
+.pay-h{font-family:var(--body);font-size:1.7em;font-weight:600;color:var(--muted)}
+.pay-amt{font-size:8em;font-weight:800;letter-spacing:-.05em;line-height:1.05}
+.pay-s{font-family:var(--body);font-size:1.5em;color:var(--muted)}
+.pay-txt{position:absolute;left:50%;top:66%;font-size:3.4em;font-weight:800;line-height:1.05;color:var(--lime);letter-spacing:-.03em}
+.coins i{position:absolute;top:0;width:3.4em;height:3.4em;border-radius:50%;background:#F7C948;border:.4em solid #E0A92B;opacity:0}
+.scene.on .coins i{animation:coin 1.1s var(--d) ease-in both}
+@keyframes coin{0%{opacity:0;transform:translateY(-6em) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(22em) rotate(400deg)}}
+/* 5 */
+.s5{background:linear-gradient(#8FCBFF,#E1F3FF)}
+.sun{position:absolute;right:12%;top:10%;width:9em;height:9em;border-radius:50%;background:#FFD54A;box-shadow:0 0 0 2em rgba(255,213,74,.25),0 0 0 4em rgba(255,213,74,.12);animation:pulseSun 3s ease-in-out infinite}
+@keyframes pulseSun{50%{box-shadow:0 0 0 3em rgba(255,213,74,.25),0 0 0 6em rgba(255,213,74,.1)}}
+.cloud{position:absolute;left:-20%;width:16em;height:5em;background:#fff;border-radius:99px;animation:drift 14s linear infinite;animation-delay:var(--d)}
+.cloud::before{content:"";position:absolute;left:3em;top:-3em;width:7em;height:7em;border-radius:50%;background:#fff}
+@keyframes drift{to{left:110%}}
+.hills{position:absolute;left:0;bottom:9em;width:100%;height:14em}
+.road{position:absolute;left:0;right:0;bottom:0;height:9.2em;background:#3A403C}
+.road::after{content:"";position:absolute;left:0;right:0;top:45%;height:.8em;background:repeating-linear-gradient(90deg,#fff 0 4em,transparent 4em 9em);animation:dash .5s linear infinite}
+@keyframes dash{to{background-position:-9em 0}}
+.title-f{position:absolute;left:6%;top:10%;font-size:4.4em;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--ink)}
+.title-f span{color:var(--coral)}
+.rider{position:absolute;left:50%;translate:-50% 0;bottom:4.5em;width:18em;display:flex;flex-direction:column;align-items:center;animation:bob .5s ease-in-out infinite alternate}
+.char-in{width:11em;margin-bottom:-7em;position:relative;z-index:1}
+.bike{font-size:16em;line-height:1}
+@keyframes bob{to{transform:translateY(-.8em)}}
+.heart{position:absolute;top:10%;font-size:3em;opacity:0}
+.scene.on .heart{animation:heart 1.8s var(--d) ease-out infinite}
+@keyframes heart{0%{opacity:0;transform:translateY(0) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-4em) scale(1.2)}}
+/* 6 */
+.s6{background:var(--paper);color:var(--ink)}
+.chat{position:absolute;left:50%;translate:-50% 0;top:6%;width:54em;height:44em;background:#fff;border-radius:3em;padding:2.4em;display:flex;flex-direction:column;gap:1.3em;box-shadow:0 2em 5em -2em rgba(15,21,18,.3)}
+.chat-h{font-family:var(--body);font-size:1.6em;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:.6em;padding-bottom:.6em;border-bottom:1px solid var(--line)}
+.chat-h span{width:1.8em;height:1.8em;border-radius:50%;background:#2F6FED;color:#fff;display:grid;place-items:center}
+.b{max-width:75%;padding:.65em 1em;border-radius:1em;font-family:var(--body);font-size:2em;font-weight:500;line-height:1.3}
+.b.r{align-self:flex-end;background:var(--ink);color:var(--paper);border-bottom-right-radius:.2em}
+.b.l{align-self:flex-start;background:#EEECE4;border-bottom-left-radius:.2em}
+.offer-b{background:var(--lime)!important;color:var(--ink)!important}
+.typing{display:flex;gap:.3em;opacity:0;max-height:0;padding-block:0;overflow:hidden}
+.typing i{width:.45em;height:.45em;border-radius:50%;background:var(--muted);animation:pulse .8s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.scene.on .typing{animation:typing 1s 1.2s both}
+@keyframes typing{0%{opacity:0;max-height:0;padding-block:0}12%,88%{opacity:1;max-height:3em;padding-block:.65em}100%{opacity:0;max-height:0;padding-block:0}}
+.sold{color:#1A9B50;border-color:#1A9B50;font-size:6em}
+.confetti i{position:absolute;top:0;width:1.2em;height:1.8em;border-radius:.2em;opacity:0}
+.scene.on .confetti i{animation:conf 1.8s var(--d) ease-in both}
+@keyframes conf{0%{opacity:1;transform:translateY(-4em) rotate(0)}100%{opacity:0;transform:translateY(60em) rotate(600deg)}}
+/* chapitres */
+.chapters{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px}
+.chapters button{border:0;background:none;cursor:pointer;text-align:left;padding:4px 0}
+.chapters .bar{display:block;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.chapters .bar i{display:block;height:100%;width:0;background:var(--ink)}
+.chapters .lbl{display:block;margin-top:8px;font-size:13px;font-weight:600;color:var(--muted);transition:color .3s}
+.chapters .lbl b{color:var(--coral);margin-right:4px}
+.chapters button.on .lbl{color:var(--ink)}
+.film-cap{margin-top:20px}
+.film-cap h3{font-size:clamp(24px,3vw,34px)}
+.film-cap p{color:var(--muted);margin-top:6px}
+.film-cap.swap{animation:fade .5s}
+@media (max-width:860px){
+  .film{aspect-ratio:4/3;font-size:1.25cqw;border-radius:24px}
+  .chapters .t{display:none}
+  .film-btn{top:auto;bottom:10px;right:10px;width:34px;height:34px;font-size:11px}
+  .mcard{left:6%;width:27em}
+  .cal{left:51%;width:33em;padding:1.6em}
+}
+
+/* ---------- Comment ça marche ---------- */
+.tabs{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px;margin-bottom:40px;position:relative}
+.tabs button{position:relative;z-index:1;border:0;background:none;padding:12px 22px;border-radius:999px;cursor:pointer;font-weight:600;transition:color .3s}
+.tabs button.on{color:var(--paper)}
+.tabs .pill{position:absolute;top:6px;bottom:6px;left:6px;border-radius:999px;background:var(--ink);transition:transform .45s var(--ease),width .45s var(--ease)}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.how-card{background:var(--card);border-radius:var(--r);padding:30px;border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .4s var(--ease)}
+.how-card:hover{transform:translateY(-6px)}
+.how-card .ic{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:28px;margin-bottom:22px}
+.how-card h3{font-size:26px;margin-bottom:10px}
+.how-card p{color:var(--muted)}
+.how-card .n{position:absolute;right:20px;top:14px;font-family:var(--display);font-weight:800;font-size:72px;color:rgba(15,21,18,.06)}
+.how-panel{display:none}
+.how-panel.on{display:block;animation:fade .6s}
+
+/* ---------- Marketplace ---------- */
+.market{background:var(--card);border-radius:40px;margin:0 12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:28px}
+.search{flex:1 1 280px;display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:999px;padding:4px 6px 4px 20px;border:1px solid var(--line)}
+.search input{flex:1;border:0;background:none;outline:none;padding:12px 0;min-width:0}
+.search select{border:0;background:var(--card);border-radius:999px;padding:10px 14px;cursor:pointer}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:26px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--card);padding:10px 16px;border-radius:999px;cursor:pointer;font-weight:500;font-size:14px;transition:all .25s}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.p-card{cursor:pointer;border-radius:var(--r);transition:transform .4s var(--ease);animation:pop .55s var(--ease) both}
+.p-card:hover{transform:translateY(-6px)}
+.p-thumb{aspect-ratio:4/3.3;border-radius:var(--r);display:grid;place-items:center;font-size:76px;position:relative;overflow:hidden}
+.p-thumb .em{transition:transform .6s var(--ease)}
+.p-card:hover .p-thumb .em{transform:scale(1.15) rotate(-6deg)}
+.p-thumb .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.9);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.p-thumb .fav{position:absolute;right:12px;top:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:0;cursor:pointer;font-size:16px;transition:transform .2s}
+.p-thumb .fav:active{transform:scale(.85)}
+.p-body{padding:14px 4px 0}
+.p-body h4{font-family:var(--display);font-size:19px;letter-spacing:-.02em;line-height:1.15}
+.p-meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;font-size:14px;color:var(--muted)}
+.p-meta b{font-family:var(--display);font-size:20px;color:var(--ink)}
+.empty{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--muted)}
+.market-cta{display:flex;justify-content:center;margin-top:44px}
+
+/* ---------- Déposer ---------- */
+.list-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:start}
+.form{background:var(--card);border-radius:30px;padding:30px;border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form .full{grid-column:1/-1}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);background:var(--paper);border-radius:var(--r-sm);padding:13px 14px;outline:none;transition:border-color .2s,background .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink);background:#fff}
+.field textarea{resize:vertical;min-height:90px}
+.drop{border:2px dashed var(--line);border-radius:var(--r-sm);padding:22px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .2s,background .2s}
+.drop:hover{border-color:var(--ink);background:var(--paper)}
+.side{position:sticky;top:100px;display:grid;gap:18px}
+.preview-label{font-size:13px;font-weight:600;color:var(--muted)}
+.sim{background:var(--ink);color:var(--paper);border-radius:30px;padding:28px}
+.sim h3{font-size:26px;margin-bottom:6px}
+.sim p{color:#b9c0bc;font-size:14px}
+.sim input[type=range]{width:100%;accent-color:var(--lime);margin:18px 0 6px}
+.sim .earn{font-family:var(--display);font-size:56px;font-weight:800;color:var(--lime);letter-spacing:-.04em;line-height:1;margin-top:10px}
+.sim .row{display:flex;justify-content:space-between;font-size:14px;color:#b9c0bc}
+
+/* ---------- Confiance ---------- */
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.trust{padding:28px;border-radius:var(--r);border:1px solid var(--line);background:var(--card)}
+.trust .ic{font-size:30px}
+.trust h3{font-size:22px;margin:16px 0 8px}
+.trust p{color:var(--muted);font-size:15px}
+.commission{margin-top:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;background:var(--lime);border-radius:30px;padding:30px 34px}
+.commission h3{font-size:clamp(26px,3vw,38px);max-width:620px}
+.commission .pct{font-family:var(--display);font-weight:800;font-size:clamp(64px,9vw,120px);letter-spacing:-.05em;line-height:.9}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:860px;margin-inline:auto}
+.faq details{border-bottom:1px solid var(--line);padding:22px 0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:22px;transition:transform .35s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg);background:var(--coral)}
+.faq details p{color:var(--muted);margin-top:12px;max-width:700px;animation:fade .4s}
+
+/* ---------- CTA final + footer ---------- */
+.final{text-align:center;padding:130px 0;position:relative;overflow:hidden}
+.final h2{font-size:clamp(52px,10vw,150px);font-weight:800;letter-spacing:-.05em}
+.final h2 em{font-style:normal;color:var(--coral)}
+.final .hero-ctas{justify-content:center;opacity:1;animation:none}
+.orbit{position:absolute;font-size:44px;animation:orbit 18s linear infinite;top:50%;left:50%;pointer-events:none;opacity:.9}
+footer{background:var(--ink);color:#b9c0bc;padding:60px 0 30px;border-radius:40px 40px 0 0}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:30px}
+footer .logo{color:var(--paper)}
+footer h5{color:var(--paper);font-size:14px;margin-bottom:12px}
+footer ul{list-style:none;display:grid;gap:8px;font-size:14px}
+footer a:hover{color:var(--lime)}
+.foot-bottom{margin-top:50px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
+
+/* ---------- Modal réservation ---------- */
+.modal{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(15,21,18,.55);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
+.modal.open{opacity:1;pointer-events:auto}
+.sheet{width:min(860px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--card);border-radius:30px;display:grid;grid-template-columns:1fr 1fr;transform:translateY(30px) scale(.97);transition:transform .45s var(--ease)}
+.modal.open .sheet{transform:none}
+.sheet .p-thumb{border-radius:30px 0 0 30px;aspect-ratio:auto;min-height:100%;font-size:130px}
+.sheet-body{padding:30px;position:relative}
+.close{position:absolute;right:16px;top:16px;width:40px;height:40px;border-radius:50%;border:0;background:var(--paper);cursor:pointer;font-size:18px}
+.sheet h3{font-size:32px;margin:8px 0 6px;padding-right:40px}
+.owner{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);margin:14px 0}
+.owner .av{width:36px;height:36px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;color:var(--ink)}
+.dates{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.quote{background:var(--paper);border-radius:var(--r-sm);padding:16px;display:grid;gap:8px;font-size:14px}
+.quote div{display:flex;justify-content:space-between}
+.quote .tot{border-top:1px solid var(--line);padding-top:10px;font-weight:700;font-size:17px}
+.sheet .btn{width:100%;justify-content:center;margin-top:16px}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:24px;z-index:90;transform:translate(-50%,150%);background:var(--ink);color:var(--paper);padding:14px 22px;border-radius:999px;font-weight:500;transition:transform .5s var(--ease);max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+
+/* ---------- Animations ---------- */
+@keyframes rise{to{transform:none}}
+@keyframes grow{to{transform:scaleX(1)}}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -16px}}
+@keyframes morph{0%,100%{border-radius:42% 58% 55% 45%/50% 40% 60% 50%}50%{border-radius:58% 42% 40% 60%/40% 60% 40% 60%}}
+@keyframes scroll{to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}50%{opacity:1}100%{opacity:0;transform:translate(20px,-30px)}}
+@keyframes ride{0%,100%{transform:translateX(-14px) rotate(-3deg)}50%{transform:translateX(14px) rotate(3deg)}}
+@keyframes pop{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes orbit{from{transform:rotate(0) translateX(min(42vw,520px)) rotate(0)}to{transform:rotate(360deg) translateX(min(42vw,520px)) rotate(-360deg)}}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1024px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .trust-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:860px){
+  .nav-links,.nav .btn{display:none}
+  .burger{display:block}
+  .hero{padding-top:120px}
+  .hero-grid,.story-grid,.list-grid{grid-template-columns:1fr}
+  .hero-visual{height:420px}
+  .float-card{width:180px}.float-card .thumb{height:110px;font-size:50px}
+  .story-sticky{top:80px;height:300px;z-index:1}
+  .stage .big{font-size:90px}
+  .steps-col{padding:0}
+  .step{min-height:55vh}
+  .how-grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .side{position:static}
+  .foot{grid-template-columns:1fr 1fr}
+  .sheet{grid-template-columns:1fr}
+  .sheet .p-thumb{border-radius:30px 30px 0 0;min-height:200px;font-size:100px}
+  section{padding:80px 0}
+}
+@media (max-width:520px){
+  .form{grid-template-columns:1fr;padding:20px}
+  .trust-grid{grid-template-columns:1fr}
+  .p-body h4{font-size:16px}
+  .p-meta{flex-direction:column;gap:2px}
+  .p-thumb{font-size:56px}
+  .tabs button{padding:10px 14px;font-size:14px}
+  .foot{grid-template-columns:1fr}
+  .hero-visual{height:380px}
+  .fc2{right:-10px}
+  .badge-circle{display:none}.badge-core{display:none}
+  .commission{padding:24px}
+  .dates{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="logo"><span class="logo-mark"><span></span></span>Location Ferro</a>
+    <nav class="nav-links">
+      <a href="#marketplace">Marketplace</a>
+      <a href="#comment">Comment ça marche</a>
+      <a href="#deposer">Mettre en location</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#deposer" class="btn btn-dark">Déposer un article <span class="arr">→</span></a>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#marketplace">Marketplace</a>
+  <a href="#comment">Comment ça marche</a>
+  <a href="#deposer">Mettre en location</a>
+  <a href="#faq">FAQ</a>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Location d'équipements sportifs entre particuliers</span>
+      <h1>
+        <span class="line"><span>Libérez</span></span>
+        <span class="line"><span>vos <span class="hl">équipements.</span></span></span>
+      </h1>
+      <p class="hero-sub">Votre <span class="rotator" id="rotator"><span class="on">vélo</span><span>paddle</span><span>kayak</span><span>tente</span><span>snowboard</span></span> dort au garage ? <strong>Mettez-le en location</strong> et laissez-le vivre de nouvelles aventures. Besoin d'un équipement pour un week-end ? <strong>Louez-le à côté de chez vous.</strong></p>
+      <div class="hero-ctas">
+        <a href="#marketplace" class="btn btn-dark magnetic">Explorer la marketplace <span class="arr">→</span></a>
+        <a href="#deposer" class="btn btn-ghost magnetic">Mettre en location</a>
+        <a href="#film-sec" class="btn" style="padding-inline:10px">▶ Voir le film (20 s)</a>
+      </div>
+      <div class="hero-proof">
+        <div><b>0 €</b>pour publier</div>
+        <div><b>10 %</b>de commission seulement</div>
+        <div><b>1 jour</b>minimum de location</div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="blob"></div>
+      <svg class="badge-circle" viewBox="0 0 120 120"><defs><path id="c" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#c">LIBÉREZ • LOUEZ • REPARTEZ • </textPath></text></svg>
+      <div class="badge-core">↻</div>
+      <div class="float-card fc1"><div class="thumb" style="background:var(--sky)">🚴</div><h4>Vélo gravel</h4><p>Lyon <b>18 €/j</b></p></div>
+      <div class="float-card fc2"><div class="thumb" style="background:var(--lime)">🏄</div><h4>Paddle gonflable</h4><p>Biarritz <b>22 €/j</b></p></div>
+      <div class="float-card fc3"><div class="thumb" style="background:var(--sand)">⛺</div><h4>Tente 3 places</h4><p>Annecy <b>12 €/j</b></p></div>
+      <div class="live-pill"><i></i>Nouvelle réservation</div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee"></div>
+  </div>
+</section>
+
+<!-- ============ LE FILM (motion) ============ -->
+<section class="film-sec" id="film-sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Le film · 20 secondes</span><h2>D'un garage à une nouvelle vie.</h2></div>
+      <p>Alex met son vélo en location. Sam le loue, l'adore… et finit par le lui racheter.</p>
+    </div>
+
+    <div class="film rv" id="film" role="img" aria-label="Animation : Alex publie son vélo, Sam le loue, Alex est payé, Sam fait une offre d'achat acceptée">
+      <button class="film-btn" id="filmBtn" aria-label="Lecture">▶</button>
+
+      <!-- 1. Je dépose -->
+      <div class="scene s1">
+        <div class="say pop" style="--d:.1s;left:6%;top:10%">Mon vélo dort au garage… 😴</div>
+        <div class="char" data-who="alex" data-wave style="left:9%"><span class="ntag">Alex · propriétaire</span></div>
+        <div class="phone up" style="--d:.2s">
+          <div class="ph-top">Location Ferro</div>
+          <div class="ph-photo pop" style="--d:.9s"><span>🚲</span></div>
+          <div class="ph-line grow" style="--d:1.2s;width:85%"></div>
+          <div class="ph-line grow" style="--d:1.35s;width:55%"></div>
+          <div class="ph-price pop" style="--d:1.6s">18 €/jour</div>
+          <div class="ph-btn">Publier</div>
+          <div class="ph-ok pop" style="--d:2.5s"><span>✓ En ligne !</span></div>
+          <div class="flash"></div>
+        </div>
+        <div class="chip-f pop" style="--d:1.8s;left:70%;top:30%">📍 Lyon</div>
+        <div class="chip-f pop" style="--d:2s;left:72%;top:44%">🔒 Caution 300 €</div>
+        <div class="chip-f pop" style="--d:2.2s;left:69%;top:58%">⚡ Publié en 3 min</div>
+      </div>
+
+      <!-- 2. Il est loué -->
+      <div class="scene s2">
+        <div class="mcard up" style="--d:.1s">
+          <div class="m-thumb"><span>🚲</span></div>
+          <div class="m-title">Vélo gravel taille M</div>
+          <div class="m-meta">Lyon · 18 €/jour</div>
+        </div>
+        <div class="cal up" style="--d:.3s">
+          <div class="cal-h">Novembre</div>
+          <div class="cal-g" id="calGrid"></div>
+          <div class="cal-f pop" style="--d:2s">3 jours × 18 € = <b>54 €</b></div>
+        </div>
+        <div class="stamp" style="--d:1.6s;left:60%;top:56%">RÉSERVÉ</div>
+        <div class="notif pop" style="--d:1.3s">🔔 Sam a réservé 3 jours</div>
+      </div>
+
+      <!-- 3. Remise -->
+      <div class="scene s3">
+        <div class="ground"></div>
+        <div class="char" data-who="alex" style="left:10%"><span class="ntag">Alex</span></div>
+        <div class="char flip" data-who="sam" data-wave style="right:10%"><span class="ntag">Sam · locataire</span></div>
+        <div class="bike-t">🚲</div>
+        <div class="shake pop" style="--d:2.2s">🤝</div>
+        <div class="chip-f pop" style="--d:2.5s;left:50%;top:44%;translate:-50% 0">🔒 Caution bloquée, pas débitée</div>
+        <div class="say pop" style="--d:2.7s;right:8%;top:12%">Merci ! 🙌</div>
+      </div>
+
+      <!-- 4. Je suis payé -->
+      <div class="scene s4">
+        <div class="char" data-who="alex" data-wave style="left:14%"><span class="ntag">Alex</span></div>
+        <div class="coins"><i style="--d:.2s;left:58%"></i><i style="--d:.45s;left:70%"></i><i style="--d:.7s;left:64%"></i><i style="--d:.95s;left:78%"></i><i style="--d:1.2s;left:61%"></i><i style="--d:1.45s;left:74%"></i></div>
+        <div class="pay up" style="--d:.2s">
+          <div class="pay-h">💸 Paiement reçu</div>
+          <div class="pay-amt">+<span id="cnt">0</span> €</div>
+          <div class="pay-s">Versé sur votre compte</div>
+        </div>
+        <div class="pay-txt up" style="--d:1.6s">Votre vélo a travaillé<br>pour vous.</div>
+      </div>
+
+      <!-- 5. Sam profite -->
+      <div class="scene s5">
+        <div class="sun"></div>
+        <div class="cloud" style="top:14%;--d:0s"></div>
+        <div class="cloud" style="top:26%;--d:-6s;scale:.7"></div>
+        <svg class="hills" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0 60 L0 35 Q60 5 120 30 T240 25 T400 30 L400 60Z" fill="#7FC77A"/><path d="M0 60 L0 45 Q80 25 160 42 T320 38 T400 44 L400 60Z" fill="#5DB35B"/></svg>
+        <div class="road"></div>
+        <div class="title-f up" style="--d:.3s">Sam roule.<br><span>Sans avoir acheté.</span></div>
+        <div class="rider">
+          <div class="char-in" data-who="sam"></div>
+          <div class="bike">🚲</div>
+          <span class="heart" style="--d:.6s;left:10%">❤️</span>
+          <span class="heart" style="--d:1.2s;left:60%">💚</span>
+          <span class="heart" style="--d:1.8s;left:35%">❤️</span>
+        </div>
+      </div>
+
+      <!-- 6. Il l'achète -->
+      <div class="scene s6">
+        <div class="chat up" style="--d:.1s">
+          <div class="chat-h"><span>S</span> Sam · à propos de « Vélo gravel »</div>
+          <div class="b r pop" style="--d:.4s">Je l'adore 😍 Tu me le vendrais ?</div>
+          <div class="b r offer-b pop" style="--d:.9s">💰 Offre d'achat · <b>320 €</b></div>
+          <div class="b l typing"><i></i><i></i><i></i></div>
+          <div class="b l pop" style="--d:2.2s">Deal ! Il est à toi 🤝</div>
+        </div>
+        <div class="stamp sold" style="--d:2.9s;left:58%;top:58%">VENDU</div>
+        <div class="confetti" id="confetti"></div>
+      </div>
+    </div>
+
+    <div class="chapters" id="chapters"></div>
+    <div class="film-cap" id="filmCap"><h3></h3><p></p></div>
+  </div>
+</section>
+
+<!-- ============ COMMENT ÇA MARCHE ============ -->
+<section id="comment">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Comment ça marche</span><h2>Deux façons de jouer.</h2></div>
+      <p>Que vous ayez du matériel à partager ou une sortie à préparer, tout se fait en quelques clics.</p>
+    </div>
+    <div class="tabs rv" id="tabs">
+      <span class="pill"></span>
+      <button class="on" data-tab="louer">Je loue</button>
+      <button data-tab="proposer">Je mets en location</button>
+    </div>
+    <div class="how-panel on" data-panel="louer">
+      <div class="how-grid">
+        <div class="how-card rv"><span class="n">1</span><div class="ic" style="background:var(--sky)">🔎</div><h3>Trouvez</h3><p>Cherchez par sport, ville et dates. Comparez les annonces et les profils des propriétaires.</p></div>
+        <div class="how-card rv d1"><span class="n">2</span><div class="ic" style="background:var(--lime)">📅</div><h3>Réservez</h3><p>Choisissez vos dates, payez en ligne. La caution est seulement bloquée, pas débitée.</p></div>
+        <div class="how-card rv d2"><span class="n">3</span><div class="ic" style="background:var(--sand)">🏔️</div><h3>Profitez</h3><p>Récupérez le matériel, partez, rendez-le à la date prévue. La caution est libérée.</p></div>
+      </div>
+    </div>
+    <div class="how-panel" data-panel="proposer">
+      <div class="how-grid">
+        <div class="how-card"><span class="n">1</span><div class="ic" style="background:var(--coral)">📸</div><h3>Publiez</h3><p>Photos, description, prix à la journée et caution. Publier est gratuit.</p></div>
+        <div class="how-card"><span class="n">2</span><div class="ic" style="background:var(--lime)">✅</div><h3>Acceptez</h3><p>Vous recevez les demandes et choisissez à qui vous louez, et quand.</p></div>
+        <div class="how-card"><span class="n">3</span><div class="ic" style="background:var(--sky)">💸</div><h3>Encaissez</h3><p>Vous êtes payé après la remise du matériel. Location Ferro ne prélève que 10 %.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKETPLACE ============ -->
+<section class="market" id="marketplace">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Marketplace</span><h2>Le matos des autres, pour vos aventures.</h2></div>
+      <p>Des équipements proposés par des particuliers, disponibles à la journée.</p>
+    </div>
+    <div class="toolbar rv">
+      <label class="search">🔍
+        <input id="q" type="search" placeholder="Vélo, paddle, ski, ville…" aria-label="Rechercher">
+        <select id="sort" aria-label="Trier">
+          <option value="recent">Plus récents</option>
+          <option value="asc">Prix croissant</option>
+          <option value="desc">Prix décroissant</option>
+        </select>
+      </label>
+    </div>
+    <div class="chips rv" id="chips"></div>
+    <div class="grid" id="grid"></div>
+    <div class="market-cta"><a href="#deposer" class="btn btn-lime magnetic">Vous aussi, libérez votre matériel <span class="arr">→</span></a></div>
+  </div>
+</section>
+
+<!-- ============ DÉPOSER ============ -->
+<section id="deposer">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Mettre en location</span><h2>Publiez en 3 minutes.</h2></div>
+      <p>Votre annonce se met à jour en direct à droite. Publier est gratuit.</p>
+    </div>
+    <div class="list-grid">
+      <form class="form rv" id="listForm">
+        <div class="field full"><label for="f-title">Titre de l'annonce</label><input id="f-title" required maxlength="60" placeholder="Ex. Vélo gravel taille M"></div>
+        <div class="field"><label for="f-cat">Catégorie</label><select id="f-cat"></select></div>
+        <div class="field"><label for="f-city">Ville</label><input id="f-city" required placeholder="Ex. Nantes"></div>
+        <div class="field"><label for="f-price">Prix par jour (€)</label><input id="f-price" type="number" min="1" step="1" value="20" required></div>
+        <div class="field"><label for="f-dep">Caution (€)</label><input id="f-dep" type="number" min="0" step="10" value="200"></div>
+        <div class="field full"><label for="f-desc">Description</label><textarea id="f-desc" placeholder="État, taille, accessoires fournis, conditions de retrait…"></textarea></div>
+        <div class="field full"><label>Photos</label><div class="drop" id="drop">📷 Cliquez pour ajouter des photos<br><small>Elles seront stockées dans Supabase Storage</small><input type="file" id="f-img" accept="image/*" hidden multiple></div></div>
+        <div class="full"><button class="btn btn-dark" type="submit" style="width:100%;justify-content:center">Publier mon annonce <span class="arr">→</span></button></div>
+      </form>
+
+      <aside class="side">
+        <span class="preview-label">Aperçu de votre annonce</span>
+        <div class="p-card" id="preview" style="animation:none"></div>
+        <div class="sim">
+          <h3>Combien ça rapporte ?</h3>
+          <p>Estimation selon le nombre de jours loués par mois.</p>
+          <input type="range" id="days" min="1" max="20" value="4" aria-label="Jours loués par mois">
+          <div class="row"><span><b id="daysLbl">4</b> jours / mois</span><span id="perDay">20 €/jour</span></div>
+          <div class="earn" id="earn">80 €</div>
+          <div class="row" style="margin-top:6px"><span>par mois pour vous</span><span id="earnYear">960 € / an</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONFIANCE ============ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Confiance</span><h2>Louer sereinement.</h2></div>
+    </div>
+    <div class="trust-grid">
+      <div class="trust rv"><div class="ic">🔒</div><h3>Paiement sécurisé</h3><p>Le paiement passe par la plateforme. Le propriétaire est payé une fois la location commencée.</p></div>
+      <div class="trust rv d1"><div class="ic">🛡️</div><h3>Caution bloquée</h3><p>Une empreinte bancaire est prise au moment de la réservation et libérée au retour.</p></div>
+      <div class="trust rv d2"><div class="ic">🪪</div><h3>Profils vérifiés</h3><p>Email et téléphone vérifiés, avis laissés après chaque location.</p></div>
+      <div class="trust rv d3"><div class="ic">💬</div><h3>Messagerie intégrée</h3><p>Organisez le retrait et le retour directement avec l'autre personne.</p></div>
+    </div>
+    <div class="commission rv">
+      <h3>Une seule commission, transparente, sur chaque location. Rien pour publier, rien caché.</h3>
+      <div class="pct" id="pctLbl">10%</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv" style="justify-content:center;text-align:center"><div><span class="eyebrow">FAQ</span><h2>Questions fréquentes</h2></div></div>
+    <div class="faq rv">
+      <details><summary>Combien coûte Location Ferro ?</summary><p id="faqFee">Publier une annonce est gratuit. Des frais de service de 10 % sont ajoutés au prix de chaque location, avec un minimum par réservation.</p></details>
+      <details><summary>Que se passe-t-il si le matériel est abîmé ?</summary><p>La caution fixée par le propriétaire est bloquée pendant la location. En cas de dommage constaté au retour, tout ou partie peut être retenu après échange entre les deux parties.</p></details>
+      <details><summary>Qui fixe le prix ?</summary><p>Le propriétaire choisit librement son prix à la journée et le montant de la caution.</p></details>
+      <details><summary>Comment récupère-t-on l'équipement ?</summary><p>En main propre, au lieu et à l'heure convenus avec le propriétaire via la messagerie.</p></details>
+      <details><summary>Puis-je refuser une demande de location ?</summary><p>Oui. Chaque demande doit être acceptée par le propriétaire avant d'être confirmée.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="final">
+  <span class="orbit" style="animation-delay:0s">🏀</span>
+  <span class="orbit" style="animation-delay:-6s">🎿</span>
+  <span class="orbit" style="animation-delay:-12s">🛶</span>
+  <div class="wrap rv">
+    <h2>Rien ne doit<br><em>dormir.</em></h2>
+    <div class="hero-ctas" style="margin-top:36px">
+      <a href="#marketplace" class="btn btn-dark magnetic">Louer un équipement <span class="arr">→</span></a>
+      <a href="#deposer" class="btn btn-lime magnetic">Mettre en location</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a href="#top" class="logo"><span class="logo-mark"><span></span></span>Location Ferro</a><p style="margin-top:14px;max-width:300px;font-size:14px">La marketplace de location d'équipements sportifs entre particuliers.</p></div>
+      <div><h5>Louer</h5><ul><li><a href="#marketplace">Marketplace</a></li><li><a href="#comment">Comment ça marche</a></li></ul></div>
+      <div><h5>Proposer</h5><ul><li><a href="#deposer">Déposer une annonce</a></li><li><a href="#faq">Commission</a></li></ul></div>
+      <div><h5>Infos</h5><ul><li><a href="#">CGU</a></li><li><a href="#">Mentions légales</a></li><li><a href="#">Contact</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>© <span id="yr"></span> Location Ferro</span><span>Fait pour que le matériel serve.</span></div>
+  </div>
+</footer>
+
+<!-- ============ MODAL RÉSERVATION ============ -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <div class="p-thumb" id="m-thumb"></div>
+    <div class="sheet-body">
+      <button class="close" id="m-close" aria-label="Fermer">✕</button>
+      <span class="eyebrow" id="m-cat"></span>
+      <h3 id="m-title"></h3>
+      <p id="m-desc" style="color:var(--muted)"></p>
+      <div class="owner"><span class="av" id="m-av"></span><span id="m-owner"></span></div>
+      <div class="dates">
+        <div class="field"><label for="m-start">Début</label><input type="date" id="m-start"></div>
+        <div class="field"><label for="m-end">Fin</label><input type="date" id="m-end"></div>
+      </div>
+      <div class="quote" id="m-quote"></div>
+      <button class="btn btn-dark" id="m-book">Demander à réserver <span class="arr">→</span></button>
+      <button class="btn btn-ghost" id="m-offer-toggle">💰 Proposer de l'acheter</button>
+      <div id="m-offer" hidden style="margin-top:14px;padding:16px;border-radius:14px;background:var(--paper)">
+        <div class="field"><label for="m-offer-amt">Votre offre (€)</label><input type="number" id="m-offer-amt" min="1" step="5"></div>
+        <p id="m-offer-info" style="font-size:13px;color:var(--muted);margin-top:8px"></p>
+        <button class="btn btn-lime" id="m-offer-send">Envoyer l'offre <span class="arr">→</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
+const CONFIG = {
+  COMMISSION_RATE: 0.10,   // 10 % appliqués à chaque location
+  COMMISSION_MIN: 2,       // plancher en € par réservation (mettre 0 pour le désactiver)
+  CURRENCY: "€",
+  // SUPABASE_URL: "https://xxxx.supabase.co",
+  // SUPABASE_ANON_KEY: "ey...",
+};
+// const supabase = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+
+/* Catégories : correspondra à la table `categories` */
+const CATEGORIES = [
+  {slug:"velo", label:"Vélo", icon:"🚴", color:"var(--sky)"},
+  {slug:"glisse-eau", label:"Paddle & surf", icon:"🏄", color:"var(--lime)"},
+  {slug:"kayak", label:"Kayak", icon:"🛶", color:"#BDE7D8"},
+  {slug:"montagne", label:"Ski & snow", icon:"🎿", color:"#E3E8FF"},
+  {slug:"camping", label:"Camping", icon:"⛺", color:"var(--sand)"},
+  {slug:"raquette", label:"Raquettes", icon:"🎾", color:"#FFE08A"},
+  {slug:"fitness", label:"Fitness", icon:"🏋️", color:"#FFC9BB"},
+  {slug:"escalade", label:"Escalade", icon:"🧗", color:"#D9C8FF"},
+];
+
+/* Données de démo : même forme que la table `listings` de Supabase */
+let LISTINGS = [
+  {id:1, title:"Vélo gravel carbone taille M", category:"velo", price_per_day:25, deposit:400, city:"Lyon", owner:"Julien", description:"Groupe Shimano GRX, pneus 40 mm, casque fourni.", created_at:"2026-11-09"},
+  {id:2, title:"Paddle gonflable 10'6 + pagaie", category:"glisse-eau", price_per_day:22, deposit:200, city:"Biarritz", owner:"Léa", description:"Gilet, leash et sac de transport inclus.", created_at:"2026-11-08"},
+  {id:3, title:"Kayak biplace sit-on-top", category:"kayak", price_per_day:30, deposit:300, city:"Annecy", owner:"Marc", description:"Deux pagaies, bidon étanche. Galerie de toit possible.", created_at:"2026-11-07"},
+  {id:4, title:"Snowboard 156 + fixations", category:"montagne", price_per_day:18, deposit:250, city:"Grenoble", owner:"Inès", description:"Fart récent, idéal all-mountain.", created_at:"2026-11-10"},
+  {id:5, title:"Tente 3 places ultra-légère", category:"camping", price_per_day:12, deposit:150, city:"Annecy", owner:"Tom", description:"1,9 kg, montage en 5 minutes.", created_at:"2026-11-05"},
+  {id:6, title:"Raquettes de padel (x2) + balles", category:"raquette", price_per_day:8, deposit:80, city:"Paris", owner:"Sarah", description:"Parfait pour tester le padel avant d'acheter.", created_at:"2026-11-06"},
+  {id:7, title:"VTT électrique tout suspendu", category:"velo", price_per_day:45, deposit:800, city:"Chambéry", owner:"Hugo", description:"Batterie 625 Wh, autonomie journée.", created_at:"2026-11-04"},
+  {id:8, title:"Kit d'escalade complet", category:"escalade", price_per_day:15, deposit:150, city:"Fontainebleau", owner:"Nora", description:"Baudrier, chaussons 41, crash pad.", created_at:"2026-11-03"},
+  {id:9, title:"Skis de rando + peaux", category:"montagne", price_per_day:28, deposit:350, city:"Chamonix", owner:"Paul", description:"Fixations Dynafit, peaux neuves.", created_at:"2026-11-02"},
+  {id:10, title:"Rameur à air", category:"fitness", price_per_day:10, deposit:200, city:"Bordeaux", owner:"Emma", description:"Pliable, livraison possible dans Bordeaux.", created_at:"2026-11-01"},
+  {id:11, title:"Planche de surf 7'2 mousse", category:"glisse-eau", price_per_day:15, deposit:120, city:"Hossegor", owner:"Lucas", description:"Idéale débutant, combinaison M en option.", created_at:"2026-10-30"},
+  {id:12, title:"Réchaud + popote 2 personnes", category:"camping", price_per_day:5, deposit:40, city:"Marseille", owner:"Chloé", description:"Cartouche de gaz non fournie.", created_at:"2026-10-29"},
+];
+
+/* =========================================================
+   CALCUL DU PRIX & COMMISSION
+   En production, refaire ce calcul côté serveur (fonction Supabase)
+   ========================================================= */
+const eur = n => (Math.round(n*100)/100).toLocaleString("fr-FR",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2})+" "+CONFIG.CURRENCY;
+function computeQuote(pricePerDay, days){
+  const subtotal = pricePerDay * days;
+  const fee = Math.max(subtotal * CONFIG.COMMISSION_RATE, CONFIG.COMMISSION_MIN);
+  return {days, subtotal, fee, total: subtotal + fee, ownerPayout: subtotal};
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const cat = slug => CATEGORIES.find(c=>c.slug===slug) || CATEGORIES[0];
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2800)}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+$("#yr").textContent = new Date().getFullYear();
+let lastY = 0;
+addEventListener("scroll",()=>{const y=scrollY;$("#nav").classList.toggle("hide",y>lastY&&y>200&&!$("#mobileMenu").classList.contains("open"));lastY=y},{passive:true});
+$("#burger").addEventListener("click",()=>{$("#burger").classList.toggle("open");$("#mobileMenu").classList.toggle("open")});
+$$("#mobileMenu a").forEach(a=>a.addEventListener("click",()=>{$("#burger").classList.remove("open");$("#mobileMenu").classList.remove("open")}));
+
+/* Mots qui tournent */
+(()=>{const w=$$("#rotator span");let i=0;setInterval(()=>{w[i].classList.remove("on");w[i].classList.add("out");const p=w[i];setTimeout(()=>p.classList.remove("out"),650);i=(i+1)%w.length;w[i].classList.add("on")},2200)})();
+
+/* Marquee */
+(()=>{const words=["Vélo","Paddle","Ski","Kayak","Tente","Padel","Escalade","Surf","Snowboard","Rameur"];const html=words.map(w=>`<span>${w}</span>`).join("");$("#marquee").innerHTML=html+html})();
+
+/* Boutons magnétiques (desktop) */
+if(matchMedia("(hover:hover)").matches){
+  $$(".magnetic").forEach(b=>{
+    b.addEventListener("mousemove",e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.3}px)`});
+    b.addEventListener("mouseleave",()=>b.style.transform="");
+  });
+}
+
+/* Révélation au scroll */
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.15});
+$$(".rv").forEach(el=>io.observe(el));
+
+/* Story : étapes qui pilotent la scène */
+const stepIO = new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){const n=e.target.dataset.step;
+    $$(".step").forEach(s=>s.classList.toggle("on",s.dataset.step===n));
+    $$(".stage").forEach(s=>s.classList.toggle("on",s.dataset.stage===n));}
+}),{rootMargin:"-45% 0px -45% 0px"});
+$$(".step").forEach(s=>stepIO.observe(s));
+
+/* Onglets */
+function movePill(btn){const p=$("#tabs .pill");p.style.width=btn.offsetWidth+"px";p.style.transform=`translateX(${btn.offsetLeft-6}px)`}
+$$("#tabs button").forEach(b=>b.addEventListener("click",()=>{
+  $$("#tabs button").forEach(x=>x.classList.toggle("on",x===b));movePill(b);
+  $$(".how-panel").forEach(p=>p.classList.toggle("on",p.dataset.panel===b.dataset.tab));
+}));
+addEventListener("load",()=>movePill($("#tabs button.on")));
+addEventListener("resize",()=>movePill($("#tabs button.on")));
+
+/* =========================================================
+   MARKETPLACE
+   ========================================================= */
+let state = {cat:"all", q:"", sort:"recent"};
+$("#chips").innerHTML = `<button class="chip on" data-cat="all">Tout</button>` + CATEGORIES.map(c=>`<button class="chip" data-cat="${c.slug}">${c.icon} ${c.label}</button>`).join("");
+$("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;state.cat=b.dataset.cat;$$(".chip").forEach(c=>c.classList.toggle("on",c===b));render()});
+$("#q").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render()});
+$("#sort").addEventListener("change",e=>{state.sort=e.target.value;render()});
+
+function cardHTML(l){
+  const c=cat(l.category);
+  return `<article class="p-card" data-id="${l.id}" tabindex="0">
+    <div class="p-thumb" style="background:${c.color}">
+      ${l.image_url?`<img src="${esc(l.image_url)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`:`<span class="em">${c.icon}</span>`}
+      <span class="tag">${c.label}</span>
+      <button class="fav" aria-label="Ajouter aux favoris" data-fav>♡</button>
+    </div>
+    <div class="p-body"><h4>${esc(l.title)}</h4>
+      <div class="p-meta"><span>📍 ${esc(l.city)}</span><span><b>${eur(l.price_per_day)}</b> / jour</span></div>
+    </div></article>`;
+}
+function render(){
+  /* Version Supabase :
+     let q = supabase.from("listings").select("*, categories(slug,label), profiles(first_name)").eq("status","active");
+     if(state.cat!=="all") q = q.eq("categories.slug", state.cat);
+     if(state.q) q = q.or(`title.ilike.%${state.q}%,city.ilike.%${state.q}%`);
+     const {data} = await q.order(...);
+  */
+  let list = LISTINGS.filter(l=>(state.cat==="all"||l.category===state.cat) && (!state.q||(l.title+" "+l.city).toLowerCase().includes(state.q)));
+  if(state.sort==="asc") list.sort((a,b)=>a.price_per_day-b.price_per_day);
+  else if(state.sort==="desc") list.sort((a,b)=>b.price_per_day-a.price_per_day);
+  else list.sort((a,b)=>b.created_at.localeCompare(a.created_at));
+  $("#grid").innerHTML = list.length ? list.map((l,i)=>cardHTML(l).replace('class="p-card"',`class="p-card" style="animation-delay:${i*45}ms"`)).join("") : `<div class="empty">Aucun équipement ne correspond. Et si vous étiez le premier à en proposer un ?</div>`;
+}
+$("#grid").addEventListener("click",e=>{
+  if(e.target.closest("[data-fav]")){const f=e.target.closest("[data-fav]");f.textContent=f.textContent==="♡"?"♥":"♡";f.style.color=f.textContent==="♥"?"var(--coral)":"";e.stopPropagation();return}
+  const c=e.target.closest(".p-card");if(c) openModal(+c.dataset.id);
+});
+$("#grid").addEventListener("keydown",e=>{if(e.key==="Enter"){const c=e.target.closest(".p-card");if(c)openModal(+c.dataset.id)}});
+render();
+
+/* =========================================================
+   MODAL RÉSERVATION
+   ========================================================= */
+let current=null;
+const iso = d => d.toISOString().slice(0,10);
+function openModal(id){
+  current = LISTINGS.find(l=>l.id===id); if(!current) return;
+  const c=cat(current.category);
+  $("#m-thumb").style.background=c.color;
+  $("#m-thumb").innerHTML=current.image_url?`<img src="${esc(current.image_url)}" alt="" style="width:100%;height:100%;object-fit:cover">`:c.icon;
+  $("#m-cat").textContent=c.label+" · "+current.city;
+  $("#m-title").textContent=current.title;
+  $("#m-desc").textContent=current.description||"";
+  $("#m-av").textContent=(current.owner||"?")[0];
+  $("#m-owner").textContent=`Proposé par ${current.owner||"un membre"} · caution ${eur(current.deposit||0)}`;
+  const t=new Date();t.setDate(t.getDate()+1);const e=new Date(t);e.setDate(e.getDate()+2);
+  $("#m-start").min=iso(new Date());$("#m-start").value=iso(t);$("#m-end").value=iso(e);$("#m-end").min=iso(t);
+  updateQuote();
+  $("#m-offer").hidden=true;
+  $("#modal").classList.add("open");$("#modal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+}
+function closeModal(){$("#modal").classList.remove("open");$("#modal").setAttribute("aria-hidden","true");document.body.style.overflow=""}
+function rentalDays(){const s=new Date($("#m-start").value),e=new Date($("#m-end").value);return Math.max(1,Math.round((e-s)/864e5)+1)}
+function updateQuote(){
+  if(!current) return;
+  $("#m-end").min=$("#m-start").value;
+  if($("#m-end").value<$("#m-start").value) $("#m-end").value=$("#m-start").value;
+  const q=computeQuote(current.price_per_day,rentalDays());
+  $("#m-quote").innerHTML=`<div><span>${eur(current.price_per_day)} × ${q.days} jour${q.days>1?"s":""}</span><span>${eur(q.subtotal)}</span></div>
+    <div><span>Frais de service (${Math.round(CONFIG.COMMISSION_RATE*100)} %${q.fee===CONFIG.COMMISSION_MIN&&q.subtotal*CONFIG.COMMISSION_RATE<CONFIG.COMMISSION_MIN?", minimum":""})</span><span>${eur(q.fee)}</span></div>
+    <div class="tot"><span>Total</span><span>${eur(q.total)}</span></div>
+    <div style="color:var(--muted);font-size:13px"><span>Caution bloquée, non débitée</span><span>${eur(current.deposit||0)}</span></div>`;
+}
+$("#m-start").addEventListener("change",updateQuote);
+$("#m-end").addEventListener("change",updateQuote);
+$("#m-close").addEventListener("click",closeModal);
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+$("#m-book").addEventListener("click",async()=>{
+  const q=computeQuote(current.price_per_day,rentalDays());
+  /* Version Supabase :
+     await supabase.from("bookings").insert({listing_id:current.id, start_date:$("#m-start").value, end_date:$("#m-end").value, status:"pending"});
+     (montants et commission recalculés côté serveur)
+  */
+  closeModal();toast(`Demande envoyée à ${current.owner} · total ${eur(q.total)}`);
+});
+
+/* =========================================================
+   FORMULAIRE DE DÉPÔT + SIMULATEUR
+   ========================================================= */
+$("#f-cat").innerHTML=CATEGORIES.map(c=>`<option value="${c.slug}">${c.icon} ${c.label}</option>`).join("");
+let previewImg=null;
+$("#drop").addEventListener("click",()=>$("#f-img").click());
+$("#f-img").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;
+  previewImg=URL.createObjectURL(f);
+  $("#drop").firstChild.textContent=`📷 ${e.target.files.length} photo(s) ajoutée(s)`;
+  updatePreview();
+});
+function formData(){return{
+  id:Date.now(), title:$("#f-title").value.trim()||"Votre équipement", category:$("#f-cat").value,
+  city:$("#f-city").value.trim()||"Votre ville", price_per_day:Math.max(1,+$("#f-price").value||0),
+  deposit:+$("#f-dep").value||0, description:$("#f-desc").value.trim(), owner:"Vous",
+  image_url:previewImg, created_at:iso(new Date())+"T"+Date.now()
+}}
+function updatePreview(){
+  const d=formData();
+  $("#preview").innerHTML=cardHTML(d).replace(/^<article[^>]*>|<\/article>$/g,"");
+  const days=+$("#days").value, earn=d.price_per_day*days;
+  $("#daysLbl").textContent=days;$("#perDay").textContent=eur(d.price_per_day)+"/jour";
+  $("#earn").textContent=eur(earn);$("#earnYear").textContent=eur(earn*12)+" / an";
+}
+["#f-title","#f-cat","#f-city","#f-price","#f-dep","#days"].forEach(s=>$(s).addEventListener("input",updatePreview));
+updatePreview();
+$("#listForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const d=formData();
+  /* Version Supabase :
+     1. upload photos : supabase.storage.from("listing-images").upload(`${user.id}/${Date.now()}.jpg`, file)
+     2. insert : supabase.from("listings").insert({owner_id:user.id, title, category_id, price_per_day_cents, deposit_cents, city, description, status:"active"})
+  */
+  LISTINGS.unshift(d);
+  state.cat="all";$$(".chip").forEach(c=>c.classList.toggle("on",c.dataset.cat==="all"));
+  render();e.target.reset();previewImg=null;$("#drop").firstChild.textContent="📷 Cliquez pour ajouter des photos";updatePreview();
+  toast("Annonce publiée 🎉 Elle apparaît dans la marketplace.");
+  setTimeout(()=>$("#marketplace").scrollIntoView({behavior:"smooth"}),600);
+});
+
+/* =========================================================
+   LE FILM : 6 scènes enchaînées, lecture auto quand visible
+   ========================================================= */
+(()=>{
+  const film=$("#film"); if(!film) return;
+  const scenes=$$("#film .scene");
+  const CH=[
+    {t:"Je dépose", h:"Je dépose mon article", d:"Alex publie son vélo qui dormait au garage. Photo, prix à la journée, caution : en ligne en 3 minutes.", ms:3800},
+    {t:"Il est loué", h:"Il est loué", d:"Sam réserve 3 jours. Le calendrier se remplit, la réservation est confirmée.", ms:3600},
+    {t:"Remise", h:"Remise en main propre", d:"Alex et Sam se retrouvent. La caution est bloquée, pas débitée.", ms:3800},
+    {t:"Je suis payé", h:"Je récupère ma thune", d:"Alex reçoit 54 € pour un vélo qui ne lui servait pas.", ms:3600},
+    {t:"Sam profite", h:"Sam profite", d:"Sam roule sans avoir eu à acheter un vélo neuf.", ms:3600},
+    {t:"Il l'achète", h:"Et s'il l'achetait ?", d:"Conquis, Sam fait une offre d'achat depuis la messagerie. Alex accepte : le vélo change de maison.", ms:4800},
+  ];
+  const person=(shirt,skin,hair,wave)=>`<svg viewBox="0 0 100 170" aria-hidden="true">
+    <path d="M18 170 Q18 100 50 100 Q82 100 82 170Z" fill="${shirt}"/>
+    ${wave?`<path class="wave" d="M76 118 Q96 104 92 80" stroke="${shirt}" stroke-width="13" stroke-linecap="round" fill="none"/><circle class="wave" cx="92" cy="78" r="7" fill="${skin}"/>`:""}
+    <rect x="43" y="82" width="14" height="20" rx="6" fill="${skin}"/>
+    <circle cx="50" cy="62" r="25" fill="${skin}"/>
+    <path d="M25 60 Q24 34 50 34 Q77 34 75 60 Q70 46 52 46 Q36 46 25 60Z" fill="${hair}"/>
+    <circle cx="41" cy="64" r="2.8" fill="#0F1512"/><circle cx="59" cy="64" r="2.8" fill="#0F1512"/>
+    <path d="M41 73 Q50 82 59 73" stroke="#0F1512" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+  $$("#film [data-who]").forEach(el=>{
+    const alex=el.dataset.who==="alex";
+    el.insertAdjacentHTML("beforeend", alex ? person("#FF6B4A","#F1C7A5","#2B1D14",el.hasAttribute("data-wave")) : person("#2F6FED","#C68B62","#161616",el.hasAttribute("data-wave")));
+  });
+  // calendrier
+  $("#calGrid").innerHTML=Array.from({length:14},(_,k)=>{const d=10+k,b=[14,15,16].indexOf(d);return `<span class="${b>-1?"bk":""}" style="${b>-1?`--d:${.6+b*.25}s`:""}">${d}</span>`}).join("");
+  // confettis
+  const cols=["#C9F23B","#FF6B4A","#9DD4FF","#F2D9A8","#2F6FED"];
+  $("#confetti").innerHTML=Array.from({length:22},(_,k)=>`<i style="left:${Math.random()*100}%;background:${cols[k%5]};--d:${(2.9+Math.random()*.5).toFixed(2)}s"></i>`).join("");
+  // chapitres
+  $("#chapters").innerHTML=CH.map((c,k)=>`<button data-i="${k}" aria-label="${c.h}"><span class="bar"><i></i></span><span class="lbl"><b>0${k+1}</b><span class="t">${c.t}</span></span></button>`).join("");
+  const btns=$$("#chapters button");
+  let i=0, el=0, playing=false, userPaused=false, last=0;
+  function count(){const c=$("#cnt"),t0=performance.now();(function f(t){const p=Math.min(1,Math.max(0,(t-t0-500)/1100));c.textContent=Math.round(54*(1-Math.pow(1-p,3)));if(p<1&&i===3)requestAnimationFrame(f)})(t0)}
+  function show(n){
+    i=n; el=0;
+    scenes.forEach(s=>s.classList.remove("on")); void film.offsetWidth; scenes[n].classList.add("on");
+    btns.forEach((b,k)=>{b.classList.toggle("on",k===n);b.querySelector("i").style.width=k<n?"100%":"0%"});
+    const cap=$("#filmCap");cap.querySelector("h3").textContent=CH[n].h;cap.querySelector("p").textContent=CH[n].d;
+    cap.classList.remove("swap");void cap.offsetWidth;cap.classList.add("swap");
+    if(n===3){$("#cnt").textContent="0";count()}
+  }
+  function setPlay(p){playing=p;film.classList.toggle("paused",!p);$("#filmBtn").textContent=p?"❚❚":"▶";$("#filmBtn").setAttribute("aria-label",p?"Pause":"Lecture")}
+  function tick(t){
+    const dt=last?Math.min(t-last,100):0; last=t;
+    if(playing){el+=dt;btns[i].querySelector("i").style.width=Math.min(100,el/CH[i].ms*100)+"%";if(el>=CH[i].ms)show((i+1)%scenes.length)}
+    requestAnimationFrame(tick);
+  }
+  film.addEventListener("click",()=>{userPaused=playing;setPlay(!playing)});
+  btns.forEach(b=>b.addEventListener("click",()=>{show(+b.dataset.i);userPaused=false;setPlay(true)}));
+  new IntersectionObserver(([e])=>{if(e.isIntersecting&&!userPaused)setPlay(true);else if(!e.isIntersecting)setPlay(false)},{threshold:.35}).observe(film);
+  show(0); setPlay(false); requestAnimationFrame(tick);
+})();
+
+/* =========================================================
+   OFFRE D'ACHAT (fiche produit)
+   ========================================================= */
+function offerInfo(){
+  const amt=Math.max(1,+$("#m-offer-amt").value||0);
+  const fee=Math.max(amt*CONFIG.COMMISSION_RATE,CONFIG.COMMISSION_MIN);
+  $("#m-offer-info").textContent=`Si ${current.owner||"le propriétaire"} accepte : ${eur(amt+fee)} au total, dont ${eur(fee)} de frais de service (${Math.round(CONFIG.COMMISSION_RATE*100)} %).`;
+}
+$("#m-offer-toggle").addEventListener("click",()=>{
+  const box=$("#m-offer");box.hidden=!box.hidden;
+  if(!box.hidden){$("#m-offer-amt").value=Math.round(current.price_per_day*15/5)*5;offerInfo();$("#m-offer-amt").focus()}
+});
+$("#m-offer-amt").addEventListener("input",offerInfo);
+$("#m-offer-send").addEventListener("click",()=>{
+  const amt=Math.max(1,+$("#m-offer-amt").value||0);
+  /* Version Supabase :
+     await supabase.from("purchase_offers").insert({listing_id:current.id, buyer_id:user.id, amount_cents:amt*100, status:"pending"});
+  */
+  closeModal();toast(`Offre de ${eur(amt)} envoyée à ${current.owner} 💰`);
+});
+
+/* Textes liés à la config */
+$("#pctLbl").textContent=Math.round(CONFIG.COMMISSION_RATE*100)+"%";
+$("#faqFee").textContent=`Publier une annonce est gratuit. Des frais de service de ${Math.round(CONFIG.COMMISSION_RATE*100)} % sont ajoutés au prix de chaque location${CONFIG.COMMISSION_MIN?`, avec un minimum de ${eur(CONFIG.COMMISSION_MIN)} par réservation`:""}. Le propriétaire touche 100 % du prix qu'il a fixé.`;
+</script>
+</body>
+</html>
