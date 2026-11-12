@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Spoloc — Location de matériel de sport entre particuliers</title>
-<meta name="description" content="Louez le matériel de sport de vos voisins, dès une demi-journée. Paiement, caution et remise protégés. Paris et petite couronne.">
+<meta name="description" content="Louez le matériel de sport de vos voisins, de 5 h à 30 jours. Paiement, caution et remise protégés. Paris et petite couronne.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230F1512'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23D35F2A' stroke='%23F3F1EA' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,6 +67,7 @@ section{padding:80px 0}
 /* LOUER */
 .hero{padding:56px 0 30px}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero-solo{max-width:860px}
 .hero h1{font-size:clamp(44px,6.4vw,88px);font-weight:800;margin:16px 0 18px}
 .hero h1 em{font-style:normal;color:var(--accent)}
 .sub{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:540px}
@@ -181,6 +182,14 @@ section{padding:80px 0}
 
 /* QUI SOMMES-NOUS */
 .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;padding-top:56px}
+.founders{background:var(--ink);color:var(--paper);border-radius:30px;padding:30px;display:grid;gap:16px}
+.fd{display:flex;align-items:center;gap:14px}
+.fd .ph{width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px;flex:none}
+.fd b{display:block;font-family:var(--display);font-size:22px}
+.fd span{color:#B9C0BC;font-size:14px}
+.founders p{color:#B9C0BC;margin-top:4px}
+.btn-ghost-l{border:1.5px solid rgba(255,255,255,.22);color:var(--paper);justify-self:start}
+.btn-ghost-l:hover{border-color:var(--paper)}
 .founder{background:var(--ink);color:var(--paper);border-radius:30px;padding:34px}
 .founder .ph{width:96px;height:96px;border-radius:50%;background:var(--paper);display:grid;place-items:center;color:var(--ink);font-family:var(--display);font-weight:800;font-size:36px;margin-bottom:18px}
 .founder h3{font-size:30px}
@@ -327,34 +336,22 @@ footer a:hover{color:var(--soft)}
 <!-- ======================= LOUER ======================= -->
 <div class="view" id="v-louer" hidden>
   <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
+    <div class="wrap">
+      <div class="hero-solo">
         <span class="eyebrow">Paris et petite couronne</span>
-        <h1>Le matos de sport de vos voisins, <em>dès une demi-journée.</em></h1>
-        <p class="sub">Paddle, tente, crash pad, vélo de voyage : louez ce qu'il vous faut pour le week-end, sans l'acheter. Paiement, caution et remise protégés.</p>
+        <h1>Louez le matériel de sport <em>de vos voisins.</em></h1>
+        <p class="sub">De 5 h à 30 jours. Paiement, caution et remise sécurisés.</p>
         <form class="search" id="search" role="search">
-          <div class="s-box s-q"><label for="q">Quoi&nbsp;?</label><input id="q" placeholder="Paddle, tente, marque…" autocomplete="off"></div>
+          <div class="s-box s-q"><label for="q">Quoi&nbsp;?</label><input id="q" placeholder="Paddle, tente, raquette, marque…" autocomplete="off"></div>
           <div class="s-box"><label for="d1">Du</label><input id="d1" type="date"></div>
           <div class="s-box"><label for="d2">Au</label><input id="d2" type="date"></div>
           <button class="btn btn-dark s-go" type="submit" style="min-height:56px;border-radius:15px"><svg class="i"><use href="#i-search"/></svg>Chercher</button>
         </form>
         <div class="trust">
-          <span><svg class="i"><use href="#i-clock"/></svg>Dès une demi-journée</span>
+          <span><svg class="i"><use href="#i-clock"/></svg>Dès 5 h</span>
           <span><svg class="i"><use href="#i-lock"/></svg>Paiement et caution sécurisés</span>
-          <span><svg class="i"><use href="#i-key"/></svg>Remise prouvée</span>
-          <span><svg class="i"><use href="#i-tag"/></svg>Rachetable si coup de cœur</span>
+          <span><svg class="i"><use href="#i-key"/></svg>Remise avec code et signatures</span>
         </div>
-      </div>
-      <div class="mock" aria-hidden="true">
-        <div class="m-card m-half"><i></i>Après-midi · 13 h – 20 h</div>
-        <div class="m-card m-main">
-          <div class="ph" id="mockPic"></div>
-          <h4>Paddle gonflable 10'6</h4>
-          <div class="m-tags"><span>Très bon état</span><span class="ok">✓ Marque vérifiée</span><span>Rachetable</span></div>
-          <div class="meta"><span>Paris 15e · 10,5 kg</span><span><b>20 €</b> / jour</span></div>
-        </div>
-        <div class="m-card m-code"><small>Code de retrait</small><b>4821</b></div>
-        <div class="m-card m-dep"><span class="ic"><svg class="i"><use href="#i-lock"/></svg></span><div><b>Caution = valeur de l'objet</b><span>450 € bloqués, jamais débités</span></div></div>
       </div>
     </div>
   </section>
@@ -369,23 +366,12 @@ footer a:hover{color:var(--soft)}
 
   <section style="padding-top:20px">
     <div class="wrap">
-      <div class="sec-head rv"><div><span class="eyebrow">Comment ça marche</span><h2>Quatre étapes, zéro mauvaise surprise.</h2></div><p>Tout se passe sur Spoloc : la demande, le paiement, la caution, la messagerie et la remise.</p></div>
+      <div class="sec-head rv"><div><span class="eyebrow">Comment ça marche</span><h2>Louer en 4 étapes.</h2></div><p>Tout se passe sur Spoloc : la demande, le paiement, la caution, les messages et la remise.</p></div>
       <div class="steps">
-        <div class="step rv"><span class="n">1</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-search"/></svg></div><h3>Trouvez</h3><p>Par sport, dates et quartier. État, marque, dimensions et poids sur chaque fiche.</p></div>
-        <div class="step rv d1"><span class="n">2</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-cal"/></svg></div><h3>Demandez</h3><p>Une demi-journée, un week-end ou jusqu'à 30 jours. Le propriétaire accepte, vous payez en ligne.</p></div>
-        <div class="step rv d2"><span class="n">3</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-key"/></svg></div><h3>Récupérez</h3><p>En main propre ou livré. Photos, code à 4 chiffres et signature des deux personnes.</p></div>
-        <div class="step rv d3"><span class="n">4</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-swap"/></svg></div><h3>Rendez ou gardez</h3><p>Retour signé, caution libérée. Coup de cœur&nbsp;? Faites une offre de rachat.</p></div>
-      </div>
-    </div>
-  </section>
-  <section style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head rv"><div><span class="eyebrow">Option rachat</span><h2>Essayez, puis gardez-le.</h2></div><p>Sur les annonces « Rachetable », vous pouvez faire une offre pendant ou après votre location. Personne ne vend ni n'achète par erreur.</p></div>
-      <div class="steps">
-        <div class="step rv"><span class="n">1</span><h3>Offre</h3><p>Pendant ou après la location, depuis la fiche de l'objet.</p></div>
-        <div class="step rv d1"><span class="n">2</span><h3>Double accord du vendeur</h3><p>Il accepte, puis confirme une seconde fois que la vente est définitive.</p></div>
-        <div class="step rv d2"><span class="n">3</span><h3>Votre confirmation</h3><p>Vous confirmez l'achat. Jusqu'à la remise, chacun peut encore annuler.</p></div>
-        <div class="step rv d3"><span class="n">4</span><h3>Remise signée</h3><p>Photos, code, deux signatures. Puis 48 h pour signaler un problème.</p></div>
+        <div class="step rv"><span class="n">1</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-search"/></svg></div><h3>Trouvez</h3><p>Cherchez par sport, quartier et dates. Chaque annonce montre des photos réelles, l'état, la marque, les dimensions et le prix.</p></div>
+        <div class="step rv d1"><span class="n">2</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-cal"/></svg></div><h3>Réservez</h3><p>Quelques heures (5 h minimum), une journée ou jusqu'à 30 jours. Le propriétaire accepte, vous payez en ligne.</p></div>
+        <div class="step rv d2"><span class="n">3</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-key"/></svg></div><h3>Récupérez</h3><p>En main propre ou livré. Photos de l'état, code à 4 chiffres et signature des deux personnes.</p></div>
+        <div class="step rv d3"><span class="n">4</span><div class="ic" style="background:var(--neutral)"><svg class="i"><use href="#i-swap"/></svg></div><h3>Rendez, ou gardez</h3><p>Au retour, la caution est libérée. L'objet vous plaît&nbsp;? Si son propriétaire accepte de le vendre (badge « Rachetable »), faites-lui une offre&nbsp;: c'est lui qui décide.</p></div>
       </div>
     </div>
   </section>
@@ -419,7 +405,7 @@ footer a:hover{color:var(--soft)}
     <div class="wrap">
       <div class="sec-head rv"><div><span class="eyebrow">Vous gardez la main</span><h2>Vos règles, votre matériel.</h2></div></div>
       <div class="ctrl">
-        <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-euro"/></svg></div><h3>Vos prix</h3><p>À la journée et à la demi-journée. La caution, elle, est toujours égale à la valeur de l'objet.</p></div>
+        <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-euro"/></svg></div><h3>Vos prix</h3><p>Un prix à la journée et un prix pour 5 à 6 h. La caution, elle, est toujours égale à la valeur de l'objet.</p></div>
         <div class="ctl rv d1"><div class="ic"><svg class="i"><use href="#i-check"/></svg></div><h3>Vous acceptez</h3><p>Chaque demande vous est soumise : vous acceptez ou refusez, sans justification.</p></div>
         <div class="ctl rv d2"><div class="ic"><svg class="i"><use href="#i-camera"/></svg></div><h3>Une fiche précise</h3><p>Au moins 2 photos, l'état, la marque, les dimensions et le poids. Une preuve d'achat donne le badge « Marque vérifiée ».</p></div>
         <div class="ctl rv"><div class="ic"><svg class="i"><use href="#i-hand"/></svg></div><h3>Main propre</h3><p>Vous proposez vos créneaux et un lieu simple.</p></div>
@@ -446,24 +432,17 @@ footer a:hover{color:var(--soft)}
 <div class="view" id="v-qui" hidden>
   <section style="padding-top:0">
     <div class="wrap about">
-      <div class="founder rv">
-        <div class="ph" aria-hidden="true">F</div>
-        <h3>Félix</h3>
-        <div class="role">Fondateur de Spoloc</div>
-        <p>Le petit dernier de quatre frères, venu de la côte ouest. Alternant dans une startup parisienne depuis 2025, je construis Spoloc à côté.</p>
-        <div class="sports"><span>Raquettes</span><span>Marathon</span><span>Ski</span><span>Triathlon</span></div>
+      <div class="founders rv">
+        <div class="fd"><span class="ph" aria-hidden="true">F</span><div><b>Félix</b><span>Cofondateur</span></div></div>
+        <div class="fd"><span class="ph" aria-hidden="true">T</span><div><b>Tim</b><span>Cofondateur</span></div></div>
+        <p>Deux frères, fans de tennis depuis toujours, installés à Paris.</p>
+        <a class="btn btn-ghost-l" href="mailto:spoloc@outlook.com"><svg class="i"><use href="#i-chat"/></svg>spoloc@outlook.com</a>
       </div>
       <div class="about-t rv d1">
         <span class="eyebrow">Qui sommes-nous</span>
-        <h1>Tout est parti d'un vélo que je n'avais pas.</h1>
-        <p>Avec mes trois grands frères, on s'est inscrits au T24, un triathlon. Petit souci : je n'avais pas de vélo. En acheter un pour une seule course n'avait aucun sens, alors j'ai cherché à en louer un près de chez moi. Rien de simple, rien de rassurant.</p>
-        <p>Pourtant, à Paris, des vélos, des paddles, des raquettes et des skis dorment dans les caves et les placards. <strong>Spoloc les remet en circulation</strong>, entre voisins, pour une demi-journée ou un mois. Le propriétaire gagne un peu d'argent, le sportif part s'entraîner sans tout acheter.</p>
-        <p>Je m'en occupe comme d'une course : bien préparé, et jusqu'au bout. Une question, une idée ? <a href="mailto:spoloc@outlook.com">spoloc@outlook.com</a></p>
-        <div class="values">
-          <div class="value"><b>Passionné</b><span>Le sport, c'est ce qui me fait lever le matin.</span></div>
-          <div class="value"><b>Pro</b><span>Paiement, caution, photos et double signature à chaque remise.</span></div>
-          <div class="value"><b>Cool</b><span>Pas de prise de tête : on loue, on rend, on se dit merci.</span></div>
-        </div>
+        <h1>Deux frères, une idée simple.</h1>
+        <p>En nous inscrivant au T24, un triathlon, il nous manquait un vélo. En acheter un pour une seule course n'avait pas de sens, et en louer un à un particulier était compliqué.</p>
+        <p>Spoloc est né de là&nbsp;: <strong>louer le matériel de sport qui dort chez vos voisins</strong>, de 5 h à 30 jours, avec un paiement, une caution et une remise sécurisés.</p>
       </div>
     </div>
   </section>
@@ -500,20 +479,6 @@ footer a:hover{color:var(--soft)}
       </div>
     </div>
   </section>
-  <section style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head rv" style="justify-content:center;text-align:center"><div><span class="eyebrow">Questions fréquentes</span><h2>Bon à savoir</h2></div></div>
-      <div class="faq rv">
-        <details><summary>Combien de temps peut-on louer ?</summary><p>D'une demi-journée (matin 8 h–13 h ou après-midi 13 h–20 h) jusqu'à 30 jours.</p></details>
-        <details><summary>Comment se passe le paiement ?</summary><p>En ligne par carte, sur Spoloc, une fois la demande acceptée. L'argent n'est versé au propriétaire que le lendemain de la remise.</p></details>
-        <details><summary>Pourquoi ne pas échanger nos numéros ?</summary><p>Parce qu'en dehors de Spoloc, vous perdez la caution, les photos, la signature et notre aide en cas de litige. La messagerie masque automatiquement numéros, emails et liens.</p></details>
-        <details><summary>Peut-on acheter l'objet loué ?</summary><p>Oui, pendant ou après votre location, si le propriétaire a activé l'option rachat. Le vendeur confirme deux fois, vous confirmez votre achat, puis l'objet est remis avec photos, code et deux signatures.</p></details>
-        <details><summary>Un achat est-il définitif ?</summary><p>Oui, une fois l'objet remis. Avant la remise, chacun peut annuler. Après, l'acheteur comme le vendeur ont 48 h pour signaler un problème : nous étudions la demande et pouvons annuler la vente.</p></details>
-        <details><summary>Combien vaut la caution ?</summary><p>La valeur de l'objet, indiquée par le propriétaire. Elle n'est pas négociable : c'est une empreinte bloquée sur votre carte, libérée au retour.</p></details>
-        <details><summary>Combien ça coûte ?</summary><p>Publier est gratuit pour toujours. Le total exact est affiché avant de payer, sans surprise.</p></details>
-      </div>
-    </div>
-  </section>
 </div>
 
 <!-- ======================= AIDE ======================= -->
@@ -533,6 +498,20 @@ footer a:hover{color:var(--soft)}
         </div>
       </div>
       <div class="chat-wrap rv d1" id="chatEmbed"></div>
+    </div>
+  </section>
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head rv" style="justify-content:center;text-align:center"><div><span class="eyebrow">Questions fréquentes</span><h2>Bon à savoir</h2></div></div>
+      <div class="faq rv">
+        <details><summary>Combien de temps peut-on louer ?</summary><p>De 5 h à 30 jours. Sur une journée, vous choisissez vos heures entre 7 h et 22 h : jusqu'à 6 h, c'est le tarif demi-journée ; au-delà, le tarif journée.</p></details>
+        <details><summary>Comment se passe le paiement ?</summary><p>En ligne par carte, sur Spoloc, une fois la demande acceptée. L'argent n'est versé au propriétaire que le lendemain de la remise.</p></details>
+        <details><summary>Pourquoi ne pas échanger nos numéros ?</summary><p>Parce qu'en dehors de Spoloc, vous perdez la caution, les photos, la signature et notre aide en cas de litige. La messagerie masque automatiquement numéros, emails et liens.</p></details>
+        <details><summary>Peut-on acheter l'objet loué ?</summary><p>Seulement si son propriétaire l'accepte (badge « Rachetable »), pendant ou après votre location. Le vendeur confirme deux fois, vous confirmez votre achat, puis l'objet est remis avec photos, code et deux signatures.</p></details>
+        <details><summary>Un achat est-il définitif ?</summary><p>Oui, une fois l'objet remis. Avant la remise, chacun peut annuler. Après, l'acheteur comme le vendeur ont 48 h pour signaler un problème : nous étudions la demande et pouvons annuler la vente.</p></details>
+        <details><summary>Combien vaut la caution ?</summary><p>La valeur de l'objet, indiquée par le propriétaire. Elle n'est pas négociable : c'est une empreinte bloquée sur votre carte, libérée au retour.</p></details>
+        <details><summary>Combien ça coûte ?</summary><p>Publier est gratuit pour toujours. Le total exact est affiché avant de payer, sans surprise.</p></details>
+      </div>
     </div>
   </section>
 </div>
@@ -575,7 +554,6 @@ const MODE = { hand:"Main propre", delivery:"Livraison", shop:"Boutique partenai
 
 $("#logoMark").innerHTML = SL.logo();
 $("#logoFoot").innerHTML = SL.logo("#F3F1EA");
-$("#mockPic").innerHTML = SL.catIcon("glisse-eau", 96);
 $("#yr").textContent = new Date().getFullYear();
 
 /* Onglets */
@@ -678,7 +656,7 @@ function openItem(id){
   $("#mBody").innerHTML = `
     <div class="facts"><span class="fact">${esc(l.catLabel)}</span><span class="fact"><svg class="i" style="width:15px;height:15px"><use href="#i-pin"/></svg>${esc(l.city)}</span>${l.verified ? `<span class="fact ok">✓ Marque vérifiée</span>` : ""}${l.buyout ? `<span class="fact">Rachetable</span>` : ""}</div>
     <h2 id="mTitle">${esc(l.title)}</h2>
-    <div class="prices"><div class="price"><span>Demi-journée</span><b>${eur(half)}</b></div><div class="price"><span>Journée</span><b>${eur(l.price)}</b></div></div>
+    <div class="prices"><div class="price"><span>5 à 6 h</span><b>${eur(half)}</b></div><div class="price"><span>Journée</span><b>${eur(l.price)}</b></div></div>
     ${specs.length ? `<div class="specs">${specs.map(([k,v]) => `<div class="spec"><span>${k}</span><b>${esc(v)}</b></div>`).join("")}</div>` : ""}
     <p style="font-size:14px;color:var(--muted)">Remise : ${l.modes.map(m => MODE[m]).join(", ")}. Caution ${eur(l.deposit)} (valeur de l'objet), bloquée et jamais débitée sauf casse ou vol.</p>
     <a class="btn btn-dark" href="${l.example ? "app/?demo#/annonce/" + esc(l.id) : "app/#/annonce/" + esc(l.id)}">Choisir mes dates</a>

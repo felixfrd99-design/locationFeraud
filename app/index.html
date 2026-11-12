@@ -217,6 +217,12 @@ main{padding:28px 0 120px}
 .day:hover:not([disabled]){background:var(--paper)}
 .day[disabled]{color:#B5B9B4}
 .day.busy{color:#B5B9B4;text-decoration:line-through}
+.back-home{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:var(--muted);padding:8px 14px 8px 10px;border:1.5px solid var(--line);border-radius:999px;background:var(--card);margin-bottom:6px}
+.back-home:hover{color:var(--ink);border-color:var(--ink)}
+.back-home .i{width:16px;height:16px}
+.hours-row{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+.hours-row label{display:flex;align-items:center;gap:8px;font-weight:600}
+.hours-row select{width:auto;min-width:96px}
 .day.half{background:linear-gradient(135deg,#ECEAE3 50%,transparent 50%)}
 .day.in{background:#EEF9C7;border-radius:0}
 .day.sel,.day.sel:hover:not([disabled]){background:var(--ink);color:var(--soft);border-radius:12px}
@@ -421,8 +427,9 @@ main{padding:28px 0 120px}
 <div id="shell" hidden>
   <header class="top">
     <div class="wrap top-in">
-      <a class="logo" href="#/explorer" aria-label="Spoloc, explorer"><span data-logo="dark"></span> <span class="app-tag">app</span></a>
+      <a class="logo" href="../" aria-label="Spoloc, retour à l'accueil"><span data-logo="dark"></span> <span class="app-tag">app</span></a>
       <nav class="tabs" aria-label="Sections">
+        <a class="tab" href="../"><svg class="i"><use href="#i-home"/></svg><span class="t">Accueil</span></a>
         <a class="tab" href="#/explorer" data-route="explorer"><svg class="i"><use href="#i-grid"/></svg><span class="t">Explorer</span></a>
         <a class="tab" href="#/locations" data-route="locations"><svg class="i"><use href="#i-cal"/></svg><span class="t">Mes locations</span> <span class="count" data-count="renter" hidden></span></a>
         <a class="tab" href="#/materiel" data-route="materiel"><svg class="i"><use href="#i-box"/></svg><span class="t">Mon matériel</span> <span class="count" data-count="owner" hidden></span></a>
@@ -448,7 +455,7 @@ main{padding:28px 0 120px}
     <!-- EXPLORER -->
     <section class="view" id="v-explorer" hidden>
       <div class="hello">
-        <div><h1 id="helloTitle">Qu'est-ce qu'on loue ?</h1><p>Du matériel de sport près de chez vous, d'une demi-journée à 30 jours.</p></div>
+        <div><h1 id="helloTitle">Qu'est-ce qu'on loue ?</h1><p>Du matériel de sport près de chez vous, de 5 h à 30 jours.</p></div>
       </div>
       <form class="filters" id="filters" role="search">
         <div class="f-box f-q"><svg class="i"><use href="#i-search"/></svg><label class="sr" for="q">Rechercher</label><input id="q" type="search" placeholder="Paddle, tente, marque, ville…" autocomplete="off"></div>
@@ -482,6 +489,7 @@ main{padding:28px 0 120px}
 
     <!-- PUBLIER -->
     <section class="view" id="v-publier" hidden>
+      <a class="back-home" href="../"><svg class="i"><use href="#i-left"/></svg>Retour à l'accueil</a>
       <div class="hello"><div><h1>Mettre en location</h1><p>Plus votre fiche est précise, plus vous louez. Publier est gratuit.</p></div></div>
       <div class="pub">
         <form class="form" id="pubForm" novalidate>
@@ -510,7 +518,7 @@ main{padding:28px 0 120px}
 
           <h3>Prix</h3>
           <div class="field"><label for="p-price">Prix par jour (€)</label><input class="input" id="p-price" type="number" min="1" value="15" required></div>
-          <div class="field"><label for="p-half">Prix demi-journée (€)</label><input class="input" id="p-half" type="number" min="1" placeholder="Par défaut 60 % du prix jour"></div>
+          <div class="field"><label for="p-half">Prix 5 à 6 h (€)</label><input class="input" id="p-half" type="number" min="1" placeholder="Par défaut 60 % du prix jour"></div>
           <div class="field"><label for="p-value">Valeur actuelle de l'objet (€)</label><input class="input" id="p-value" type="number" min="1" step="5" placeholder="Ex. 300" required><small class="note">C'est la caution : bloquée sur la carte du locataire, jamais débitée sauf casse ou vol.</small></div>
           <div class="field"><label for="p-city">Ville</label><input class="input" id="p-city" placeholder="Ex. Paris 11e" required></div>
 
@@ -764,8 +772,8 @@ function supaApi(){
     },
     async listing(id){ const { data, error } = await sb.from("listings").select(SEL).eq("id", id).maybeSingle(); if (error) fail(error); return data ? vm(data) : null; },
     async busy(id){ const { data, error } = await sb.rpc("listing_busy_ranges", { p_listing:id }); if (error) fail(error); return data; },
-    async book(id, start, end, mode, slot){
-      const { data, error } = await sb.from("bookings").insert({ listing_id:id, start_date:start, end_date:end, handover_mode:mode, slot:slot||"full" }).select().single();
+    async book(id, start, end, mode, hours){
+      const { data, error } = await sb.from("bookings").insert({ listing_id:id, start_date:start, end_date:end, handover_mode:mode, start_hour:hours?.from ?? null, end_hour:hours?.to ?? null }).select().single();
       if (error) fail(error); return data;
     },
     async renterBookings(){
@@ -882,7 +890,7 @@ function demoApi(){
     id,title,cat,catLabel:label(cat),price,deposit,city,owner,ownerId:"o-"+id,description,img:null,status:"active",
     condition,brand,model,verified,dims:dims||[null,null,null],weight,modes:modes.filter(m => m !== "shop"),deliveryFee,shop:null,buyout,buyoutPrice,half:HALF[id]||null }));
   const t = today();
-  const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,9),addDays(t,11)],[addDays(t,2),addDays(t,2),"am"]], d8:[[addDays(t,6),addDays(t,9)]] };
+  const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,9),addDays(t,11)],[addDays(t,2),addDays(t,2),9,15]], d8:[[addDays(t,6),addDays(t,9)]] };
   const S0 = () => ({ bookings:[], offers:[], ownerBookings:null, ownerOffers:null, myListings:null, ledger:[], msgs:null });
   let st = Object.assign(S0(), store.get("rebond_demo_v2") || {});
   const save = () => store.set("rebond_demo_v2", st);
@@ -890,8 +898,10 @@ function demoApi(){
   const me = () => store.get("rebond_demo_user");
   let authCb = () => {};
   const blocking = s => ["accepted","paid","in_progress"].includes(s);
-  const busyOf = id => [...(others[id]||[]).map(([a,b,s]) => [a,b,s||"full"]), ...st.bookings.filter(b => b.listing_id===id && blocking(b.status)).map(b => [b.start_date,b.end_date,b.slot||"full"])].map(([start_date,end_date,slot]) => ({ start_date, end_date, slot }));
-  const clash = (r, start, end, slot) => overlaps(r.start_date, r.end_date, start, end) && !(start === end && r.start_date === r.end_date && slot !== "full" && r.slot !== "full" && slot !== r.slot);
+  const busyOf = id => [...(others[id]||[]).map(([a,b,h1,h2]) => ({ start_date:a, end_date:b, start_hour:h1 ?? null, end_hour:h2 ?? null })),
+    ...st.bookings.filter(b => b.listing_id===id && blocking(b.status)).map(b => ({ start_date:b.start_date, end_date:b.end_date, start_hour:b.start_hour ?? null, end_hour:b.end_hour ?? null }))];
+  const clash = (r, start, end, h) => overlaps(r.start_date, r.end_date, start, end)
+    && !(start === end && r.start_date === r.end_date && h && r.start_hour != null && (h.to <= r.start_hour || h.from >= r.end_hour));
   const overlaps = (a1,a2,b1,b2) => a1 <= b2 && b1 <= a2;
   const wait = (ms=260) => new Promise(r => setTimeout(r, ms));
   const award = (pts, reason) => { st.ledger.unshift({ points:pts, reason, created_at:new Date().toISOString() }); };
@@ -902,7 +912,7 @@ function demoApi(){
     st.myListings = [mine];
     // une location déjà rendue, sur un objet rachetable : l'offre d'achat y est ouverte
     const past = L.find(l => l.buyout);
-    if (past) st.bookings.push({ id:"bpast", listing_id:past.id, start_date:addDays(t,-6), end_date:addDays(t,-5), days:2, slot:"full", handover_mode:"hand", delivery_fee_cents:0, subtotal_cents:past.price*2, fee_cents:feeFor(past.price*2), total_cents:past.price*2+feeFor(past.price*2), deposit_cents:past.deposit, status:"completed", codes:{}, ownerCode:code(), created_at:new Date(Date.now()-6*864e5).toISOString() });
+    if (past) st.bookings.push({ id:"bpast", listing_id:past.id, start_date:addDays(t,-6), end_date:addDays(t,-5), days:2, handover_mode:"hand", delivery_fee_cents:0, subtotal_cents:past.price*2, fee_cents:feeFor(past.price*2), total_cents:past.price*2+feeFor(past.price*2), deposit_cents:past.deposit, status:"completed", codes:{}, ownerCode:code(), created_at:new Date(Date.now()-6*864e5).toISOString() });
     const sub = mine.price*2;
     st.ownerBookings = [{ id:"ob1", listing_id:"m1", other:"Camille", start_date:addDays(t,2), end_date:addDays(t,3), days:2, handover_mode:"hand", subtotal_cents:sub, fee_cents:0, total_cents:sub, deposit_cents:mine.deposit, status:"pending", codes:{ return:code() }, renterCode:code(), created_at:new Date().toISOString() }];
     st.ownerOffers = [{ id:"oo1", listing_id:"m1", other:"Inès", amount_cents:20000, fee_cents:0, total_cents:20000, status:"pending", buyerCode:code(), created_at:new Date().toISOString() }];
@@ -930,17 +940,17 @@ function demoApi(){
       const q = (f.q||"").toLowerCase();
       return L.filter(l => (!f.cat || l.cat===f.cat)
         && (!q || [l.title,l.city,l.brand,l.model].join(" ").toLowerCase().includes(q))
-        && (!(f.start && f.end) || !busyOf(l.id).some(r => r.slot === "full" && overlaps(r.start_date, r.end_date, f.start, f.end))));
+        && (!(f.start && f.end) || !busyOf(l.id).some(r => r.start_hour == null && overlaps(r.start_date, r.end_date, f.start, f.end))));
     },
     async listing(id){ return L.find(l => l.id===id) || (st.myListings||[]).find(l => l.id===id) || null; },
     async busy(id){ await wait(120); return busyOf(id).filter(r => r.end_date >= today()); },
-    async book(id, start, end, mode, slot){
+    async book(id, start, end, mode, hours){
       await wait(450);
       const l = L.find(x => x.id===id);
-      slot = slot || "full";
-      if (busyOf(id).some(r => clash(r, start, end, slot))) throw new Error("Ces dates viennent d'être prises. Choisissez-en d'autres.");
-      const rent = slot !== "full" ? (l.half || Math.round(l.price*0.6)) : l.price * dayCount(start, end), del = mode==="delivery" ? (l.deliveryFee||0) : 0, fee = feeFor(rent);
-      const b = { id:"b"+Date.now(), listing_id:id, start_date:start, end_date:end, days:dayCount(start,end), slot, handover_mode:mode, delivery_fee_cents:del, subtotal_cents:rent+del, fee_cents:fee, total_cents:rent+del+fee, deposit_cents:l.deposit, status:"pending", codes:{ pickup:code() }, ownerCode:code(), created_at:new Date().toISOString() };
+      if (hours && (start !== end || hours.to - hours.from < MIN_H)) throw new Error(`Location de ${MIN_H} h minimum, le même jour`);
+      if (busyOf(id).some(r => clash(r, start, end, hours))) throw new Error("Ces dates viennent d'être prises. Choisissez-en d'autres.");
+      const rent = hourRent(l, hours, dayCount(start, end)), del = mode==="delivery" ? (l.deliveryFee||0) : 0, fee = feeFor(rent);
+      const b = { id:"b"+Date.now(), listing_id:id, start_date:start, end_date:end, days:dayCount(start,end), start_hour:hours?.from ?? null, end_hour:hours?.to ?? null, handover_mode:mode, delivery_fee_cents:del, subtotal_cents:rent+del, fee_cents:fee, total_cents:rent+del+fee, deposit_cents:l.deposit, status:"pending", codes:{ pickup:code() }, ownerCode:code(), created_at:new Date().toISOString() };
       st.bookings.unshift(b); save();
       setTimeout(() => { const x = st.bookings.find(y => y.id===b.id); if (x && x.status==="pending") { x.status = "accepted"; save(); onDemoChange(`${l.owner} a accepté votre demande pour « ${l.title} »`); } }, 5000);
       return b;
@@ -1032,7 +1042,7 @@ const api = DEMO ? demoApi() : supaApi();
 const S = {
   user:null, cats:[], shops:[],
   settings:{ rate:0.06, min:100, saleRate:0.08, saleMin:200, founder:0.5 },
-  f:{ cat:null, q:"", start:"", end:"" }, listings:[], d:null, mode:"hand", slot:"full",
+  f:{ cat:null, q:"", start:"", end:"" }, listings:[], d:null, mode:"hand", hours:null,
   cal:{ month:null, start:null, end:null, busy:new Set() }, pts:0,
 };
 const disc = () => S.user?.founder ? S.settings.founder : 1;
@@ -1183,7 +1193,7 @@ async function openDetail(id){
   if (S.d?.id === id && $("#sheet").classList.contains("open")) return;
   const l = S.listings.find(x => x.id === id) || await api.listing(id).catch(() => null);
   if (!l) { toast("Cette annonce n'est plus disponible."); location.hash = "#/explorer"; return; }
-  S.d = l; S.mode = l.modes?.[0] || "hand"; S.slot = "full";
+  S.d = l; S.mode = l.modes?.[0] || "hand"; S.hours = null;
   S.cal = { month: parse(S.f.start || today()), start: S.f.start || null, end: S.f.end || null, busy:new Map() };
   S.cal.month.setDate(1);
   drawDetail();
@@ -1192,7 +1202,8 @@ async function openDetail(id){
   try {
     const ranges = await api.busy(id);
     const map = new Map();
-    ranges.forEach(r => { for (let d = r.start_date; d <= r.end_date; d = addDays(d,1)) { if (!map.has(d)) map.set(d, new Set()); map.get(d).add(r.slot || "full"); } });
+    ranges.forEach(r => { const sd = String(r.start_date).slice(0,10), ed = String(r.end_date).slice(0,10);
+      for (let d = sd; d <= ed; d = addDays(d,1)) { if (!map.has(d)) map.set(d, []); map.get(d).push(r.start_hour == null ? [0,24] : [r.start_hour, r.end_hour]); } });
     S.cal.busy = map;
     if (S.cal.start && rangeHasBusy(S.cal.start, S.cal.end || S.cal.start)) S.cal.start = S.cal.end = null;
     drawCal(); drawFoot();
@@ -1255,26 +1266,52 @@ function drawDetail(){
   drawFoot();
 }
 document.addEventListener("change", e => { if (e.target.name === "hoMode") { S.mode = e.target.value; drawQuote(); drawFoot(); } });
-const taken = d => S.cal.busy.get(d) || new Set();
-const dayFull = d => { const t = taken(d); return t.has("full") || (t.has("am") && t.has("pm")); };
-const dayPartial = d => taken(d).size > 0 && !dayFull(d);
-function rangeHasBusy(a, b){ for (let d = a; d <= b; d = addDays(d,1)) if (taken(d).size) return true; return false; }
+/* Location à l'heure : 5 h minimum, entre 7 h et 22 h, le même jour */
+const MIN_H = 5, HALF_MAX_H = 6, OPEN_H = 7, CLOSE_H = 22;
+const taken = d => S.cal.busy.get(d) || [];
 const halfPrice = l => l.half || Math.round(l.price * 0.6);
-const SLOT = { full:"Journée", am:"Matin · 8 h – 13 h", pm:"Après-midi · 13 h – 20 h" };
+function hourRent(l, hours, days){ if (!hours) return l.price * days; return hours.to - hours.from <= HALF_MAX_H ? halfPrice(l) : l.price; }
+const hoursFree = (d, from, to) => taken(d).every(([a,b]) => to <= a || from >= b);
+function windows(d){ // créneaux libres d'au moins 5 h
+  const out = []; let cur = null;
+  for (let h = OPEN_H; h < CLOSE_H; h++) { const free = hoursFree(d, h, h+1); if (free && cur == null) cur = h; if (!free && cur != null) { out.push([cur,h]); cur = null; } }
+  if (cur != null) out.push([cur, CLOSE_H]);
+  return out.filter(([a,b]) => b - a >= MIN_H);
+}
+const dayFull = d => taken(d).length > 0 && !windows(d).length;
+const dayPartial = d => taken(d).length > 0 && !dayFull(d);
+function rangeHasBusy(a, b){ for (let d = a; d <= b; d = addDays(d,1)) if (taken(d).length) return true; return false; }
+const hLbl = h => `${h} h`;
 function single(){ return S.cal.start && (!S.cal.end || S.cal.end === S.cal.start); }
-function fixSlot(){
-  if (!single()) { S.slot = "full"; return; }
-  const t = taken(S.cal.start);
-  if (S.slot === "full" && t.size) S.slot = t.has("am") ? "pm" : "am";
-  if (S.slot !== "full" && t.has(S.slot)) S.slot = S.slot === "am" ? "pm" : "am";
+function fixHours(){
+  if (!single()) { S.hours = null; return; }
+  const d = S.cal.start;
+  if (S.hours && hoursFree(d, S.hours.from, S.hours.to)) return;
+  if (!S.hours && !taken(d).length) return;
+  const w = windows(d)[0]; S.hours = w ? { from:w[0], to:Math.min(w[1], w[0] + MIN_H) } : null;
 }
-function slotsHTML(){
+function hoursHTML(){
   if (!single()) return "";
-  const t = taken(S.cal.start), hp = halfPrice(S.d);
-  const opt = (v, price, dis) => `<label class="mode"><input type="radio" name="slot" value="${v}" ${S.slot===v?"checked":""} ${dis?"disabled":""}><span><b>${SLOT[v]}</b><span>${dis ? "Déjà réservé" : eur(price)}</span></span></label>`;
-  return `<div class="modes" style="margin-top:12px">${opt("full", S.d.price, t.size > 0)}${opt("am", hp, t.has("am"))}${opt("pm", hp, t.has("pm"))}</div>`;
+  const d = S.cal.start, busy = taken(d).length > 0, h = S.hours;
+  const fromOpts = Array.from({ length: CLOSE_H - MIN_H - OPEN_H + 1 }, (_, i) => OPEN_H + i)
+    .map(x => `<option value="${x}" ${h?.from===x?"selected":""}>${hLbl(x)}</option>`).join("");
+  const from = h?.from ?? 9;
+  const toOpts = Array.from({ length: CLOSE_H - (from + MIN_H) + 1 }, (_, i) => from + MIN_H + i)
+    .map(x => `<option value="${x}" ${h?.to===x?"selected":""}>${hLbl(x)}</option>`).join("");
+  const libres = windows(d).map(([a,b]) => `${hLbl(a)} – ${hLbl(b)}`).join(", ");
+  return `<div class="modes" style="margin-top:12px">
+    <label class="mode"><input type="radio" name="dur" value="day" ${!h?"checked":""} ${busy?"disabled":""}><span><b>Journée entière</b><span>${busy ? "Une partie de la journée est déjà réservée" : eur(S.d.price)}</span></span></label>
+    <label class="mode"><input type="radio" name="dur" value="hours" ${h?"checked":""}><span><b>Quelques heures · 5 h minimum</b><span>${eur(halfPrice(S.d))} jusqu'à 6 h, ${eur(S.d.price)} au-delà</span></span></label>
+  </div>
+  ${h ? `<div class="hours-row"><label>De <select class="input" id="hFrom">${fromOpts}</select></label><label>à <select class="input" id="hTo">${toOpts}</select></label></div>
+  ${busy ? `<p class="note">Libre ce jour-là : ${libres}</p>` : ""}
+  ${hoursFree(d, h.from, h.to) ? "" : `<p class="note" style="color:#B3261E;font-weight:600">Ces heures sont déjà réservées.</p>`}` : ""}`;
 }
-document.addEventListener("change", e => { if (e.target.name === "slot") { S.slot = e.target.value; drawQuote(); drawFoot(); } });
+document.addEventListener("change", e => {
+  if (e.target.name === "dur") { S.hours = e.target.value === "hours" ? (S.hours || (() => { const w = windows(S.cal.start)[0] || [9,14]; return { from:w[0], to:Math.min(w[1], w[0]+MIN_H) }; })()) : null; drawCal(); drawFoot(); }
+  if (e.target.id === "hFrom") { const f = +e.target.value; S.hours = { from:f, to:Math.max(S.hours.to, f + MIN_H) }; drawCal(); drawFoot(); }
+  if (e.target.id === "hTo") { S.hours = { from:S.hours.from, to:+e.target.value }; drawCal(); drawFoot(); }
+});
 function drawCal(){
   const box = $("#cal"); if (!box) return;
   const m = S.cal.month, y = m.getFullYear(), mo = m.getMonth();
@@ -1286,7 +1323,7 @@ function drawCal(){
   for (let d = 1; d <= nDays; d++) {
     const ds = iso(new Date(y, mo, d)), past = ds < t, isBusy = dayFull(ds), part = dayPartial(ds), tooFar = start && !end && ds > addDays(start, 29);
     const sel = ds === start || ds === end, inR = start && end && ds > start && ds < end;
-    cells += `<button class="day${isBusy?" busy":""}${part?" half":""}${sel?" sel":""}${inR?" in":""}${ds===t?" today":""}" data-d="${ds}" ${past||isBusy||tooFar?"disabled":""} aria-pressed="${sel}" aria-label="${parse(ds).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${isBusy?", indisponible":part?", une demi-journée libre":""}">${d}</button>`;
+    cells += `<button class="day${isBusy?" busy":""}${part?" half":""}${sel?" sel":""}${inR?" in":""}${ds===t?" today":""}" data-d="${ds}" ${past||isBusy||tooFar?"disabled":""} aria-pressed="${sel}" aria-label="${parse(ds).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}${isBusy?", indisponible":part?", quelques heures libres":""}">${d}</button>`;
   }
   box.innerHTML = `
     <div class="cal-h">
@@ -1295,7 +1332,7 @@ function drawCal(){
       <button class="cal-nav" data-nav="1" aria-label="Mois suivant"><svg class="i"><use href="#i-right"/></svg></button>
     </div>
     <div class="cal-g">${["L","M","M","J","V","S","D"].map(x => `<span class="dow">${x}</span>`).join("")}${cells}</div>
-    <div class="cal-legend"><span><i style="background:var(--ink)"></i>Vos dates</span><span><i style="background:#E7E5DE"></i>Déjà loué</span><span><i style="background:linear-gradient(135deg,#E7E5DE 50%,#fff 50%);border:1px solid var(--line)"></i>Demi-journée libre</span><span>De ½ journée à 30 jours</span></div>${slotsHTML()}`;
+    <div class="cal-legend"><span><i style="background:var(--ink)"></i>Vos dates</span><span><i style="background:#E7E5DE"></i>Déjà loué</span><span><i style="background:linear-gradient(135deg,#E7E5DE 50%,#fff 50%);border:1px solid var(--line)"></i>Quelques heures libres</span><span>De 5 h à 30 jours</span></div>${hoursHTML()}`;
   drawQuote();
 }
 document.addEventListener("click", e => {
@@ -1309,32 +1346,33 @@ document.addEventListener("click", e => {
   else if (dayCount(c.start, d) > 30) { toast("30 jours maximum par location."); c.start = d; c.end = null; }
   else if (d !== c.start && rangeHasBusy(c.start, d)) { toast("Certaines dates de cette période sont déjà prises."); c.start = d; c.end = null; }
   else c.end = d;
-  fixSlot(); drawCal(); drawFoot();
+  fixHours(); drawCal(); drawFoot();
 });
 function quote(){
   const { start, end } = S.cal; if (!start) return null;
-  const days = dayCount(start, end || start), half = days === 1 && S.slot !== "full";
-  if (days === 1 && S.slot === "full" && taken(start).size) return null;
-  const rent = half ? halfPrice(S.d) : S.d.price * days, del = S.mode === "delivery" ? (S.d.deliveryFee || 0) : 0, fee = feeFor(rent);
-  return { start, end: end || start, days, half, slot: half ? S.slot : "full", rent, del, fee, total: rent + del + fee };
+  const days = dayCount(start, end || start), h = days === 1 ? S.hours : null;
+  if (days === 1 && !h && taken(start).length) return null;
+  if (h && !hoursFree(start, h.from, h.to)) return null;
+  const rent = hourRent(S.d, h, days), del = S.mode === "delivery" ? (S.d.deliveryFee || 0) : 0, fee = feeFor(rent);
+  return { start, end: end || start, days, hours:h, rent, del, fee, total: rent + del + fee };
 }
 function drawQuote(){
   const box = $("#quote"); if (!box) return;
   const q = quote();
   box.innerHTML = q ? `
-    <div><span>${q.half ? SLOT[q.slot] : `${eur(S.d.price)} × ${q.days} jour${q.days>1?"s":""}`}</span><span>${eur(q.rent)}</span></div>
+    <div><span>${q.hours ? `${hLbl(q.hours.from)} – ${hLbl(q.hours.to)} (${q.hours.to - q.hours.from} h, tarif ${q.hours.to - q.hours.from <= HALF_MAX_H ? "demi-journée" : "journée"})` : `${eur(S.d.price)} × ${q.days} jour${q.days>1?"s":""}`}</span><span>${eur(q.rent)}</span></div>
     ${q.del ? `<div><span>Livraison</span><span>${eur(q.del)}</span></div>` : ""}
     <div><span>Frais de service${S.user?.founder ? " (membre fondateur)" : ""}</span><span>${eur(q.fee)}</span></div>
     <div class="tot"><span>Total</span><span>${eur(q.total)}</span></div>
     <div style="color:var(--muted);font-size:13px"><span>Caution = valeur de l'objet, bloquée, non débitée</span><span>${eur(S.d.deposit)}</span></div>
     <div style="color:var(--accent);font-size:13px"><span>Points gagnés</span><span>+${Math.floor((q.rent+q.del)/100)} pts</span></div>`
-    : `<div style="color:var(--muted)"><span>Touchez un jour pour le début, puis un autre pour la fin. Pour un seul jour, choisissez la journée, le matin ou l'après-midi.</span></div>`;
+    : `<div style="color:var(--muted)"><span>Touchez un jour pour le début, puis un autre pour la fin. Pour un seul jour, louez la journée ou quelques heures (5 h minimum).</span></div>`;
 }
 function drawFoot(){
   const l = S.d, mine = S.user && (l.ownerId === S.user.id || l.ownerId === "me"), q = quote();
   $("#dFoot").innerHTML = mine
     ? `<div class="sum"><b>${eur(l.price)}</b><span>par jour</span></div><a class="btn btn-ghost" href="#/materiel">Gérer</a>`
-    : `<div class="sum">${q ? `<b>${eur(q.total)}</b><span>${fmtDay(q.start)}${q.days>1 ? " → "+fmtDay(q.end) : q.half ? " · " + (q.slot === "am" ? "matin" : "après-midi") : ""} · ${MODE[S.mode]}</span>` : `<b>${eur(l.price)}</b><span>par jour</span>`}</div>
+    : `<div class="sum">${q ? `<b>${eur(q.total)}</b><span>${fmtDay(q.start)}${q.days>1 ? " → "+fmtDay(q.end) : q.hours ? ` · ${hLbl(q.hours.from)}–${hLbl(q.hours.to)}` : ""} · ${MODE[S.mode]}</span>` : `<b>${eur(l.price)}</b><span>par jour</span>`}</div>
        <button class="btn btn-dark" id="bookBtn" ${q ? "" : "disabled"}>Demander à réserver</button>`;
   const b = $("#bookBtn"); if (b) b.addEventListener("click", book);
 }
@@ -1342,11 +1380,11 @@ async function book(){
   const q = quote(); if (!q) return;
   const btn = $("#bookBtn"); btn.disabled = true; btn.textContent = "Envoi…";
   try {
-    await api.book(S.d.id, q.start, q.end, S.mode, q.slot);
+    await api.book(S.d.id, q.start, q.end, S.mode, q.hours);
     $("#dScroll").innerHTML = `<div class="done">
       <div class="ok"><svg class="i"><use href="#i-check"/></svg></div>
       <h2 style="font-size:30px">Demande envoyée !</h2>
-      <p style="color:var(--muted);max-width:360px">${esc(S.d.owner)} va recevoir votre demande pour <b style="color:var(--ink)">${esc(S.d.title)}</b>, du ${fmtDay(q.start)} au ${fmtDay(q.end)} (${MODE[S.mode].toLowerCase()}). Votre code de retrait est dans « Mes locations ».</p>
+      <p style="color:var(--muted);max-width:360px">${esc(S.d.owner)} va recevoir votre demande pour <b style="color:var(--ink)">${esc(S.d.title)}</b>, ${q.hours ? `le ${fmtDay(q.start)}, de ${hLbl(q.hours.from)} à ${hLbl(q.hours.to)}` : `du ${fmtDay(q.start)} au ${fmtDay(q.end)}`} (${MODE[S.mode].toLowerCase()}). Votre code de retrait est dans « Mes locations ».</p>
       <p style="font-family:var(--display);font-weight:800;font-size:26px">${eur(q.total)}</p></div>`;
     $("#dFoot").innerHTML = `<a class="btn btn-ghost" href="#/explorer" style="flex:1">Continuer</a><a class="btn btn-dark" href="#/locations" style="flex:1">Mes locations</a>`;
     refreshCounts(); if (S.f.start) S.listings = [];
@@ -1386,7 +1424,7 @@ function rowHTML({ l, title, sub, status, statusLabel, hint, total, totalNote, a
 }
 const codeHTML = (label, c) => c ? `<span class="code">${label} <b>${esc(c)}</b></span>` : "";
 const emptyHTML = (h, p, cta) => `<div class="empty"><h3>${h}</h3><p>${p}</p>${cta || ""}</div>`;
-const when = b => `${fmtDay(b.start_date)}${b.days>1 ? " → "+fmtDay(b.end_date) + ` · ${b.days} jours` : b.slot === "am" ? " · matin" : b.slot === "pm" ? " · après-midi" : " · journée"} · ${MODE[b.handover_mode || "hand"]}`;
+const when = b => `${fmtDay(b.start_date)}${b.days>1 ? " → "+fmtDay(b.end_date) + ` · ${b.days} jours` : b.start_hour != null ? ` · ${b.start_hour} h – ${b.end_hour} h` : " · journée"} · ${MODE[b.handover_mode || "hand"]}`;
 const ORDER = { in_progress:0, confirmed:1, accepted:1, paid:1, pending:2, withdrawal_requested:2, completed:3, declined:4, cancelled:5 };
 
 async function loadRenter(){
