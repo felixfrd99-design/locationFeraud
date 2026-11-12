@@ -182,6 +182,31 @@ section{padding:80px 0}
 
 /* QUI SOMMES-NOUS */
 .about{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;padding-top:56px}
+.story-hero{padding:64px 0 24px}
+.story-hero h1{font-size:clamp(40px,5.6vw,76px);font-weight:800;margin:14px 0 20px;max-width:950px}
+.story-hero .lead{font-size:20px;color:#3F4642;max-width:760px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.person{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:28px}
+.p-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.p-head .ph{width:58px;height:58px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px;flex:none}
+.p-head h3{font-size:26px}
+.p-head span{color:var(--muted);font-size:14px;font-weight:500}
+.person p{color:#3F4642;font-size:16.5px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tags span{background:var(--neutral);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+.timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.tl{border-top:3px solid var(--accent);padding-top:16px}
+.tl .when{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.tl h3{font-size:21px;margin:8px 0}
+.tl p{color:#3F4642;font-size:15.5px}
+.promise-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pr{background:var(--ink);color:var(--paper);border-radius:22px;padding:24px}
+.pr h3{font-size:20px;margin-bottom:6px}
+.pr p{color:#B9C0BC;font-size:15px}
+.contact-line{text-align:center;margin-top:28px;font-size:18px}
+.contact-line a{color:var(--accent);font-weight:700}
+@media (max-width:900px){ .duo,.promise-3{grid-template-columns:1fr} .timeline{grid-template-columns:1fr 1fr} }
+@media (max-width:560px){ .timeline{grid-template-columns:1fr} }
 .founders{background:var(--ink);color:var(--paper);border-radius:30px;padding:30px;display:grid;gap:16px}
 .fd{display:flex;align-items:center;gap:14px}
 .fd .ph{width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px;flex:none}
@@ -218,6 +243,10 @@ section{padding:80px 0}
 .panel h3{font-size:21px;margin-bottom:10px}
 .line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:15px;color:#D8DDD9}
 .line:last-child{border-bottom:0}
+.stamps-s{display:flex;align-items:center;gap:8px;margin:6px 0 12px}
+.stamps-s i{width:30px;height:30px;border-radius:50%;border:2px dashed rgba(255,255,255,.3)}
+.stamps-s i.on{background:var(--accent);border:2px solid var(--accent)}
+.stamps-s b{margin-left:6px;font-family:var(--display);color:var(--soft)}
 .line b{font-family:var(--display);color:var(--soft);white-space:nowrap}
 .shop{border:2px solid var(--ink);border-radius:28px;padding:28px 32px;display:grid;grid-template-columns:1.3fr .7fr;gap:20px;align-items:center}
 .shop h3{font-size:clamp(24px,3vw,34px)}
@@ -430,41 +459,70 @@ footer a:hover{color:var(--soft)}
 
 <!-- ======================= QUI SOMMES-NOUS ======================= -->
 <div class="view" id="v-qui" hidden>
-  <section style="padding-top:0">
-    <div class="wrap about">
-      <div class="founders rv">
-        <div class="fd"><span class="ph" aria-hidden="true">F</span><div><b>Félix</b><span>Cofondateur</span></div></div>
-        <div class="fd"><span class="ph" aria-hidden="true">T</span><div><b>Tim</b><span>Cofondateur</span></div></div>
-        <p>Deux frères, fans de tennis depuis toujours, installés à Paris.</p>
-        <a class="btn btn-ghost-l" href="mailto:spoloc@outlook.com"><svg class="i"><use href="#i-chat"/></svg>spoloc@outlook.com</a>
+  <section class="story-hero">
+    <div class="wrap">
+      <span class="eyebrow">Qui sommes-nous</span>
+      <h1>Deux frères, une raquette à la main depuis toujours.</h1>
+      <p class="lead">Spoloc, c'est Félix et Tim. Deux frères, cofondateurs, qui ont grandi sur les courts de tennis et qui ne ratent jamais une ligne de départ. Nous avons créé le service que nous aurions voulu trouver&nbsp;: louer du bon matériel de sport, près de chez soi, en toute confiance.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:10px">
+    <div class="wrap duo">
+      <article class="person rv">
+        <div class="p-head"><span class="ph" aria-hidden="true">F</span><div><h3>Félix</h3><span>Cofondateur · Communauté et partenaires</span></div></div>
+        <p>Le petit dernier de la fratrie, arrivé de la côte ouest à Paris. Alternant dans une startup, il partage ses week-ends entre le tennis, le padel et les sentiers de trail, avec un marathon au compteur. Chez Spoloc, c'est lui qui rencontre les propriétaires, les clubs et les boutiques du quartier.</p>
+        <div class="tags"><span>Tennis</span><span>Padel</span><span>Trail</span><span>Marathon</span></div>
+      </article>
+      <article class="person rv d1">
+        <div class="p-head"><span class="ph" aria-hidden="true">T</span><div><h3>Tim</h3><span>Cofondateur · Produit et service client</span></div></div>
+        <p>Raquette en main depuis l'enfance, il est passé du tennis au squash, puis à la course sur route et au trail. Chez Spoloc, il construit le site et l'application, teste chaque étape avant qu'elle n'arrive chez vous, et répond lui-même à vos messages.</p>
+        <div class="tags"><span>Tennis</span><span>Squash</span><span>Course sur route</span><span>Trail</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section style="padding-top:30px">
+    <div class="wrap">
+      <div class="sec-head rv"><div><span class="eyebrow">Notre histoire</span><h2>D'un vélo qui manquait à Spoloc.</h2></div></div>
+      <div class="timeline">
+        <div class="tl rv"><span class="when">L'enfance</span><h3>Les courts, d'abord</h3><p>Nos mercredis se passaient au club de tennis. Puis sont venus le padel, le squash, la course à pied et le trail. Le sport a toujours été notre terrain commun.</p></div>
+        <div class="tl rv d1"><span class="when">Le T24</span><h3>Le vélo qui manquait</h3><p>Avec nos frères, nous nous sommes inscrits au T24, un triathlon. Problème&nbsp;: pas de vélo de route. En acheter un pour une seule course n'avait aucun sens, et les annonces entre particuliers n'offraient ni caution, ni garantie, ni rendez-vous fiable.</p></div>
+        <div class="tl rv d2"><span class="when">Le déclic</span><h3>Des garages pleins</h3><p>Autour de nous, partout le même constat&nbsp;: un vélo sorti deux fois, des raquettes au fond d'un placard, un paddle jamais gonflé. Et, à côté, des amis qui cherchaient exactement ce matériel pour un week-end.</p></div>
+        <div class="tl rv d3"><span class="when">Aujourd'hui</span><h3>Spoloc</h3><p>Une location simple et sûre&nbsp;: paiement en ligne, caution égale à la valeur de l'objet, photos, code et signatures à chaque remise. De 5 h à 30 jours, à Paris et en petite couronne.</p></div>
       </div>
-      <div class="about-t rv d1">
-        <span class="eyebrow">Qui sommes-nous</span>
-        <h1>Deux frères, une idée simple.</h1>
-        <p>En nous inscrivant au T24, un triathlon, il nous manquait un vélo. En acheter un pour une seule course n'avait pas de sens, et en louer un à un particulier était compliqué.</p>
-        <p>Spoloc est né de là&nbsp;: <strong>louer le matériel de sport qui dort chez vos voisins</strong>, de 5 h à 30 jours, avec un paiement, une caution et une remise sécurisés.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="promise-3">
+        <div class="pr rv"><h3>Un vrai contact</h3><p>Chaque message est lu par l'un de nous deux, pas par un robot anonyme.</p></div>
+        <div class="pr rv d1"><h3>Des règles claires</h3><p>Prix affiché, caution juste, aucun frais caché. Les propriétaires ne paient rien.</p></div>
+        <div class="pr rv d2"><h3>Du sport accessible</h3><p>Essayer avant d'acheter, louer plutôt qu'encombrer. Le bon matériel, au bon moment.</p></div>
       </div>
+      <p class="contact-line rv">Une question, une idée, un partenariat&nbsp;? <a href="mailto:spoloc@outlook.com">spoloc@outlook.com</a></p>
     </div>
   </section>
   <section class="club" id="club">
     <div class="wrap">
-      <div class="sec-head rv"><div><span class="eyebrow">Le Club Spoloc</span><h2>Ici, chaque location vous rapporte.</h2></div><p>Des avantages qui restent, des points à chaque location, et des amis qui vous font gagner.</p></div>
+      <div class="sec-head rv"><div><span class="eyebrow">Le Club Spoloc</span><h2>La fidélité, tout simplement.</h2></div><p>Pas de points compliqués&nbsp;: une carte qui se remplit à chaque location, et un parrainage qui compte vraiment.</p></div>
       <div class="promise">
         <div class="prom rv" style="background:var(--soft)"><span class="k">0 €</span><h3>Pour les propriétaires, à vie</h3><p>Vous touchez toujours 100 % du prix que vous fixez.</p></div>
         <div class="prom rv d1" style="background:var(--ink);color:var(--paper)"><span class="k">÷ 2</span><h3>Membres fondateurs, à vie</h3><p>Les 500 premiers inscrits paient deux fois moins de frais de service. Pour toujours.</p></div>
       </div>
       <div class="earn">
-        <div class="panel rv"><h3>Gagnez des points</h3>
-          <div class="line"><span>Chaque euro loué, prêté, acheté ou vendu</span><b>1 pt</b></div>
-          <div class="line"><span>Votre première annonce</span><b>50 pts</b></div>
-          <div class="line"><span>Chaque avis laissé</span><b>20 pts</b></div>
-          <div class="line"><span>Chaque ami parrainé, pour vous deux</span><b>200 pts</b></div>
+        <div class="panel rv"><h3>La carte de fidélité</h3>
+          <div class="stamps-s" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><b>Frais offerts</b></div>
+          <div class="line"><span>Chaque location terminée</span><b>1 tampon</b></div>
+          <div class="line"><span>5 tampons</span><b>Frais de service offerts sur la suivante</b></div>
+          <div class="line"><span>Remise maximale</span><b>5 €</b></div>
         </div>
-        <div class="panel rv d1"><h3>Échangez-les</h3>
-          <div class="line"><span>Frais de service offerts</span><b>300 pts</b></div>
-          <div class="line"><span>5 € sur une location</span><b>600 pts</b></div>
-          <div class="line"><span>Bon de 10 € en boutique partenaire</span><b>1 000 pts</b></div>
-          <div class="line"><span>Une journée offerte (jusqu'à 30 €)</span><b>2 000 pts</b></div>
+        <div class="panel rv d1"><h3>Le parrainage</h3>
+          <div class="line"><span>Votre ami s'inscrit avec votre lien</span><b>—</b></div>
+          <div class="line"><span>Il termine sa première location</span><b>Validé</b></div>
+          <div class="line"><span>Vous deux</span><b>Frais de service offerts</b></div>
+          <p style="color:#B9C0BC;font-size:14px;margin-top:10px">Rien n'est donné tant que la première location n'est pas terminée.</p>
         </div>
       </div>
     </div>
@@ -510,6 +568,7 @@ footer a:hover{color:var(--soft)}
         <details><summary>Peut-on acheter l'objet loué ?</summary><p>Seulement si son propriétaire l'accepte (badge « Rachetable »), pendant ou après votre location. Le vendeur confirme deux fois, vous confirmez votre achat, puis l'objet est remis avec photos, code et deux signatures.</p></details>
         <details><summary>Un achat est-il définitif ?</summary><p>Oui, une fois l'objet remis. Avant la remise, chacun peut annuler. Après, l'acheteur comme le vendeur ont 48 h pour signaler un problème : nous étudions la demande et pouvons annuler la vente.</p></details>
         <details><summary>Combien vaut la caution ?</summary><p>La valeur de l'objet, indiquée par le propriétaire. Elle n'est pas négociable : c'est une empreinte bloquée sur votre carte, libérée au retour.</p></details>
+        <details><summary>Comment fonctionne la fidélité ?</summary><p>Toutes les 5 locations terminées, vos frais de service sont offerts sur la suivante (jusqu'à 5 €). Parrainage&nbsp;: dès que votre ami a terminé sa première location, vous recevez chacun la même remise.</p></details>
         <details><summary>Combien ça coûte ?</summary><p>Publier est gratuit pour toujours. Le total exact est affiché avant de payer, sans surprise.</p></details>
       </div>
     </div>

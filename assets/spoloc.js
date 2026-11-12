@@ -28,7 +28,7 @@
   }
   const TINT = {};
   const catTint = () => "#ECE4D6";
-  /* Logo : le mot « spoloc », le premier « o » devient un point vert (une balle) */
+  /* Logo : le mot « spoloc », le premier « o » devient un point orange (une balle) */
   const ACCENT = "#D35F2A";
   function logo(color) {
     return `<span class="sl-wm" style="color:${color || "#0F1512"}">sp<i class="sl-o"></i>loc</span>`;

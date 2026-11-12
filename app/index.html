@@ -298,6 +298,11 @@ main{padding:28px 0 120px}
 .club-hero .big{font-family:var(--display);font-weight:800;font-size:64px;color:var(--soft);line-height:1;letter-spacing:-.04em}
 .club-hero p{color:#B9C0BC}
 .founder{display:inline-flex;align-items:center;gap:8px;background:var(--soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;margin-top:12px}
+.stamps{display:flex;gap:10px;margin:14px 0 16px}
+.stamp{width:46px;height:46px;border-radius:50%;border:2px dashed rgba(255,255,255,.3);display:grid;place-items:center;color:var(--ink)}
+.stamp.on{background:var(--accent);border:2px solid var(--accent);color:#fff}
+.stamp .i{width:20px;height:20px}
+.big-n{font-family:var(--display);font-weight:800;font-size:48px;line-height:1;color:var(--accent)}
 .club-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
 .ccard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px;align-content:start}
 .ccard h3{font-size:20px}
@@ -397,7 +402,7 @@ main{padding:28px 0 120px}
     <a class="logo" href="../" aria-label="Spoloc, retour au site"><span data-logo="light"></span></a>
     <div>
       <h1>Le matos des autres,<br><span>vos aventures.</span></h1>
-      <p>Louez près de chez vous, mettez en location ce qui dort au garage, gagnez des points à chaque location.</p>
+      <p>Louez près de chez vous, mettez en location ce qui dort au garage, et profitez de la carte de fidélité.</p>
     </div>
     <svg class="bounce-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M54 32 A22 22 0 1 1 47.5 16.5" stroke="#F2A57C" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M41 9 L50 15 L42 22" stroke="#F2A57C" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="10" fill="#FF6B4A"/></svg>
   </div>
@@ -408,7 +413,7 @@ main{padding:28px 0 120px}
         <button type="button" class="on" data-mode="in" role="tab" aria-selected="true">Connexion</button>
         <button type="button" data-mode="up" role="tab" aria-selected="false">Inscription</button>
       </div>
-      <div class="ref-box" id="refBox" hidden>Invité par un ami : vous gagnerez tous les deux <b>200 points</b> après votre première location.</div>
+      <div class="ref-box" id="refBox" hidden>Invité par un ami : après votre première location, vos frais de service sont offerts sur la suivante, et ceux de votre ami aussi.</div>
       <div class="field" id="fFirst" hidden><label for="first">Prénom</label><input class="input" id="first" autocomplete="given-name" placeholder="Ex. Sam"></div>
       <div class="field"><label for="email">Email</label><input class="input" id="email" type="email" autocomplete="email" placeholder="vous@exemple.fr" required></div>
       <div class="field"><label for="pw">Mot de passe</label><input class="input" id="pw" type="password" autocomplete="current-password" placeholder="6 caractères minimum" required minlength="6"></div>
@@ -439,7 +444,7 @@ main{padding:28px 0 120px}
       <div class="top-right">
         <span class="demo-pill" id="demoPill" hidden>Démo</span>
         <a class="btn btn-dark btn-sm" href="#/publier" id="pubBtn"><svg class="i"><use href="#i-plus"/></svg><span class="t">Publier</span></a>
-        <a class="pts-pill" href="#/club" aria-label="Mes points"><svg class="i" style="width:18px;height:18px"><use href="#i-star"/></svg><b id="ptsTop">0</b> pts</a>
+        <a class="pts-pill" href="#/club" aria-label="Ma carte de fidélité"><svg class="i" style="width:18px;height:18px"><use href="#i-star"/></svg><b id="ptsTop">0</b>/5</a>
         <button class="avatar" id="avatarBtn" aria-haspopup="true" aria-expanded="false" aria-label="Mon compte"></button>
         <div class="menu" id="menu" role="menu">
           <div class="who"><b id="whoName"></b><span id="whoEmail"></span></div>
@@ -542,7 +547,7 @@ main{padding:28px 0 120px}
         <aside class="pub-side">
           <span class="note" style="font-weight:600">Aperçu</span>
           <div id="pubPreview"></div>
-          <div class="ccard"><h3>+50 points</h3><p class="note">pour votre première annonce, puis 1 point par euro loué.</p></div>
+          <div class="ccard"><h3>0 € pour vous</h3><p class="note">Publier, louer et être payé ne vous coûte rien, à vie. Vous touchez 100 % de votre prix.</p></div>
         </aside>
       </div>
     </section>
@@ -560,37 +565,35 @@ main{padding:28px 0 120px}
     <section class="view" id="v-club" hidden>
       <div class="club-hero">
         <div>
-          <p style="font-weight:600;color:var(--soft)">Mes points</p>
-          <div class="big" id="ptsBig">0</div>
-          <p>1 point par euro loué ou prêté, des bonus pour les avis et le parrainage.</p>
+          <p style="font-weight:600;color:var(--soft)">Ma carte de fidélité</p>
+          <div class="stamps" id="stamps"></div>
+          <p id="loyText">Toutes les 5 locations terminées, vos frais de service sont offerts sur la suivante.</p>
           <span class="founder" id="founderTag" hidden><svg class="i" style="width:16px;height:16px"><use href="#i-star"/></svg>Membre fondateur : frais de service divisés par deux, à vie</span>
         </div>
-        <a class="btn btn-lime" href="#/explorer">Gagner des points</a>
+        <a class="btn btn-lime" href="#/explorer">Louer</a>
       </div>
       <div class="club-grid">
         <div class="ccard">
-          <h3>Gagner des points</h3>
+          <h3>Comment ça marche</h3>
           <ul>
-            <li><span>Chaque euro loué ou prêté</span><b>1 pt</b></li>
-            <li><span>Chaque euro acheté ou vendu</span><b>1 pt</b></li>
-            <li><span>Première annonce</span><b>50 pts</b></li>
-            <li><span>Avis laissé</span><b>20 pts</b></li>
-            <li><span>Ami parrainé (chacun)</span><b>200 pts</b></li>
+            <li><span>Chaque location terminée</span><b>1 tampon</b></li>
+            <li><span>5 tampons</span><b>Frais offerts</b></li>
+            <li><span>Remise maximale</span><b>5 €</b></li>
           </ul>
+          <p class="note">La remise s'applique toute seule à votre prochaine demande. Si elle est refusée ou annulée, la remise vous revient.</p>
         </div>
         <div class="ccard">
-          <h3>Les récompenses</h3>
-          <div id="rewards"></div>
-          <p class="note">L'échange des points arrive bientôt ; vos points sont déjà comptés.</p>
+          <h3>Mes remises</h3>
+          <div class="big-n" id="vouchers">0</div>
+          <p class="note" id="vouchersTxt">remise disponible</p>
         </div>
         <div class="ccard">
           <h3>Parrainez vos amis</h3>
-          <p class="note">Après sa première location, vous gagnez chacun 200 points.</p>
+          <p class="note">Dès que votre ami a terminé sa première location, vous avez chacun vos frais de service offerts sur une location.</p>
           <div class="ref-code"><b id="refCode">——</b><button class="btn btn-ghost btn-sm" id="copyRef">Copier le lien</button></div>
+          <p class="note" id="refCount"></p>
         </div>
       </div>
-      <h2 class="sec-t">Historique</h2>
-      <div class="ccard" id="ledger"></div>
     </section>
   </main>
 
@@ -689,12 +692,6 @@ const OSTATUS = { pending:"En attente", accepted:"Acceptée, à confirmer", conf
 const WITHDRAW_H = 48;
 const inWithdrawal = o => o.status === "completed" && o.completed_at && (Date.now() - new Date(o.completed_at)) < WITHDRAW_H * 3600e3;
 const MODE = { hand:"En main propre", delivery:"Livraison", shop:"Boutique partenaire" };
-const REWARDS = [
-  [300, "Frais de service offerts sur une location"],
-  [600, "5 € de réduction sur une location"],
-  [1000, "Bon de 10 € dans une boutique partenaire"],
-  [2000, "Une journée de location offerte (jusqu'à 30 €)"],
-];
 function friendly(msg){
   const m = String(msg || "");
   const map = [
@@ -859,9 +856,9 @@ function supaApi(){
       if (error) fail(error); return data;
     },
     async profileName(id){ const { data } = await sb.from("profiles").select("first_name").eq("id", id).maybeSingle(); return data?.first_name || "Un membre"; },
-    async points(){
-      const [{ data:p }, { data:l }] = await Promise.all([ sb.rpc("my_points"), sb.from("points_ledger").select("points,reason,created_at").order("created_at", { ascending:false }).limit(30) ]);
-      return { total:p || 0, ledger:l || [] };
+    async loyalty(){
+      const { data, error } = await sb.rpc("my_loyalty"); if (error) fail(error);
+      return data || { completed:0, every:5, max_cents:500, vouchers:0, referrals:0 };
     },
   };
 }
@@ -891,7 +888,7 @@ function demoApi(){
     condition,brand,model,verified,dims:dims||[null,null,null],weight,modes:modes.filter(m => m !== "shop"),deliveryFee,shop:null,buyout,buyoutPrice,half:HALF[id]||null }));
   const t = today();
   const others = { d1:[[addDays(t,3),addDays(t,5)]], d2:[[addDays(t,9),addDays(t,11)],[addDays(t,2),addDays(t,2),9,15]], d8:[[addDays(t,6),addDays(t,9)]] };
-  const S0 = () => ({ bookings:[], offers:[], ownerBookings:null, ownerOffers:null, myListings:null, ledger:[], msgs:null });
+  const S0 = () => ({ bookings:[], offers:[], ownerBookings:null, ownerOffers:null, myListings:null, vouchers:[], msgs:null });
   let st = Object.assign(S0(), store.get("rebond_demo_v2") || {});
   const save = () => store.set("rebond_demo_v2", st);
   const code = () => String(Math.floor(Math.random()*10000)).padStart(4,"0");
@@ -904,7 +901,7 @@ function demoApi(){
     && !(start === end && r.start_date === r.end_date && h && r.start_hour != null && (h.to <= r.start_hour || h.from >= r.end_hour));
   const overlaps = (a1,a2,b1,b2) => a1 <= b2 && b1 <= a2;
   const wait = (ms=260) => new Promise(r => setTimeout(r, ms));
-  const award = (pts, reason) => { st.ledger.unshift({ points:pts, reason, created_at:new Date().toISOString() }); };
+  const stamp = () => { st.vouchers = st.vouchers || []; const n = st.bookings.filter(b => b.status === "completed").length; if (n % 5 === 0) st.vouchers.push({ used:null }); };
   function seedOwner(){
     if (st.myListings) return;
     const mine = { id:"m1", title:"Paddle Itiwit X100 11'", cat:"glisse-eau", catLabel:label("glisse-eau"), price:1800, deposit:32000, city:"Paris 11e", owner:me()?.firstName||"Vous", ownerId:"me", description:"Avec pompe et pagaie.", img:null, status:"active",
@@ -916,7 +913,6 @@ function demoApi(){
     const sub = mine.price*2;
     st.ownerBookings = [{ id:"ob1", listing_id:"m1", other:"Camille", start_date:addDays(t,2), end_date:addDays(t,3), days:2, handover_mode:"hand", subtotal_cents:sub, fee_cents:0, total_cents:sub, deposit_cents:mine.deposit, status:"pending", codes:{ return:code() }, renterCode:code(), created_at:new Date().toISOString() }];
     st.ownerOffers = [{ id:"oo1", listing_id:"m1", other:"Inès", amount_cents:20000, fee_cents:0, total_cents:20000, status:"pending", buyerCode:code(), created_at:new Date().toISOString() }];
-    award(50, "premiere_annonce");
     const ago = m => new Date(Date.now() - m*60000).toISOString();
     st.msgs = [
       { listing_id:"m1", other:"o-camille", otherName:"Camille", mine:false, body:"Bonjour ! Le paddle tient dans un coffre de Clio ?", masked:false, created_at:ago(95) },
@@ -949,8 +945,10 @@ function demoApi(){
       const l = L.find(x => x.id===id);
       if (hours && (start !== end || hours.to - hours.from < MIN_H)) throw new Error(`Location de ${MIN_H} h minimum, le même jour`);
       if (busyOf(id).some(r => clash(r, start, end, hours))) throw new Error("Ces dates viennent d'être prises. Choisissez-en d'autres.");
-      const rent = hourRent(l, hours, dayCount(start, end)), del = mode==="delivery" ? (l.deliveryFee||0) : 0, fee = feeFor(rent);
-      const b = { id:"b"+Date.now(), listing_id:id, start_date:start, end_date:end, days:dayCount(start,end), start_hour:hours?.from ?? null, end_hour:hours?.to ?? null, handover_mode:mode, delivery_fee_cents:del, subtotal_cents:rent+del, fee_cents:fee, total_cents:rent+del+fee, deposit_cents:l.deposit, status:"pending", codes:{ pickup:code() }, ownerCode:code(), created_at:new Date().toISOString() };
+      const rent = hourRent(l, hours, dayCount(start, end)), del = mode==="delivery" ? (l.deliveryFee||0) : 0;
+      st.vouchers = st.vouchers || []; const v = st.vouchers.find(x => !x.used), full = feeFor(rent), disc = v ? Math.min(full, 500) : 0, fee = full - disc;
+      const b = { id:"b"+Date.now(), listing_id:id, start_date:start, end_date:end, days:dayCount(start,end), start_hour:hours?.from ?? null, end_hour:hours?.to ?? null, handover_mode:mode, delivery_fee_cents:del, subtotal_cents:rent+del, fee_cents:fee, discount_cents:disc, total_cents:rent+del+fee, deposit_cents:l.deposit, status:"pending", codes:{ pickup:code() }, ownerCode:code(), created_at:new Date().toISOString() };
+      if (v) { v.used = b.id; b.voucher = true; }
       st.bookings.unshift(b); save();
       setTimeout(() => { const x = st.bookings.find(y => y.id===b.id); if (x && x.status==="pending") { x.status = "accepted"; save(); onDemoChange(`${l.owner} a accepté votre demande pour « ${l.title} »`); } }, 5000);
       return b;
@@ -960,7 +958,7 @@ function demoApi(){
     async setBooking(id, status){
       await wait(200);
       const b = st.bookings.find(x => x.id===id) || (st.ownerBookings||[]).find(x => x.id===id);
-      if (b) { b.status = status; save(); }
+      if (b) { b.status = status; if (["declined","cancelled"].includes(status)) (st.vouchers||[]).forEach(v => { if (v.used === b.id) v.used = null; }); save(); }
     },
     async offer(id, cents){
       await wait(350);
@@ -1003,11 +1001,11 @@ function demoApi(){
       if (target.attempts >= 3) throw new Error("Code bloqué après 3 essais : contactez le support");
       if (typed !== expected) { target.attempts++; save(); throw new Error(target.attempts >= 3 ? "Code incorrect : code bloqué, contactez le support" : `Code incorrect (${3-target.attempts} essai(s) restant(s))`); }
       if (kind==="pickup") target.status = "in_progress";
-      else if (kind==="return") { target.status = "completed"; award(Math.floor(target.subtotal_cents/100), "location"); }
-      else { target.status = "completed"; target.completed_at = new Date().toISOString(); const l = st.myListings.find(x => x.id===target.listing_id); if (l) l.status = "sold"; award(Math.floor(target.amount_cents/100), "vente"); }
+      else if (kind==="return") { target.status = "completed"; stamp(); }
+      else { target.status = "completed"; target.completed_at = new Date().toISOString(); const l = st.myListings.find(x => x.id===target.listing_id); if (l) l.status = "sold"; }
       save();
     },
-    async points(){ await wait(120); return { total: st.ledger.reduce((a,b)=>a+b.points,0), ledger: st.ledger }; },
+    async loyalty(){ await wait(120); st.vouchers = st.vouchers || []; return { completed: st.bookings.filter(b => b.status === "completed").length, every:5, max_cents:500, vouchers: st.vouchers.filter(v => !v.used).length, referrals:0 }; },
     async conversations(){
       await wait(150);
       const all = [...(st.myListings||[]), ...L], convs = new Map();
@@ -1043,7 +1041,7 @@ const S = {
   user:null, cats:[], shops:[],
   settings:{ rate:0.06, min:100, saleRate:0.08, saleMin:200, founder:0.5 },
   f:{ cat:null, q:"", start:"", end:"" }, listings:[], d:null, mode:"hand", hours:null,
-  cal:{ month:null, start:null, end:null, busy:new Set() }, pts:0,
+  cal:{ month:null, start:null, end:null, busy:new Set() }, loy:{ completed:0, every:5, max_cents:500, vouchers:0, referrals:0 },
 };
 const disc = () => S.user?.founder ? S.settings.founder : 1;
 function feeFor(c){ return Math.round(Math.max(Math.round(c * S.settings.rate), S.settings.min) * disc()); }
@@ -1122,7 +1120,7 @@ function onUser(u){
     $("#whoName").textContent = (u.firstName || "Mon compte") + (u.founder ? " · fondateur" : "");
     $("#whoEmail").textContent = u.email || "";
     $("#helloTitle").textContent = u.firstName ? `${u.firstName}, qu'est-ce qu'on loue ?` : "Qu'est-ce qu'on loue ?";
-    if (was !== u.id) { S.listings = []; refreshCounts(); refreshPoints(); }
+    if (was !== u.id) { S.listings = []; refreshCounts(); refreshLoyalty(); }
   }
   render();
 }
@@ -1353,8 +1351,9 @@ function quote(){
   const days = dayCount(start, end || start), h = days === 1 ? S.hours : null;
   if (days === 1 && !h && taken(start).length) return null;
   if (h && !hoursFree(start, h.from, h.to)) return null;
-  const rent = hourRent(S.d, h, days), del = S.mode === "delivery" ? (S.d.deliveryFee || 0) : 0, fee = feeFor(rent);
-  return { start, end: end || start, days, hours:h, rent, del, fee, total: rent + del + fee };
+  const rent = hourRent(S.d, h, days), del = S.mode === "delivery" ? (S.d.deliveryFee || 0) : 0, full = feeFor(rent);
+  const disc = S.loy.vouchers > 0 ? Math.min(full, S.loy.max_cents) : 0, fee = full - disc;
+  return { start, end: end || start, days, hours:h, rent, del, fee:full, disc, total: rent + del + fee };
 }
 function drawQuote(){
   const box = $("#quote"); if (!box) return;
@@ -1365,7 +1364,7 @@ function drawQuote(){
     <div><span>Frais de service${S.user?.founder ? " (membre fondateur)" : ""}</span><span>${eur(q.fee)}</span></div>
     <div class="tot"><span>Total</span><span>${eur(q.total)}</span></div>
     <div style="color:var(--muted);font-size:13px"><span>Caution = valeur de l'objet, bloquée, non débitée</span><span>${eur(S.d.deposit)}</span></div>
-    <div style="color:var(--accent);font-size:13px"><span>Points gagnés</span><span>+${Math.floor((q.rent+q.del)/100)} pts</span></div>`
+    ${q.disc ? `<div style="color:var(--accent);font-size:13px;font-weight:600"><span>Carte de fidélité : frais offerts</span><span>− ${eur(q.disc)}</span></div>` : `<div style="color:var(--muted);font-size:13px"><span>Carte de fidélité</span><span>${S.loy.completed % S.loy.every}/${S.loy.every} tampons</span></div>`}`
     : `<div style="color:var(--muted)"><span>Touchez un jour pour le début, puis un autre pour la fin. Pour un seul jour, louez la journée ou quelques heures (5 h minimum).</span></div>`;
 }
 function drawFoot(){
@@ -1399,7 +1398,7 @@ async function gateOffer(l){
 function offerPreview(){
   const box = $("#offerInfo"); if (!box) return;
   const v = Math.round((+$("#offerAmt").value || 0) * 100);
-  box.textContent = v > 0 ? `Si l'offre est acceptée, vous paierez ${eur(v + saleFeeFor(v))} frais de service compris, et gagnerez ${Math.floor(v/100)} points.` : "";
+  box.textContent = v > 0 ? `Si la vente se fait, vous paierez ${eur(v + saleFeeFor(v))} frais de service compris.` : "";
 }
 document.addEventListener("input", e => { if (e.target.id === "offerAmt") offerPreview(); });
 document.addEventListener("click", async e => {
@@ -1439,7 +1438,8 @@ async function loadRenter(){
       if (["accepted","paid"].includes(b.status)) hint = codeHTML("Code de retrait", b.codes?.pickup) + `<span class="note">À donner au propriétaire le jour J, après les photos.</span>`;
       if (b.status === "pending") hint = `<span class="note">Réponse sous 24 h en général</span>`;
       if (b.status === "in_progress") { hint = `<span class="note">Au retour, le propriétaire vous donne son code.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="return" data-id="${esc(b.id)}">Rendre le matériel</button>`; }
-      if (b.status === "completed") hint = `<span class="note" style="color:var(--accent)">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
+      if (b.status === "completed") hint = `<span class="note" style="color:var(--accent)">Tampon ajouté à votre carte de fidélité</span>`;
+      if (b.discount_cents > 0 && !["declined","cancelled"].includes(b.status)) hint += `<span class="note" style="color:var(--accent)">Frais offerts : − ${eur(b.discount_cents)}</span>`;
       if (["pending","accepted"].includes(b.status)) actions += `<button class="btn btn-ghost btn-sm" data-cancel="${esc(b.id)}">Annuler</button>`;
       if (["in_progress","completed"].includes(b.status) && l.buyout && l.status !== "sold") actions += `<a class="btn btn-ghost btn-sm" href="#/annonce/${esc(l.id)}">Faire une offre d'achat</a>`;
       return rowHTML({ l, title:l.title, sub:`${esc(l.city||"")} · ${when(b)}`, status:b.status, statusLabel:STATUS[b.status], hint, total:eur(b.total_cents), actions, i });
@@ -1471,7 +1471,7 @@ async function loadOwner(){
       if (b.status === "pending") actions = `<button class="btn btn-dark btn-sm" data-bset="accepted" data-id="${esc(b.id)}">Accepter</button><button class="btn btn-ghost btn-sm" data-bset="declined" data-id="${esc(b.id)}">Refuser</button>`;
       if (["accepted","paid"].includes(b.status)) { hint = `<span class="note">Le jour J : photos, code de ${esc(b.other)} et sa signature.</span>`; actions = `<button class="btn btn-dark btn-sm" data-ho="pickup" data-id="${esc(b.id)}">Remettre le matériel</button>`; }
       if (b.status === "in_progress") hint = codeHTML("Code de retour", b.codes?.return) + `<span class="note">À donner à ${esc(b.other)} quand il vous rend l'objet.</span>`;
-      if (b.status === "completed") hint = `<span class="note" style="color:var(--accent)">+${Math.floor(b.subtotal_cents/100)} points gagnés</span>`;
+      if (b.status === "completed") hint = `<span class="note" style="color:var(--accent)">Location terminée, vous êtes payé</span>`;
       return rowHTML({ l, title:l.title, sub:`${esc(b.other)} · ${when(b)}`, status:b.status, statusLabel:STATUS[b.status], hint, total:eur(b.subtotal_cents), totalNote:"pour vous", actions, i });
     }).join("") : emptyHTML("Aucune demande pour l'instant", "Les demandes de location de votre matériel apparaîtront ici.", "");
     ox.innerHTML = offers.length ? offers.map((o, i) => {
@@ -1485,7 +1485,7 @@ async function loadOwner(){
       if (o.status === "withdrawal_requested") hint = `<span class="note">Problème signalé : Spoloc étudie la demande.</span>`;
       return rowHTML({ l, title:l.title, sub:`Offre de ${esc(o.other)}${l.buyoutPrice ? ` · vous demandiez ${eur(l.buyoutPrice)}` : ""}`, status:o.status, statusLabel:OSTATUS[o.status], hint, total:eur(o.amount_cents), totalNote:"pour vous", actions, i });
     }).join("") : emptyHTML("Aucune offre d'achat", "Activez l'option « J'accepte qu'on me le rachète » sur vos annonces.", "");
-    lx.innerHTML = mine.length ? mine.map(cardHTML).join("") : emptyHTML("Aucune annonce", "Publiez votre premier objet : +50 points.", `<a class="btn btn-dark" href="#/publier">Publier</a>`);
+    lx.innerHTML = mine.length ? mine.map(cardHTML).join("") : emptyHTML("Aucune annonce", "Publiez votre premier objet, c'est gratuit.", `<a class="btn btn-dark" href="#/publier">Publier</a>`);
   } catch (ex) { bx.innerHTML = emptyHTML("Impossible de charger", esc(ex.message), `<button class="btn btn-ghost" onclick="loadOwner()">Réessayer</button>`); }
 }
 
@@ -1608,7 +1608,7 @@ $("#hoForm").addEventListener("submit", async e => {
     await api.handover(HO.kind, HO.id, code, $("#hoCond").value, HO.files, b1, b2, $("#hoNotes").value.trim());
     closeHo();
     toast(HO.kind === "pickup" ? "Matériel remis : la location commence." : HO.kind === "return" ? "Retour validé : la caution est libérée." : "Vente terminée : l'objet a changé de main.");
-    refreshCounts(); refreshPoints();
+    refreshCounts(); refreshLoyalty();
     if (route().name === "locations") loadRenter(); else loadOwner();
   } catch (ex) { err.textContent = ex.message; }
   finally { btn.disabled = false; btn.textContent = "Valider la remise"; }
@@ -1667,7 +1667,7 @@ async function publish(e){
     toast(pubProof ? "Annonce publiée. La marque sera vérifiée sous 48 h." : "Annonce publiée !");
     $("#pubForm").reset(); pubPhotos = []; pubProof = null; $("#p-photos-l").textContent = "Ajouter des photos"; $("#p-proof-l").textContent = "Ajouter une preuve (photo ou PDF)";
     ["#m-del-box","#m-shop-box","#p-buy-box"].forEach(s => $(s).hidden = true);
-    S.listings = []; refreshPoints(); location.hash = "#/materiel";
+    S.listings = []; refreshLoyalty(); location.hash = "#/materiel";
   } catch (ex) { err.textContent = ex.message; }
   finally { btn.disabled = false; btn.textContent = "Publier l'annonce"; }
 }
@@ -1741,17 +1741,22 @@ document.addEventListener("click", e => {
 });
 
 /* =========================================================
-   CLUB : points, récompenses, parrainage
+   CLUB : carte de fidélité, parrainage
    ========================================================= */
-const REASON = { location:"Location", location_proprietaire:"Location de votre matériel", achat:"Achat", vente:"Vente", premiere_annonce:"Première annonce", avis:"Avis laissé", parrainage:"Ami parrainé", filleul:"Bonus de parrainage" };
-async function refreshPoints(){ try { const p = await api.points(); S.pts = p.total; $("#ptsTop").textContent = p.total; return p; } catch { return { total:0, ledger:[] }; } }
+async function refreshLoyalty(){
+  try { S.loy = await api.loyalty(); } catch {}
+  $("#ptsTop").textContent = S.loy.completed % S.loy.every;
+  return S.loy;
+}
 async function loadClub(){
-  const p = await refreshPoints();
-  $("#ptsBig").textContent = p.total;
+  const p = await refreshLoyalty(), n = p.completed % p.every, left = p.every - n;
   $("#founderTag").hidden = !S.user?.founder;
   $("#refCode").textContent = S.user?.refCode || "——";
-  $("#rewards").innerHTML = REWARDS.map(([pts, txt]) => `<div class="reward ${p.total >= pts ? "ok" : ""}"><span>${txt}</span><span class="p">${pts} pts</span></div>`).join("");
-  $("#ledger").innerHTML = p.ledger.length ? p.ledger.map(x => `<div class="reward"><span>${REASON[x.reason] || x.reason}<br><span class="note">${new Date(x.created_at).toLocaleDateString("fr-FR")}</span></span><span class="p" style="color:var(--accent)">+${x.points}</span></div>`).join("") : `<p class="note">Vos points apparaîtront ici après votre première location ou annonce.</p>`;
+  $("#stamps").innerHTML = Array.from({ length:p.every }, (_, k) => `<span class="stamp ${k < n ? "on" : ""}">${k < n ? '<svg class="i"><use href="#i-check"/></svg>' : ""}</span>`).join("");
+  $("#loyText").textContent = `${n} location${n>1?"s":""} sur ${p.every}. Encore ${left} avant vos frais de service offerts (jusqu'à ${eur(p.max_cents)}).`;
+  $("#vouchers").textContent = p.vouchers;
+  $("#vouchersTxt").textContent = p.vouchers ? `remise${p.vouchers>1?"s":""} prête${p.vouchers>1?"s":""} : elle s'applique à votre prochaine demande.` : "Pas encore de remise : elle arrive à votre 5e location.";
+  $("#refCount").textContent = p.referrals ? `${p.referrals} ami${p.referrals>1?"s":""} parrainé${p.referrals>1?"s":""}.` : "";
 }
 $("#copyRef").addEventListener("click", async () => {
   const link = `${location.origin}${location.pathname}?ref=${S.user?.refCode || ""}`;
